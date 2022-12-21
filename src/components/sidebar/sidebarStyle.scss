@@ -1,0 +1,58 @@
+.sidebar {
+  flex: 1;
+  min-height: 100vh;
+  border-radius: 0.4rem;
+
+  .header {
+    background-color: #dae2ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .links {
+    margin: 0rem;
+    padding-left: 0.4rem;
+    color: #324d67;
+    transition: all 0.3s linear;
+
+    .name {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 0.4rem 0;
+      letter-spacing: 0.1rem;
+    }
+
+    .items {
+      display: flex;
+      align-items: center;
+      padding: 0.8rem 0.8rem;
+      font-size: 1rem;
+      text-transform: capitalize;
+      color: #324d67;
+      text-decoration: none;
+
+      &:hover {
+        background: #f1f5f8;
+        color: #102a42;
+        box-shadow: 0.8rem;
+        border-radius: 0.8rem;
+        font-weight: bold;
+        outline-style: none;
+      }
+
+      svg {
+        font-size: 1rem;
+        color: #324d67;
+        margin-right: 0.4rem;
+        font-weight: bold;
+        transition: all 0.3s linear;
+        &:hover {
+          color: #102a42;
+        }
+      }
+    }
+  }
+}
