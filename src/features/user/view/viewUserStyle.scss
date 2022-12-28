@@ -1,0 +1,46 @@
+.viewUser {
+  display: flex;
+  width: 100%;
+  .viewUserContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .viewUserBody {
+      margin: 1rem 1.2rem;
+      .title {
+        margin-bottom: 0.4rem;
+        color: #48647f;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .viewUserForm {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        background-color: #fff;
+
+        .form {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0.8rem;
+
+          .title {
+            color: #324d67;
+            margin-bottom: 0.2rem;
+          }
+
+          .textField {
+            background-color: #f1f5f8;
+            border-radius: 0.4rem;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

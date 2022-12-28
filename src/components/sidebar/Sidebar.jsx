@@ -1,10 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { FaSignOutAlt } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../commons/assets/brand.png'
 import { links } from './data'
 import './sidebarStyle.scss'
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+  const handleSignOut = () => {
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   return (
     <>
       <div className="sidebar">
@@ -40,6 +46,10 @@ const Sidebar = () => {
               </>
             )
           })}
+          <li onClick={handleSignOut} className="items">
+            <FaSignOutAlt className="icon" />
+            <span>Sign out</span>
+          </li>
         </ul>
       </div>
     </>
