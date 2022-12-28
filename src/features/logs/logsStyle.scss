@@ -1,0 +1,36 @@
+.logs {
+  display: flex;
+  width: 100%;
+
+  .logsContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .body {
+      margin: 1rem 1.2rem;
+      .title {
+        color: #324d67;
+        margin-bottom: 0.4rem;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+      .template {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+
+        .datatable {
+          height: 40rem;
+          .MuiDataGrid-footerContainer {
+            min-height: auto;
+            height: 2.4rem;
+            .MuiTablePagination-displayedRows {
+              font-size: 0.8rem !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}

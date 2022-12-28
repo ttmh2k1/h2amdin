@@ -1,0 +1,76 @@
+.view {
+  display: flex;
+  width: 100%;
+
+  .viewContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .bodys {
+      background-color: #955b36;
+      padding: 1.2rem;
+      margin: 2rem;
+      border-radius: 0.8rem;
+
+      .header {
+        display: flex;
+        background-color: #ede0dd;
+        height: 4rem;
+        align-items: center;
+        color: #955b36;
+        text-transform: capitalize !important;
+        font-weight: bold;
+        margin: 1.2rem;
+        border-radius: 0.4rem;
+      }
+      .form {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        min-width: 25vw;
+        max-width: 100%;
+        margin: 1.2rem;
+
+        .title {
+          color: #955b36;
+          font-size: 1.6rem;
+          font-weight: bold;
+          margin-bottom: 0.4rem;
+        }
+
+        .textField {
+          background-color: #f0f0f0;
+          border-radius: 0.4rem;
+          font-size: 1.6rem;
+        }
+        .address {
+          margin-top: 2rem;
+          background-color: #f0f0f0;
+          border-radius: 0.4rem;
+          font-size: 1.6rem;
+        }
+      }
+
+      .template {
+        .title {
+          display: flex;
+          color: #707070;
+          background-color: #fff;
+          padding: 1.6rem;
+          border-radius: 0.4rem;
+        }
+
+        .datatable {
+          margin: 1.2rem;
+          height: 32rem;
+        }
+      }
+
+      .text {
+        color: #955b36;
+        font-size: 1.6rem;
+        padding-right: 1.6rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+.viewProductGroup {
+  display: flex;
+  width: 100%;
+  .viewProductGroupContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .viewProductGroupBody {
+      margin: 1rem 1.2rem;
+      .title {
+        margin-bottom: 0.4rem;
+        color: #48647f;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .viewProductGroupForm {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        background-color: #fff;
+
+        .level0 {
+          .levelHeader {
+            display: flex;
+            color: #48647f;
+            font-weight: bold;
+            margin: 0.8rem 0 0 0.8rem;
+          }
+          .form {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            min-width: 25vw;
+            max-width: 100%;
+            margin: 0.8rem;
+
+            .title {
+              color: #324d67;
+              margin-bottom: 0.2rem;
+            }
+
+            .textField {
+              background-color: #f1f5f8;
+              border-radius: 0.4rem;
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .group {
+          margin: 0.8rem;
+
+          .MuiAccordionSummary-root {
+            min-height: 2rem;
+          }
+
+          .headerGroup {
+            .MuiAccordionSummary-content {
+              margin: 0;
+            }
+            background-color: #dae2ec;
+            height: 2rem;
+            .titleGroup {
+              color: #48647f;
+              font-size: 1rem;
+              font-weight: bold;
+            }
+          }
+          .MuiAccordionDetails-root {
+            padding: 0;
+          }
+
+          .level {
+            display: flex;
+            flex-direction: row;
+
+            .form {
+              display: flex;
+              flex-direction: column;
+              width: 20%;
+              min-width: 20vw;
+              max-width: 100%;
+              margin: 0.8rem;
+
+              .title {
+                color: #48647f;
+                font-size: 1rem;
+                margin-bottom: 0.4rem;
+              }
+
+              .textField {
+                background-color: #f1f5f8;
+                border-radius: 0.4rem;
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
+
+      .viewProductGroupFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+        }
+      }
+    }
+  }
+}

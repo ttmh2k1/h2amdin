@@ -27,7 +27,7 @@ export const links = [
         icon: <FaUserCog />,
       },
       {
-        url: '/logSystem',
+        url: '/logs',
         text: 'Logs',
         icon: <FaRegListAlt />,
       },

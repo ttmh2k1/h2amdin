@@ -1,7 +1,5 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import logo from '../../commons/assets/brand.png'
-import image from '../../commons/assets/loginImage.jpg'
 import './loginStyle.scss'
 import { LoginService } from '../../apis/loginApi'
 import { Button } from '@mui/material'
@@ -27,35 +25,34 @@ function LoginComponent() {
   return (
     <div className="loginPage">
       <div className="box-form">
-        <div className="right">
-          <h2 className="title">LOGIN</h2>
-          <div className="inputs">
-            <div className="item">
-              <label className="label" htmlFor="username">
-                Username
-              </label>
-              <input type="text" className="input" id="username" />
-            </div>
-            <div className="item">
-              <label className="label" htmlFor="password">
-                Password
-              </label>
-              <input type="password" className="input" id="password" />
-            </div>
+        <h2 className="title">LOGIN</h2>
+        <div className="inputs">
+          <div className="item">
+            <label className="label" htmlFor="username">
+              Username
+            </label>
+            <input type="text" className="input" id="username" />
           </div>
-          <div className="remember-me">
-            <span style={{ display: 'flex', alignItems: 'center' }}>
-              <input type="checkbox" className="checkbox" id="checkbox" />
-              <label for="checkbox">Remember me</label>
-            </span>
-            <span>
-              <label style={{ textDecorationLine: 'underline' }}>Forget password?</label>
-            </span>
+          <div className="item">
+            <label className="label" htmlFor="password">
+              Password
+            </label>
+            <input type="password" className="input" id="password" />
           </div>
-
-          <br />
-          <Button onClick={() => handleLogin()}>Login</Button>
         </div>
+        <div className="remember-me">
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <input type="checkbox" className="checkbox" id="checkbox" />
+            <label for="checkbox">Remember me</label>
+          </span>
+          <span>
+            <label style={{ textDecorationLine: 'underline' }}>Forget password?</label>
+          </span>
+        </div>
+        <br />
+        <Button className="buttonLogin" onClick={() => handleLogin()}>
+          Login
+        </Button>
       </div>
     </div>
   )

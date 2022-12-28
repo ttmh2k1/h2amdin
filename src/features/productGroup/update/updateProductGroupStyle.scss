@@ -1,0 +1,189 @@
+.updateProductGroup {
+  display: flex;
+  width: 100%;
+
+  .updateProductGroupContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .updateProductGroupBody {
+      margin: 1rem 1.2rem;
+      .title {
+        margin-bottom: 0.4rem;
+        color: #48647f;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .updateProductGroupForm {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        background-color: #fff;
+
+        .level0 {
+          .levelHeader {
+            display: flex;
+            color: #48647f;
+            font-weight: bold;
+            margin: 0.8rem 0 0 0.8rem;
+          }
+          .form {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            min-width: 25vw;
+            max-width: 100%;
+            margin: 0.8rem;
+
+            .title {
+              color: #324d67;
+              margin-bottom: 0.2rem;
+            }
+
+            .textField {
+              border-radius: 0.4rem;
+              font-size: 1rem;
+              .MuiInputBase-root {
+                height: 2.4rem;
+                .Mui-disabled {
+                  background-color: #f1f5f8;
+                  height: 0.4rem;
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .select {
+              border-radius: 0.4rem;
+              font-size: 1rem;
+              .MuiSelect-select {
+                height: 2.4rem !important;
+                padding: 0 0.8rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+              }
+            }
+          }
+        }
+
+        .group {
+          margin: 0.8rem;
+
+          .MuiAccordionSummary-root {
+            min-height: 2rem;
+          }
+
+          .headerGroup {
+            .MuiAccordionSummary-content {
+              margin: 0;
+            }
+            background-color: #dae2ec;
+            height: 2rem;
+            .titleGroup {
+              color: #48647f;
+              font-size: 1rem;
+              font-weight: bold;
+            }
+          }
+          .MuiAccordionDetails-root {
+            padding: 0;
+          }
+
+          .level {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            .form {
+              display: flex;
+              flex-direction: column;
+              width: 20%;
+              min-width: 20vw;
+              max-width: 100%;
+              margin: 0.8rem;
+
+              .title {
+                color: #48647f;
+                font-size: 1rem;
+                margin-bottom: 0.4rem;
+              }
+
+              .textField {
+                background-color: #fff;
+                border-radius: 0.4rem;
+                font-size: 1rem;
+                .MuiInputBase-root {
+                  height: 2.4rem;
+                  .Mui-disabled {
+                    background-color: #f1f5f8;
+                    height: 0.4rem;
+                    font-size: 1rem;
+                  }
+                }
+              }
+
+              .select {
+                border-radius: 0.4rem;
+                font-size: 1rem;
+                .MuiSelect-select {
+                  height: 2.4rem !important;
+                  padding: 0 0.8rem;
+                  font-size: 1rem;
+                  display: flex;
+                  align-items: center;
+                }
+              }
+            }
+            .saveButton {
+              font-size: 1rem;
+              text-transform: none;
+              margin: 2.7rem 0rem 0rem;
+              padding: 0.2rem 1rem;
+              height: 2.4rem;
+              border-radius: 0.2rem;
+              color: #fff;
+              background-color: #829ab0;
+
+              &:hover {
+                background-color: #243a52;
+              }
+            }
+          }
+        }
+      }
+      .updateProductGroupFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+        }
+        .saveButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #829ab0;
+
+          &:hover {
+            background-color: #243a52;
+          }
+        }
+      }
+    }
+  }
+}
