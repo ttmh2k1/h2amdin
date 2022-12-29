@@ -46,7 +46,7 @@ const Sidebar = () => {
               </>
             )
           })}
-          <li onClick={handleSignOut} className="items">
+          <li onClick={handleSignOut} className="items" style={{ cursor: 'pointer' }}>
             <FaSignOutAlt className="icon" />
             <span>Sign out</span>
           </li>

@@ -6,7 +6,7 @@
     flex: 6;
     background-color: #eee;
 
-    .body {
+    .logsBody {
       margin: 1rem 1.2rem;
       .title {
         color: #324d67;
@@ -16,6 +16,7 @@
           text-decoration: none;
         }
       }
+
       .template {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;
@@ -28,6 +29,28 @@
             .MuiTablePagination-displayedRows {
               font-size: 0.8rem !important;
             }
+          }
+        }
+      }
+
+      .logsFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
           }
         }
       }

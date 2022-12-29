@@ -5,9 +5,13 @@ import { useEffect, useState } from 'react'
 import { getRoles } from '../../apis/roleApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import { Button } from '@mui/material'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 
 const RoleComponent = () => {
   const [roles, setRoles] = useState()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleGetRole = async () => {
@@ -72,6 +76,15 @@ const RoleComponent = () => {
                 }}
               />
             </div>
+          </div>
+          <div className="roleFooter">
+            <Button
+              className="backButton"
+              startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
           </div>
         </div>
       </div>

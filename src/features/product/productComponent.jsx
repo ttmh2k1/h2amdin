@@ -1,25 +1,25 @@
-import './productGroupStyle.scss'
+import './productStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { useEffect, useState } from 'react'
-import { getListProductGroup } from '../../apis/productGroupApi'
 import { DataGrid } from '@mui/x-data-grid'
-import styled from 'styled-components'
+import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaPlusCircle, FaTrashAlt } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt } from 'react-icons/fa'
+import styled from 'styled-components'
+import { getListProduct } from '../../apis/productApi'
 import { Button } from '@mui/material'
 
-const ProductGroupComponent = () => {
-  const [listProductGroup, setListProductGroup] = useState([])
+const ProductComponent = () => {
+  const [listProduct, setListProduct] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleListProductGroup = async () => {
-      const resp = await getListProductGroup()
+    const handleListProduct = async () => {
+      const resp = await getListProduct()
       const list = resp?.data?.data
-      setListProductGroup(list)
+      setListProduct(list)
     }
-    handleListProductGroup()
+    handleListProduct()
   }, [])
 
   const header = [
@@ -32,32 +32,40 @@ const ProductGroupComponent = () => {
     },
     {
       field: 'id',
-      headerName: 'Product group ID',
-      width: 300,
+      headerName: 'Product ID',
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'name',
-      headerName: 'Product group name',
-      width: 400,
+      headerName: 'Product name',
+      width: 600,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'groupName',
+      headerName: 'Group name',
+      width: 150,
       align: 'left',
       headerAlign: 'center',
     },
     {
       field: 'status',
       headerName: 'Status',
-      width: 200,
+      width: 80,
       align: 'center',
       headerAlign: 'center',
     },
   ]
 
-  const content = listProductGroup.map((item, index) => {
+  const content = listProduct.map((item, index) => {
     return {
       stt: index + 1,
       id: item?.id,
       name: item?.name,
+      groupName: item?.category.name,
       status: item?.hidden ? 'Banned' : 'Active',
     }
   })
@@ -71,12 +79,12 @@ const ProductGroupComponent = () => {
       renderCell: (props) => {
         return (
           <div className="cellAction">
-            <Link to={`/productGroup/view/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/product/view/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="viewButton">
                 <FaEye />
               </div>
             </Link>
-            <Link to={`/productGroup/update/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/product/update/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="updateButton">
                 <FaPen />
               </div>
@@ -94,14 +102,15 @@ const ProductGroupComponent = () => {
   ]
 
   return (
-    <div className="productGroup">
+    <div className="product">
       <Sidebar />
-      <div className="productGroupContainer">
+      <div className="productContainer">
         <Navbar />
-        <div className="productGroupBody">
+        <div className="productBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/productGroup">Product group</a>
+            <a href="/">Home</a>/ <a href="/product">Product</a>
           </div>
+
           <div className="template">
             <div className="datatable">
               <Tab
@@ -116,7 +125,14 @@ const ProductGroupComponent = () => {
               />
             </div>
           </div>
-          <div className="productGroupFooter">
+          <div className="productFooter">
+            <Button
+              className="createButton"
+              startIcon={<FaPlusCircle color="#fff" size={'1rem'} />}
+              onClick={() => navigate('/product/create')}
+            >
+              New
+            </Button>
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
@@ -137,4 +153,4 @@ const Tab = styled(DataGrid)({
   },
 })
 
-export default ProductGroupComponent
+export default ProductComponent

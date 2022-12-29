@@ -6,7 +6,7 @@ const login = (username, password) => {
         loginKey: username,
         password: password
     }
-    console.log("🚀 ~ file: loginApi.js:9 ~ login ~ data", data)
+
     return axios.post(config.baseURL + "api/admin/login", data).then((response) => {
         const temp = response.data;
         if (temp) {

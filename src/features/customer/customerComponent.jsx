@@ -1,48 +1,28 @@
-import './userStyle.scss'
+import './customerStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getListUsers } from '../../apis/userApi'
+import { getListCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
+import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
-import { FaArrowCircleLeft, FaEye } from 'react-icons/fa'
+import styled from 'styled-components'
 import { Button } from '@mui/material'
 
-const UserComponent = () => {
-  const [users, setUsers] = useState([])
+const CustomerComponent = () => {
+  const [listCustomer, setListCustomer] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleGetUser = async () => {
-      const resp = await getListUsers()
+    const handleListCustomer = async () => {
+      const resp = await getListCustomer()
       const list = resp?.data?.data
-      setUsers(list)
+      setListCustomer(list)
     }
-    handleGetUser()
+    handleListCustomer()
   }, [])
 
-  const actionColumn = [
-    {
-      headerName: 'Action',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (props) => {
-        return (
-          <div className="cellAction">
-            <Link to={`/user/${props.id}`} style={{ textDecoration: 'none' }}>
-              <div className="viewButton">
-                <FaEye />
-              </div>
-            </Link>
-          </div>
-        )
-      },
-    },
-  ]
-
-  const userHeader = [
+  const header = [
     {
       field: 'stt',
       headerName: 'No',
@@ -52,15 +32,15 @@ const UserComponent = () => {
     },
     {
       field: 'id',
-      headerName: 'User ID',
-      width: 120,
+      headerName: 'Customer ID',
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'username',
-      headerName: 'User name',
-      width: 150,
+      headerName: 'Username',
+      width: 100,
       align: 'left',
       headerAlign: 'center',
     },
@@ -72,16 +52,15 @@ const UserComponent = () => {
       headerAlign: 'center',
     },
     {
-      field: 'role',
-      headerName: 'User role',
-      width: 150,
+      field: 'gender',
+      headerName: 'Gender',
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'email',
       headerName: 'Email',
-      type: 'email',
       width: 200,
       align: 'left',
       headerAlign: 'center',
@@ -89,48 +68,77 @@ const UserComponent = () => {
     {
       field: 'phone',
       headerName: 'Phone',
-      type: 'phone',
       width: 100,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
     },
     {
       field: 'status',
       headerName: 'Status',
-      type: 'status',
-      width: 100,
+      width: 150,
       align: 'center',
       headerAlign: 'center',
     },
   ]
-  const userContent = users.map((item, index) => {
+
+  const content = listCustomer.map((item, index) => {
     return {
       stt: index + 1,
       id: item?.id,
       username: item?.username,
       fullname: item?.fullname,
-      role: item?.role.name,
+      gender: item?.gender,
       email: item?.email,
       phone: item?.phone,
-      status:
-        item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
+      status: item?.status,
     }
   })
 
+  const action = [
+    {
+      headerName: 'Action',
+      width: 150,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (props) => {
+        return (
+          <div className="cellAction">
+            <Link to={`/customer/view/${props.id}`} style={{ textDecoration: 'none' }}>
+              <div className="viewButton">
+                <FaEye />
+              </div>
+            </Link>
+            <Link to={`/customer/update/${props.id}`} style={{ textDecoration: 'none' }}>
+              <div className="updateButton">
+                <FaPen />
+              </div>
+            </Link>
+            {/* <div className="disableButton">
+              <FaLock />
+            </div>
+            <div className="deleteButton">
+              <FaTrashAlt />
+            </div> */}
+          </div>
+        )
+      },
+    },
+  ]
+
   return (
-    <div className="user">
+    <div className="customer">
       <Sidebar />
-      <div className="userContainer">
+      <div className="customerContainer">
         <Navbar />
-        <div className="body">
+        <div className="customerBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/user">User</a>
+            <a href="/">Home</a>/ <a href="/customer">Customer</a>
           </div>
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={userContent}
-                columns={userHeader.concat(actionColumn)}
+                rows={content}
+                columns={header.concat(action)}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 style={{
@@ -140,7 +148,7 @@ const UserComponent = () => {
               />
             </div>
           </div>
-          <div className="userFooter">
+          <div className="customerFooter">
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
@@ -161,4 +169,4 @@ const Tab = styled(DataGrid)({
   },
 })
 
-export default UserComponent
+export default CustomerComponent

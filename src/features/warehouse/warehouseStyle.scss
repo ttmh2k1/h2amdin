@@ -1,12 +1,12 @@
-.order {
+.warehouse {
   display: flex;
   width: 100%;
 
-  .orderContainer {
+  .warehouseContainer {
     flex: 6;
     background-color: #eee;
 
-    .body {
+    .warehouseBody {
       margin: 1rem 1.2rem;
       .title {
         color: #324d67;
@@ -30,45 +30,26 @@
               font-size: 0.8rem !important;
             }
           }
-
           .cellAction {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.4rem;
+            gap: 2rem;
 
             .viewButton {
               display: flex;
               align-items: center;
               padding: 0.4rem;
-              border-radius: 0.2rem;
-              border: 0.1rem solid #9eb2c7;
-              color: #9eb2c7;
-              cursor: pointer;
-            }
-            .approveButton {
-              display: flex;
-              align-items: center;
-              padding: 0.4rem;
-              border-radius: 0.2rem;
-              background-color: #25bb32;
-              color: #fff;
-              cursor: pointer;
-            }
-            .denyButton {
-              display: flex;
-              align-items: center;
-              padding: 0.4rem;
-              border-radius: 0.2rem;
-              background-color: #bb2525;
-              color: #fff;
+              border-radius: 0.4rem;
+              background-color: olivedrab;
+              color: white;
               cursor: pointer;
             }
           }
         }
       }
 
-      .orderFooter {
+      .warehouseFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;
