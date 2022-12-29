@@ -1,37 +1,37 @@
-import './userStyle.scss'
+import './warehouseStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getListUsers } from '../../apis/userApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { DataGrid } from '@mui/x-data-grid'
 import { FaArrowCircleLeft, FaEye } from 'react-icons/fa'
+import { getListWarehouse } from '../../apis/warehouseApi'
+import { DataGrid } from '@mui/x-data-grid'
+import styled from 'styled-components'
 import { Button } from '@mui/material'
 
-const UserComponent = () => {
-  const [users, setUsers] = useState([])
+const WarehouseComponent = () => {
+  const [warehouse, setWarehouse] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleGetUser = async () => {
-      const resp = await getListUsers()
+    const handleWarehouse = async () => {
+      const resp = await getListWarehouse()
       const list = resp?.data?.data
-      setUsers(list)
+      setWarehouse(list)
     }
-    handleGetUser()
-  }, [])
+    handleWarehouse()
+  })
 
-  const actionColumn = [
+  const action = [
     {
       headerName: 'Action',
-      width: 100,
+      width: 60,
       align: 'center',
       headerAlign: 'center',
       renderCell: (props) => {
         return (
           <div className="cellAction">
-            <Link to={`/user/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/warehouse/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="viewButton">
                 <FaEye />
               </div>
@@ -42,7 +42,7 @@ const UserComponent = () => {
     },
   ]
 
-  const userHeader = [
+  const header = [
     {
       field: 'stt',
       headerName: 'No',
@@ -52,85 +52,58 @@ const UserComponent = () => {
     },
     {
       field: 'id',
-      headerName: 'User ID',
-      width: 120,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'username',
-      headerName: 'User name',
-      width: 150,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'fullname',
-      headerName: 'Full name',
-      width: 200,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'role',
-      headerName: 'User role',
-      width: 150,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      type: 'email',
-      width: 200,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'phone',
-      headerName: 'Phone',
-      type: 'phone',
+      headerName: 'Inventory ID',
       width: 100,
       align: 'center',
       headerAlign: 'center',
     },
     {
-      field: 'status',
-      headerName: 'Status',
-      type: 'status',
-      width: 100,
+      field: 'importerName',
+      headerName: 'Importer name',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'importQuantity',
+      headerName: 'Import quantity',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'importTime',
+      headerName: 'Import time',
+      width: 200,
       align: 'center',
       headerAlign: 'center',
     },
   ]
-  const userContent = users.map((item, index) => {
+
+  const content = warehouse.map((item, index) => {
     return {
       stt: index + 1,
       id: item?.id,
-      username: item?.username,
-      fullname: item?.fullname,
-      role: item?.role.name,
-      email: item?.email,
-      phone: item?.phone,
-      status:
-        item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
+      importerName: item?.importer?.fullname,
+      importQuantity: item?.importQuantity,
+      importTime: item?.importTime,
     }
   })
 
   return (
-    <div className="user">
+    <div className="warehouse">
       <Sidebar />
-      <div className="userContainer">
+      <div className="warehouseContainer">
         <Navbar />
-        <div className="body">
+        <div className="warehouseBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/user">User</a>
+            <a href="/">Home</a>/ <a href="/warehouse">Warehouse</a>
           </div>
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={userContent}
-                columns={userHeader.concat(actionColumn)}
+                rows={content}
+                columns={header}
                 pageSize={10}
                 rowsPerPageOptions={[10]}
                 style={{
@@ -140,7 +113,7 @@ const UserComponent = () => {
               />
             </div>
           </div>
-          <div className="userFooter">
+          <div className="warehouseFooter">
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
@@ -161,4 +134,4 @@ const Tab = styled(DataGrid)({
   },
 })
 
-export default UserComponent
+export default WarehouseComponent

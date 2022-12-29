@@ -2,16 +2,19 @@ import './orderStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { FaCheck, FaEye, FaRegTimesCircle } from 'react-icons/fa'
+import { Link, useNavigate } from 'react-router-dom'
+import { FaArrowCircleLeft, FaCheck, FaEye, FaRegTimesCircle } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { getListOrder, updateOrder } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
 import { formatNumber } from '../../utils/functionHelper'
+import { Button } from '@mui/material'
 
 const OrderComponent = () => {
   const [listOrder, setListOrder] = useState([])
+  const navigate = useNavigate()
+
   useEffect(() => {
     const handleListOrder = async () => {
       const resp = await getListOrder()
@@ -181,6 +184,15 @@ const OrderComponent = () => {
                 }}
               />
             </div>
+          </div>
+          <div className="orderFooter">
+            <Button
+              className="backButton"
+              startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
           </div>
         </div>
       </div>

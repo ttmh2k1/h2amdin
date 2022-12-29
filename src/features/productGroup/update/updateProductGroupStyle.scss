@@ -168,6 +168,10 @@
           border-radius: 0.2rem;
           color: #fff;
           background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
+          }
         }
         .saveButton {
           font-size: 1rem;

@@ -1,0 +1,96 @@
+.systemReport {
+  display: flex;
+  width: 100%;
+
+  .systemReportContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .systemReportBody {
+      margin: 1rem 1.2rem;
+      .title {
+        color: #324d67;
+        margin-bottom: 0.4rem;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .systemStatistic {
+        background-color: #fff;
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+
+        .filter {
+          display: flex;
+          flex-direction: row;
+          margin-top: 0.8rem;
+
+          .form {
+            height: 4rem;
+            display: flex;
+            flex-direction: column;
+            width: 20%;
+            min-width: 15vw;
+            max-width: 100%;
+            margin: 0 1.2rem;
+
+            .title {
+              color: #324d67;
+              font-size: 1rem;
+              margin-bottom: 0.4rem;
+            }
+
+            .select {
+              height: 2rem;
+              border-radius: 0.2rem;
+              font-size: 0.8rem;
+            }
+
+            .filterButton {
+              font-size: 1rem;
+              justify-content: center;
+              text-transform: none;
+              margin-top: 1.8rem;
+              border-radius: 0.2rem;
+              height: 2rem;
+              width: 4rem;
+              color: #324d67;
+              background-color: #bcccdc;
+              border: 0.04rem solid #48647f;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #829ab0;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      .systemReportFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
+          }
+        }
+      }
+    }
+  }
+}

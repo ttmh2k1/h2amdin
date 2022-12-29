@@ -1,25 +1,25 @@
-import './productGroupStyle.scss'
+import './customerGroupStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { useEffect, useState } from 'react'
-import { getListProductGroup } from '../../apis/productGroupApi'
 import { DataGrid } from '@mui/x-data-grid'
-import styled from 'styled-components'
+import { FaArrowCircleLeft, FaEye, FaPen } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
+import { getListCustomerGroup } from '../../apis/customerGroupApi'
+import styled from 'styled-components'
 import { Button } from '@mui/material'
 
-const ProductGroupComponent = () => {
-  const [listProductGroup, setListProductGroup] = useState([])
+const CustomerGroupComponent = () => {
+  const [listCustomerGroup, setListCustomerGroup] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleListProductGroup = async () => {
-      const resp = await getListProductGroup()
+    const handleListCustomerGroup = async () => {
+      const resp = await getListCustomerGroup()
       const list = resp?.data?.data
-      setListProductGroup(list)
+      setListCustomerGroup(list)
     }
-    handleListProductGroup()
+    handleListCustomerGroup()
   }, [])
 
   const header = [
@@ -32,33 +32,33 @@ const ProductGroupComponent = () => {
     },
     {
       field: 'id',
-      headerName: 'Product group ID',
+      headerName: 'Customer group ID',
       width: 300,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'name',
-      headerName: 'Product group name',
-      width: 400,
+      headerName: 'Customer group name',
+      width: 350,
       align: 'left',
       headerAlign: 'center',
     },
     {
-      field: 'status',
-      headerName: 'Status',
-      width: 200,
+      field: 'discountRate',
+      headerName: 'Customer group discount',
+      width: 250,
       align: 'center',
       headerAlign: 'center',
     },
   ]
 
-  const content = listProductGroup.map((item, index) => {
+  const content = listCustomerGroup.map((item, index) => {
     return {
       stt: index + 1,
       id: item?.id,
       name: item?.name,
-      status: item?.hidden ? 'Banned' : 'Active',
+      discountRate: item?.discountRate * 100 + '%',
     }
   })
 
@@ -71,22 +71,16 @@ const ProductGroupComponent = () => {
       renderCell: (props) => {
         return (
           <div className="cellAction">
-            <Link to={`/productGroup/view/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/customerGroup/view/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="viewButton">
                 <FaEye />
               </div>
             </Link>
-            <Link to={`/productGroup/update/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/customerGroup/update/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="updateButton">
                 <FaPen />
               </div>
             </Link>
-            <div className="disableButton">
-              <FaLock />
-            </div>
-            <div className="deleteButton">
-              <FaTrashAlt />
-            </div>
           </div>
         )
       },
@@ -94,13 +88,13 @@ const ProductGroupComponent = () => {
   ]
 
   return (
-    <div className="productGroup">
+    <div className="customerGroup">
       <Sidebar />
-      <div className="productGroupContainer">
+      <div className="customerGroupContainer">
         <Navbar />
-        <div className="productGroupBody">
+        <div className="customerGroupBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/productGroup">Product group</a>
+            <a href="/">Home</a>/ <a href="/customerGroup">Customer group</a>
           </div>
           <div className="template">
             <div className="datatable">
@@ -116,7 +110,7 @@ const ProductGroupComponent = () => {
               />
             </div>
           </div>
-          <div className="productGroupFooter">
+          <div className="customerGroupFooter">
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
@@ -137,4 +131,4 @@ const Tab = styled(DataGrid)({
   },
 })
 
-export default ProductGroupComponent
+export default CustomerGroupComponent

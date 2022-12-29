@@ -5,9 +5,13 @@ import { getLogs } from '../../apis/logsApi'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
+import { Button } from '@mui/material'
+import { FaArrowCircleLeft } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
 
 const LogsComponent = () => {
   const [logs, setLogs] = useState([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleGetLogs = async () => {
@@ -71,7 +75,7 @@ const LogsComponent = () => {
       <Sidebar />
       <div className="logsContainer">
         <Navbar />
-        <div className="body">
+        <div className="logsBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/logs">Logs</a>
           </div>
@@ -88,6 +92,15 @@ const LogsComponent = () => {
                 }}
               />
             </div>
+          </div>
+          <div className="logsFooter">
+            <Button
+              className="backButton"
+              startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
           </div>
         </div>
       </div>

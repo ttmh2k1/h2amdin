@@ -1,12 +1,12 @@
-.order {
+.customer {
   display: flex;
   width: 100%;
 
-  .orderContainer {
+  .customerContainer {
     flex: 6;
     background-color: #eee;
 
-    .body {
+    .customerBody {
       margin: 1rem 1.2rem;
       .title {
         color: #324d67;
@@ -30,7 +30,6 @@
               font-size: 0.8rem !important;
             }
           }
-
           .cellAction {
             display: flex;
             align-items: center;
@@ -46,29 +45,38 @@
               color: #9eb2c7;
               cursor: pointer;
             }
-            .approveButton {
+            .updateButton {
               display: flex;
               align-items: center;
               padding: 0.4rem;
               border-radius: 0.2rem;
-              background-color: #25bb32;
-              color: #fff;
+              border: 0.1rem solid #6ebef7;
+              color: #6ebef7;
               cursor: pointer;
             }
-            .denyButton {
+            .disableButton {
               display: flex;
               align-items: center;
               padding: 0.4rem;
               border-radius: 0.2rem;
-              background-color: #bb2525;
-              color: #fff;
+              border: 0.1rem solid #104e7a;
+              color: #104e7a;
+              cursor: pointer;
+            }
+            .deleteButton {
+              display: flex;
+              align-items: center;
+              padding: 0.4rem;
+              border-radius: 0.2rem;
+              border: 0.1rem solid #bb2525;
+              color: #bb2525;
               cursor: pointer;
             }
           }
         }
       }
 
-      .orderFooter {
+      .customerFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;
