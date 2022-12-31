@@ -52,9 +52,9 @@ const ProductComponent = () => {
 
       await updateStatusProduct(id, transform)
       toast.success('Disable product successful!', style)
-      // setTimeout(() => {
-      //   window.location.reload()
-      // }, 2000)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
     } catch (error) {
       toast.error('Disable product failed!', style)
     }
@@ -70,9 +70,9 @@ const ProductComponent = () => {
 
       await updateStatusProduct(id, transform)
       toast.success('Enable product successful!', style)
-      // setTimeout(() => {
-      //   window.location.reload()
-      // }, 2000)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
     } catch (error) {
       toast.error('Enable product failed!', style)
     }

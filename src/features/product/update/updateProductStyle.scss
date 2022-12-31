@@ -1,12 +1,12 @@
-.createProduct {
+.updateProduct {
   display: flex;
   width: 100%;
 
-  .createProductContainer {
+  .updateProductContainer {
     flex: 6;
     background-color: #eee;
 
-    .createProductBody {
+    .updateProductBody {
       margin: 1rem 1.2rem;
       .title {
         margin-bottom: 0.4rem;
@@ -17,12 +17,12 @@
         }
       }
 
-      .createProductForm {
+      .updateProductForm {
         border-radius: 0.2rem;
         border: 0.08rem solid #48647f;
         background-color: #fff;
 
-        .createProduct {
+        .updateProduct {
           .form {
             display: flex;
             flex-direction: column;
@@ -392,7 +392,7 @@
         }
       }
 
-      .createProductFooter {
+      .updateProductFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -413,7 +413,7 @@
           }
         }
 
-        .createButton {
+        .saveButton {
           font-size: 1rem;
           justify-content: center;
           text-transform: none;
