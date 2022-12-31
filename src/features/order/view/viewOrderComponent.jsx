@@ -44,6 +44,7 @@ const OrderComponent = () => {
     {
       field: 'productName',
       headerName: 'Product name',
+      flex: 1,
       width: 450,
       align: 'left',
       headerAlign: 'center',
@@ -51,6 +52,7 @@ const OrderComponent = () => {
     {
       field: 'variationName',
       headerName: 'Variation',
+      flex: 1,
       width: 100,
       align: 'left',
       headerAlign: 'center',
@@ -62,20 +64,20 @@ const OrderComponent = () => {
       align: 'right',
       headerAlign: 'center',
     },
-    {
-      field: 'discount',
-      headerName: 'Discount',
-      width: 100,
-      align: 'right',
-      headerAlign: 'center',
-    },
-    {
-      field: 'priceAfterDiscount',
-      headerName: 'Price after discount',
-      width: 130,
-      align: 'right',
-      headerAlign: 'center',
-    },
+    // {
+    //   field: 'discount',
+    //   headerName: 'Discount',
+    //   width: 100,
+    //   align: 'right',
+    //   headerAlign: 'center',
+    // },
+    // {
+    //   field: 'priceAfterDiscount',
+    //   headerName: 'Price after discount',
+    //   width: 130,
+    //   align: 'right',
+    //   headerAlign: 'center',
+    // },
     {
       field: 'quantity',
       headerName: 'Quantity',
@@ -91,9 +93,9 @@ const OrderComponent = () => {
       id: item?.variation?.product?.id,
       productName: item?.variation?.product?.name,
       variationName: item?.variation?.name,
-      price: formatNumber(item?.variation?.price),
-      discount: item?.variation?.discount + '%',
-      priceAfterDiscount: formatNumber(item?.variation?.priceAfterDiscount),
+      price: formatNumber(item?.unitPrice),
+      // discount: item?.variation?.discount + '%',
+      // priceAfterDiscount: formatNumber(item?.variation?.priceAfterDiscount),
       quantity: item?.quantity,
     }
   })
