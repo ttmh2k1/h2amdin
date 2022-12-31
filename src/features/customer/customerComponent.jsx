@@ -1,13 +1,14 @@
 import './customerStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getListCustomer } from '../../apis/customerApi'
+import { getListCustomer, updateCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt, FaUnlock } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
+import { toast } from 'react-toastify'
 
 const CustomerComponent = () => {
   const [listCustomer, setListCustomer] = useState([])
@@ -21,6 +22,41 @@ const CustomerComponent = () => {
     }
     handleListCustomer()
   }, [])
+
+  const style = {
+    position: 'bottom-right',
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  }
+
+  const handleDisable = async (id) => {
+    try {
+      await updateCustomer(id, 'BANNED')
+      toast.success('Disable customer successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Disable customer failed!', style)
+    }
+  }
+
+  const handleEnable = async (id) => {
+    try {
+      await updateCustomer(id, 'ACTIVE')
+      toast.success('Enable customer successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Enable customer failed!', style)
+    }
+  }
 
   const header = [
     {
@@ -90,7 +126,8 @@ const CustomerComponent = () => {
       gender: item?.gender,
       email: item?.email,
       phone: item?.phone,
-      status: item?.status,
+      status:
+        item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
     }
   })
 
@@ -113,12 +150,13 @@ const CustomerComponent = () => {
                 <FaPen />
               </div>
             </Link>
-            {/* <div className="disableButton">
-              <FaLock />
+            <div className="disableButton">
+              {props?.row?.status === 'ACTIVE' ? (
+                <FaLock onClick={() => handleDisable(props.id)} />
+              ) : (
+                <FaUnlock onClick={() => handleEnable(props.id)} />
+              )}
             </div>
-            <div className="deleteButton">
-              <FaTrashAlt />
-            </div> */}
           </div>
         )
       },

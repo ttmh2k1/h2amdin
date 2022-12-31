@@ -13,15 +13,15 @@ import ProductGroup from "./pages/productGroup/ProductGroupPage"
 import ViewProductGroup from "./pages/productGroup/view/ViewProductGroupPage"
 import UpdateProductGroup from "./pages/productGroup/update/UpdateProductGroupPage"
 import Product from "./pages/product/ProductPage"
-// import CreateProduct from "./pages/product/create/createProduct"
-// import ViewProduct from "./pages/product/view/viewProduct"
+import CreateProduct from "./pages/product/create/CreateProductPage"
+import ViewProduct from "./pages/product/view/ViewProductPage"
 // import UpdateProduct from "./pages/product/update/updateProduct"
 import CustomerGroup from "./pages/customerGroup/CustomerGroupPage"
-// import ViewCustomerGroup from "./pages/customerGroup/view/viewCustomerGroup"
-// import UpdateCustomerGroup from "./pages/customerGroup/update/updateCustomerGroup"
+import ViewCustomerGroup from "./pages/customerGroup/view/ViewCustomerGroupPage"
+import UpdateCustomerGroup from "./pages/customerGroup/update/UpdateCustomerGroupPage"
 import Customer from "./pages/customer/CustomerPage"
-// import ViewCustomer from "./pages/customer/view/viewCustomer"
-// import UpdateCustomer from "./pages/customer/update/updateCustomer"
+import ViewCustomer from "./pages/customer/view/ViewCustomerPage"
+import UpdateCustomer from "./pages/customer/update/UpdateCustomerPage"
 import Warehouse from "./pages/warehouse/WarehousePage"
 import BusinessReport from "./pages/businessReport/BusinessReportPage"
 import SystemReport from "./pages/systemReport/SystemReportPage"
@@ -66,30 +66,31 @@ function App() {
           </Route>
           <Route path="product">
             <Route index element={<Product />} />
-            {/* <Route path="create" element={<CreateProduct />} />
-              <Route path="view">
-                <Route path=":productId" element={<ViewProduct />} />
-              </Route>
-              <Route path="update">
+            <Route path="create" element={<CreateProduct />} />
+            <Route path="view">
+              <Route path=":productId" element={<ViewProduct />} />
+            </Route>
+            {/* <Route path="update">
                 <Route path=":productId" element={<UpdateProduct />} />
               </Route> */}
-          </Route><Route path="customerGroup">
+          </Route>
+          <Route path="customerGroup">
             <Route index element={<CustomerGroup />} />
-            {/* <Route path="view">
+            <Route path="view">
               <Route path=":customerGroupId" element={<ViewCustomerGroup />} />
             </Route>
             <Route path="update">
               <Route path=":customerGroupId" element={<UpdateCustomerGroup />} />
-            </Route> */}
+            </Route>
           </Route>
           <Route path="customer">
             <Route index element={<Customer />} />
-            {/* <Route path="view">
-            <Route path=":customerId" element={<ViewCustomer />} />
-          </Route>
-          <Route path="update">
-            <Route path=":customerId" element={<UpdateCustomer />} />
-          </Route> */}
+            <Route path="view">
+              <Route path=":customerId" element={<ViewCustomer />} />
+            </Route>
+            <Route path="update">
+              <Route path=":customerId" element={<UpdateCustomer />} />
+            </Route>
           </Route>
           <Route path="warehouse">
             <Route index element={<Warehouse />} />

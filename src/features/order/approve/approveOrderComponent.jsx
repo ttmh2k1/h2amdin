@@ -284,8 +284,8 @@ const OrderComponent = () => {
                         pageSize={5}
                         rowsPerPageOptions={[10]}
                         style={{
-                          backgroundColor: 'white',
-                          fontSize: '1.4rem',
+                          backgroundColor: '#fff',
+                          fontSize: '1rem',
                         }}
                       />
                     )}
@@ -350,7 +350,7 @@ const OrderComponent = () => {
 const Item = styled(TextField)({
   '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled': {
     height: '0.4rem',
-    fontSize: '1.4rem',
+    fontSize: '1rem',
     WebkitTextFillColor: '#717171',
     backgroundColor: '#f0f0f0',
   },
@@ -359,7 +359,7 @@ const Item = styled(TextField)({
 const ItemSelect = styled(Select)({
   '& .MuiSelect-outlined': {
     padding: '0.8rem',
-    fontSize: '1.4rem',
+    fontSize: '1rem',
     display: 'flex',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -368,7 +368,7 @@ const ItemSelect = styled(Select)({
 
 const Tab = styled(DataGrid)({
   '& .css-levciy-MuiTablePagination-displayedRows': {
-    fontSize: '1.4rem',
+    fontSize: '1rem',
   },
 })
 

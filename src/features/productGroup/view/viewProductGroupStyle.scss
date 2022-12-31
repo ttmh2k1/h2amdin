@@ -1,6 +1,7 @@
 .viewProductGroup {
   display: flex;
   width: 100%;
+
   .viewProductGroupContainer {
     flex: 6;
     background-color: #eee;
@@ -28,6 +29,7 @@
             font-weight: bold;
             margin: 0.8rem 0 0 0.8rem;
           }
+
           .form {
             display: flex;
             flex-direction: column;
@@ -45,6 +47,14 @@
               background-color: #f1f5f8;
               border-radius: 0.4rem;
               font-size: 1rem;
+              .MuiInputBase-root {
+                height: 2.4rem;
+                .Mui-disabled {
+                  background-color: #f1f5f8;
+                  height: 0.4rem;
+                  font-size: 1rem;
+                }
+              }
             }
           }
         }
@@ -94,6 +104,14 @@
                 background-color: #f1f5f8;
                 border-radius: 0.4rem;
                 font-size: 1rem;
+                .MuiInputBase-root {
+                  height: 2.4rem;
+                  .Mui-disabled {
+                    background-color: #f1f5f8;
+                    height: 0.4rem;
+                    font-size: 1rem;
+                  }
+                }
               }
             }
           }

@@ -1,0 +1,89 @@
+.updateCustomerGroup {
+  display: flex;
+  width: 100%;
+
+  .updateCustomerGroupContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .updateCustomerGroupBody {
+      margin: 1rem 1.2rem;
+      .title {
+        margin-bottom: 0.4rem;
+        color: #48647f;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .updateCustomerGroupForm {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        background-color: #fff;
+
+        .form {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0.8rem;
+
+          .title {
+            color: #324d67;
+            margin-bottom: 0.2rem;
+          }
+
+          .textField {
+            border-radius: 0.4rem;
+            font-size: 1rem;
+            .MuiInputBase-root {
+              height: 2.4rem;
+              .Mui-disabled {
+                background-color: #f1f5f8;
+                height: 0.4rem;
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
+
+      .updateCustomerGroupFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
+          }
+        }
+        .saveButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #829ab0;
+
+          &:hover {
+            background-color: #243a52;
+          }
+        }
+      }
+    }
+  }
+}

@@ -6,7 +6,7 @@
     flex: 6;
     background-color: #eee;
 
-    .body {
+    .orderBody {
       margin: 1rem 1.2rem;
       .title {
         color: #324d67;
@@ -51,8 +51,8 @@
               align-items: center;
               padding: 0.4rem;
               border-radius: 0.2rem;
-              background-color: #25bb32;
-              color: #fff;
+              border: 0.1rem solid #25bb32;
+              color: #25bb32;
               cursor: pointer;
             }
             .denyButton {
@@ -60,8 +60,8 @@
               align-items: center;
               padding: 0.4rem;
               border-radius: 0.2rem;
-              background-color: #bb2525;
-              color: #fff;
+              border: 0.1rem solid #bb2525;
+              color: #bb2525;
               cursor: pointer;
             }
           }

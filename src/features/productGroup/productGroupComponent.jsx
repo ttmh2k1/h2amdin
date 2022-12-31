@@ -6,7 +6,7 @@ import { getListProductGroup } from '../../apis/productGroupApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaEye, FaPen } from 'react-icons/fa'
 import { Button } from '@mui/material'
 
 const ProductGroupComponent = () => {
@@ -81,12 +81,6 @@ const ProductGroupComponent = () => {
                 <FaPen />
               </div>
             </Link>
-            <div className="disableButton">
-              <FaLock />
-            </div>
-            <div className="deleteButton">
-              <FaTrashAlt />
-            </div>
           </div>
         )
       },
