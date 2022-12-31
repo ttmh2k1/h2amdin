@@ -10,25 +10,50 @@ import { FaArrowCircleLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const LogsComponent = () => {
-  const [logs, setLogs] = useState([])
+  const [data, setData] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1
+  })
+
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleGetLogs = async () => {
-      const resp = await getLogs()
-      const list = resp?.data?.data
-      setLogs(list)
-    }
-    handleGetLogs()
+    getLogs({page : data.page, size: data.pageSize, sortByDateDescending: true}).then(resp => {
+      setData({
+        ...data,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
   }, [])
 
-  const logsHeader = [
+  useEffect(() => {
+    updateData("loading", true);
+    getLogs({page: data.page, size: data.pageSize, sortByDateDescending: true}).then(resp => {
+      setData({
+        ...data,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    });
+  }, [data.page, data.pageSize]);
+
+  const updateData = (k, v) => setData((prev) => ({ ...prev, [k]: v }));
+
+  const header = [
     {
       field: 'stt',
       headerName: 'No',
       width: 100,
       align: 'center',
       headerAlign: 'center',
+      renderCell:(index) => index.api.getRowIndex(index.row.id) + 1
     },
     {
       field: 'id',
@@ -60,15 +85,15 @@ const LogsComponent = () => {
     },
   ]
 
-  const logsContent = logs.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      date: item?.date,
-      logType: item?.logType,
-      content: item?.content,
-    }
-  })
+  // const logsContent = logs.map((item, index) => {
+  //   return {
+  //     stt: index + 1,
+  //     id: item?.id,
+  //     date: item?.date,
+  //     logType: item?.logType,
+  //     content: item?.content,
+  //   }
+  // })
 
   return (
     <div className="logs">
@@ -82,10 +107,22 @@ const LogsComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={logsContent}
-                columns={logsHeader}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                rows={data.rows}
+                columns={header}
+                paginationMode="server"
+                loading={data.loading}
+                rowCount={data.totalRows}
+                page={data.page - 1}
+                pageSize={data.pageSize}
+                rowsPerPageOptions={data.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData("page", page + 1);
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData("page", 1);
+                  updateData("pageSize", pageSize);
+                }}
+                getRowId= {(row) => row.id}
                 style={{
                   backgroundColor: 'white',
                   fontSize: '0.8rem',
