@@ -69,33 +69,6 @@ const ProductComponent = () => {
                     />
                   </div>
                   <div className="form">
-                    <label className="title" for="product parents">
-                      Product group
-                    </label>
-                    <TextField
-                      disabled
-                      className="textField"
-                      id="product"
-                      value={product?.category?.parents[0]?.name}
-                    />
-                  </div>
-
-                  <div className="form">
-                    {' '}
-                    {product?.category?.parents?.map((item) => (
-                      <>
-                        <TextField
-                          disabled
-                          className="textField"
-                          id="productGroup"
-                          style={{ marginTop: '1.6rem' }}
-                          value={item?.name}
-                        />
-                      </>
-                    ))}
-                  </div>
-
-                  <div className="form">
                     <label className="title" for="product type">
                       Product type
                     </label>
@@ -106,6 +79,7 @@ const ProductComponent = () => {
                       value={product?.category?.name}
                     />
                   </div>
+
                   <div className="form">
                     <label className="title" for="status">
                       Status

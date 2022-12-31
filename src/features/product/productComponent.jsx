@@ -44,7 +44,13 @@ const ProductComponent = () => {
 
   const handleDisable = async (id) => {
     try {
-      await updateStatusProduct(id, true)
+      var transform = new FormData()
+      const blob = new Blob(['{"isHidden": true}'], {
+        type: 'application/json',
+      })
+      transform.append('info', blob)
+
+      await updateStatusProduct(id, transform)
       toast.success('Disable product successful!', style)
       // setTimeout(() => {
       //   window.location.reload()
@@ -56,7 +62,13 @@ const ProductComponent = () => {
 
   const handleEnable = async (id) => {
     try {
-      await updateStatusProduct(id, false)
+      var transform = new FormData()
+      const blob = new Blob(['{"isHidden": false}'], {
+        type: 'application/json',
+      })
+      transform.append('info', blob)
+
+      await updateStatusProduct(id, transform)
       toast.success('Enable product successful!', style)
       // setTimeout(() => {
       //   window.location.reload()

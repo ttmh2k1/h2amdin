@@ -1,20 +1,20 @@
 import './approveOrderStyle.scss'
 import { Button, Grid, MenuItem, Select, TextField } from '@mui/material'
-import ContentBox from '../../../components/ContentBox'
 import Navbar from '../../../components/navbar/Navbar'
 import Sidebar from '../../../components/sidebar/Sidebar'
 import { styled } from '@material-ui/styles'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getOrder, updateOrder } from '../../../apis/orderApi'
 import { DataGrid } from '@mui/x-data-grid'
-import { FaSave } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaSave } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { Divider, Typography } from 'antd'
 import { formatNumber } from '../../../utils/functionHelper'
 
 const OrderComponent = () => {
-  const [order, setOrder] = useState()
+  const [order, setOrder] = useState({ status: '' })
+  console.log('🚀 ~ file: approveOrderComponent.jsx:17 ~ OrderComponent ~ order', order)
   const params = useParams()
   const orderId = params.orderId
   const navigate = useNavigate()
@@ -38,7 +38,7 @@ const OrderComponent = () => {
     },
     {
       field: 'id',
-      headerName: 'Attribute ID',
+      headerName: 'Product ID',
       width: 100,
       align: 'center',
       headerAlign: 'center',
@@ -46,14 +46,14 @@ const OrderComponent = () => {
     {
       field: 'productName',
       headerName: 'Product name',
-      width: 400,
+      width: 450,
       align: 'left',
       headerAlign: 'center',
     },
     {
       field: 'variationName',
-      headerName: 'Attribute',
-      width: 150,
+      headerName: 'Variation',
+      width: 100,
       align: 'left',
       headerAlign: 'center',
     },
@@ -68,12 +68,12 @@ const OrderComponent = () => {
       field: 'discount',
       headerName: 'Discount',
       width: 100,
-      align: 'center',
+      align: 'right',
       headerAlign: 'center',
     },
     {
-      field: 'unitPrice',
-      headerName: 'Promotion price',
+      field: 'priceAfterDiscount',
+      headerName: 'Price after discount',
       width: 130,
       align: 'right',
       headerAlign: 'center',
@@ -90,12 +90,12 @@ const OrderComponent = () => {
   const content = order?.orderDetails?.map((item, index) => {
     return {
       stt: index + 1,
-      id: item?.productVariation?.id,
-      productName: item?.productVariation?.product?.name,
-      variationName: item?.productVariation?.variationName,
-      price: formatNumber(item?.productVariation?.price),
-      discount: item?.productVariation?.discount + '%',
-      unitPrice: formatNumber(item?.unitPrice),
+      id: item?.variation?.product?.id,
+      productName: item?.variation?.product?.name,
+      variationName: item?.variation?.name,
+      price: formatNumber(item?.variation?.price),
+      discount: item?.variation?.discount + '%',
+      priceAfterDiscount: formatNumber(item?.variation?.priceAfterDiscount),
       quantity: item?.quantity,
     }
   })
@@ -124,34 +124,41 @@ const OrderComponent = () => {
     }
   }
   return (
-    <div className="approve">
+    <div className="approveOrder">
       <Sidebar />
-      <div className="approveContainer">
+      <div className="approveOrderContainer">
         <Navbar />
-        <div className="body">
-          <ContentBox.Container className="approveForm">
-            <ContentBox.Title title="Approve order" />
-            <ContentBox.Body>
-              <div style={{ width: '100%', padding: '0.4rem' }}>
+        <div className="approveOrderBody">
+          <div className="title">
+            <a href="/">Home</a>/ <a href="/order">Order</a>/ <a href=" ">Order detail</a>
+          </div>
+          <div className="approveOrderForm">
+            <div style={{ width: '100%', padding: '0.4rem' }}>
+              <div className="customer">
                 <label className="header">Customer information</label>
                 <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
                   <div className="form">
                     <label className="title" for="orderCode">
                       Order ID
                     </label>
-                    <Item disabled className="textField" id="orderCode" value={order?.id} />
+                    <TextField disabled className="textField" id="orderCode" value={order?.id} />
                   </div>
                   <div className="form">
                     <label className="title" for="customerId">
                       Customer ID
                     </label>
-                    <Item disabled className="textField" id="customerId" value={order?.buyer?.id} />
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="customerId"
+                      value={order?.buyer?.id}
+                    />
                   </div>
                   <div className="form">
                     <label className="title" for="customerName">
                       Customer name
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="customerName"
@@ -162,7 +169,7 @@ const OrderComponent = () => {
                     <label className="title" for="phone">
                       Customer phone
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="customerName"
@@ -173,7 +180,7 @@ const OrderComponent = () => {
                     <label className="title" for="customerGroup">
                       Customer group
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="customerGroup"
@@ -184,13 +191,18 @@ const OrderComponent = () => {
                     <label className="title" for="email">
                       Email
                     </label>
-                    <Item disabled className="textField" id="email" value={order?.buyer?.email} />
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="email"
+                      value={order?.buyer?.email}
+                    />
                   </div>
                   <div className="form">
                     <label className="title" for="receiverName">
                       Receiver name
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="receiverName"
@@ -201,7 +213,7 @@ const OrderComponent = () => {
                     <label className="title" for="receiverPhone">
                       Receiver phone
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="receiverPhone"
@@ -210,9 +222,9 @@ const OrderComponent = () => {
                   </div>
                   <div className="form">
                     <label className="title" for="address">
-                      Address
+                      Address detail
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="address"
@@ -220,37 +232,48 @@ const OrderComponent = () => {
                     />
                   </div>
                   <div className="form">
-                    <Item
+                    <label className="title" for="address">
+                      Ward
+                    </label>
+                    <TextField
                       disabled
-                      className="address"
+                      className="textField"
                       id="address"
                       value={order?.deliveryAddress?.addressWard?.name}
                     />
                   </div>
                   <div className="form">
-                    <Item
+                    <label className="title" for="address">
+                      District
+                    </label>
+                    <TextField
                       disabled
-                      className="address"
+                      className="textField"
                       id="address"
                       value={order?.deliveryAddress?.addressWard?.district?.name}
                     />
                   </div>
                   <div className="form">
-                    <Item
+                    <label className="title" for="address">
+                      Province
+                    </label>
+                    <TextField
                       disabled
-                      className="address"
+                      className="textField"
                       id="address"
                       value={order?.deliveryAddress?.addressWard?.district?.provinceCity?.name}
                     />
                   </div>
                 </Grid>
+              </div>
+              <div className="product">
                 <label className="header">Product information</label>
                 <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
                   <div className="form">
                     <label className="title" for="paymentMethod">
                       Payment method
                     </label>
-                    <Item
+                    <TextField
                       disabled
                       className="textField"
                       id="paymentMethod"
@@ -261,9 +284,10 @@ const OrderComponent = () => {
                     <label className="title" for="status">
                       Status
                     </label>
-                    <ItemSelect
+                    <Select
                       className="select"
                       id="status"
+                      defaultValue={order?.status}
                       value={order?.status}
                       onChange={(e) => setOrder((state) => ({ ...state, status: e.target.value }))}
                     >
@@ -272,9 +296,11 @@ const OrderComponent = () => {
                           {item?.name}
                         </MenuItem>
                       ))}
-                    </ItemSelect>
+                    </Select>
                   </div>
                 </Grid>
+              </div>
+              <div className="detail">
                 <div className="template">
                   <div className="datatable">
                     {content && (
@@ -285,7 +311,7 @@ const OrderComponent = () => {
                         rowsPerPageOptions={[10]}
                         style={{
                           backgroundColor: '#fff',
-                          fontSize: '1rem',
+                          fontSize: '0.8rem',
                         }}
                       />
                     )}
@@ -300,15 +326,9 @@ const OrderComponent = () => {
                 >
                   <Typography>
                     {'Price: '}
-                    {formatNumber(
-                      order?.orderDetails
-                        ?.map((item) => {
-                          return item?.unitPrice * item?.quantity
-                        })
-                        .reduce((acc, item) => acc + item, 0),
-                    )}
+                    {formatNumber(order?.price)}
                   </Typography>
-                  <Typography>
+                  {/* <Typography>
                     {'Customer discount: - '}
                     {formatNumber(
                       order?.buyer?.rank?.discountRate *
@@ -318,8 +338,11 @@ const OrderComponent = () => {
                           })
                           .reduce((acc, item) => acc + item, 0),
                     )}
+                  </Typography> */}
+                  <Typography>
+                    {'Ship: '}
+                    {formatNumber(order?.shipPrice)}
                   </Typography>
-                  <Typography>{'Ship: 30,000'}</Typography>
                   <Divider style={{ width: '100%' }} />
                   <div style={{ display: 'flex' }}>
                     <Typography
@@ -327,48 +350,35 @@ const OrderComponent = () => {
                         fontWeight: 'bolder',
                       }}
                     >
-                      {'Total amount order: '}
-                      {formatNumber(order?.payPrice)}
+                      {'Total price: '}
+                      {formatNumber(order?.totalPrice)}
                     </Typography>
                   </div>
                 </Grid>
               </div>
-            </ContentBox.Body>
-            <ContentBox.Footer isGoBack>
-              <Button className="saveButton" startIcon={<FaSave />} onClick={(e) => handleSave()}>
-                Save
-              </Button>
-              <Link to="/order" style={{ textDecoration: 'none' }} />
-            </ContentBox.Footer>
-          </ContentBox.Container>
+            </div>
+          </div>
+          <div className="approveOrderFooter">
+            <Button className="saveButton" startIcon={<FaSave />} onClick={(e) => handleSave()}>
+              Save
+            </Button>
+            <Button
+              startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
+              className="backButton"
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   )
 }
 
-const Item = styled(TextField)({
-  '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled': {
-    height: '0.4rem',
-    fontSize: '1rem',
-    WebkitTextFillColor: '#717171',
-    backgroundColor: '#f0f0f0',
-  },
-})
-
-const ItemSelect = styled(Select)({
-  '& .MuiSelect-outlined': {
-    padding: '0.8rem',
-    fontSize: '1rem',
-    display: 'flex',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-})
-
 const Tab = styled(DataGrid)({
   '& .css-levciy-MuiTablePagination-displayedRows': {
-    fontSize: '1rem',
+    fontSize: '0.8rem',
   },
 })
 

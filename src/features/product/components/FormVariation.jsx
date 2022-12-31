@@ -41,7 +41,7 @@ const FormProduct = ({ variation, setVariation, onChangeVariation, options }) =>
           <AccordionDetails>
             <Typography>
               <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
-                <div className="group">
+                <div className="group" style={{ width: '100%' }}>
                   <div className="level">
                     <Grid container>
                       <Grid item xs={6}>

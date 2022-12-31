@@ -28,7 +28,7 @@ const CustomerComponent = () => {
         <Navbar />
         <div className="viewCustomerBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/customer">Customer</a>/ <a href=" ">Product detail</a>
+            <a href="/">Home</a>/ <a href="/customer">Customer</a>/ <a href=" ">Customer detail</a>
           </div>
           <div className="viewCustomerForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
