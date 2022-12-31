@@ -6,7 +6,7 @@ const Select = ({ id, name, children, onChange }) => {
     const [onHover, setOnHover] = React.useState(false);
     return (
         <Box sx={{ position: 'relative' }} onMouseOver={() => setShow(true)} onMouseLeave={() => setShow(false)}>
-            <Button sx={{ minWidth: '100px' }} onClick={() => onChange({ name, id })}>
+            <Button sx={{ minWidth: '10vw' }} onClick={() => onChange({ name, id })}>
                 {name}
             </Button>
             {(show || onHover) && <Paper sx={{ position: "absolute", left: '100%', top: '0' }} elevation={4}>
@@ -20,7 +20,7 @@ const Select = ({ id, name, children, onChange }) => {
     )
 }
 
-export default function MultiLEvelSelect({ options, value, onChange }) {
+export default function MultiLEvelSelect({ defaultValue, options, value, onChange }) {
     const [show, setShow] = React.useState(false)
     const [onHover, setOnHover] = React.useState(false);
     const handleChange = (e) => {
@@ -29,7 +29,7 @@ export default function MultiLEvelSelect({ options, value, onChange }) {
         setOnHover(false)
     }
     return (
-        <Box sx={{ position: 'relative', width: '100%', border: '1px solid #48647f', borderRadius: '0.2rem' }} >
+        <Box sx={{ position: 'relative', width: '100%', border: '0.08rem solid #000000de', borderRadius: '0.2rem' }} >
             <Button onClick={() => setShow(true)} onMouseLeave={() => setShow(false)}>{value.name || 'select'}</Button>
             {(show || onHover) && <Paper sx={{ position: "absolute", left: '0', top: '100%', zIndex: 5 }} elevation={4}
             >
@@ -38,7 +38,7 @@ export default function MultiLEvelSelect({ options, value, onChange }) {
                         <Select key={index} id={item.id} name={item.name} children={item.children} onChange={handleChange} />
                     ))}
                 </Box>
-            </Paper>}
+            </Paper>}{defaultValue}
         </Box>
     )
 }

@@ -1,14 +1,14 @@
-import './createProductStyle.scss'
+import './updateProductStyle.scss'
 import { useEffect, useState } from 'react'
 import Navbar from '../../../components/navbar/Navbar'
 import Sidebar from '../../../components/sidebar/Sidebar'
-import { ProductDetail } from './detail'
-import { ProductOption } from './option'
-import { ProductVariation } from './variation'
-import { FaArrowCircleLeft, FaPlusSquare, FaRegTimesCircle, FaUpload } from 'react-icons/fa'
+import { ProductDetail } from '../create/detail'
+import { ProductOption } from '../create/option'
+import { ProductVariation } from '../create/variation'
+import { FaArrowCircleLeft, FaRegTimesCircle, FaSave, FaUpload } from 'react-icons/fa'
 import { Button } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
-import { createProduct } from '../../../apis/productApi'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getProduct, updateProduct } from '../../../apis/productApi'
 import { toast } from 'react-toastify'
 
 const defaultProduct = {
@@ -27,12 +27,22 @@ const defaultProduct = {
   ],
 }
 
-export const CreateProduct = () => {
+const ProductComponent = () => {
   const [product, setProduct] = useState(defaultProduct)
+  const { productId } = useParams()
   const [avatar, setAvatar] = useState()
   const [images, setImages] = useState([])
   const [imageList, setImageList] = useState([])
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleGetProduct = async () => {
+      const resp = await getProduct(productId)
+      const data = resp?.data?.data
+      setProduct(data)
+    }
+    handleGetProduct()
+  }, [productId])
 
   const style = {
     position: 'bottom-right',
@@ -82,27 +92,27 @@ export const CreateProduct = () => {
       transform.append('images', imageList[i])
     }
     try {
-      await createProduct(transform)
-      toast.success('Create product successful!', style)
+      await updateProduct(transform)
+      toast.success('Update product successful!', style)
       setTimeout(() => {
         navigate('/product')
       }, 2000)
     } catch (error) {
-      toast.error('Create product failed!', style)
+      toast.error('Update product failed!', style)
     }
   }
 
   return (
     <>
-      <div className="createProduct">
+      <div className="updateProduct">
         <Sidebar />
-        <div className="createProductContainer">
+        <div className="updateProductContainer">
           <Navbar />
-          <div className="createProductBody">
+          <div className="updateProductBody">
             <div className="title">
-              <a href="/">Home</a>/ <a href="/product">Product</a>/ <a href=" ">Create product</a>
+              <a href="/">Home</a>/ <a href="/product">Product</a>/ <a href=" ">Update product</a>
             </div>
-            <div className="createProductForm">
+            <div className="updateProductForm">
               <div style={{ width: '100%', padding: '0.4rem' }}>
                 <ProductDetail product={product} setProduct={setProduct} />
                 <ProductOption product={product} setProduct={setProduct} />
@@ -173,13 +183,9 @@ export const CreateProduct = () => {
                 </div>
               </div>
             </div>
-            <div className="createProductFooter">
-              <Button
-                className="createButton"
-                startIcon={<FaPlusSquare />}
-                onClick={(e) => handleSave()}
-              >
-                Create
+            <div className="updateProductFooter">
+              <Button className="saveButton" startIcon={<FaSave />} onClick={(e) => handleSave()}>
+                Save
               </Button>
               <Button
                 startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
@@ -195,3 +201,5 @@ export const CreateProduct = () => {
     </>
   )
 }
+
+export default ProductComponent

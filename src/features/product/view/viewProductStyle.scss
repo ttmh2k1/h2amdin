@@ -7,7 +7,7 @@
     background-color: #eee;
 
     .viewProductBody {
-      margin: 1rem 1.2rem;
+      margin: 1.2rem;
       .title {
         margin-bottom: 0.4rem;
         color: #48647f;
@@ -22,7 +22,7 @@
         border: 0.08rem solid #48647f;
         background-color: #fff;
 
-        .level0 {
+        .detail {
           .levelHeader {
             display: flex;
             color: #48647f;
@@ -64,7 +64,7 @@
           flex-direction: column;
           min-width: 25vw;
           max-width: 100%;
-          margin: 0 0.8rem;
+          margin: 0 1.2rem;
 
           .descriptionTitle {
             color: #48647f;
@@ -80,13 +80,80 @@
           }
         }
 
+        .groupGroup {
+          margin: 1.2rem;
+          .title {
+            color: #48647f;
+            font-size: 1rem;
+          }
+          .option,
+          .variation {
+            border-radius: 0.2rem;
+            border: 0.08rem solid #48647f;
+            background-color: #fff;
+
+            .groupParent {
+              margin: 0.2rem;
+
+              .MuiAccordionSummary-root {
+                min-height: 2rem;
+              }
+              .headerParent {
+                background-color: #bcccdc;
+                height: 1.6rem;
+                .MuiAccordionSummary-content {
+                  margin: 0;
+                }
+                .titleParent {
+                  color: #48647f;
+                  font-size: 1rem;
+                }
+              }
+              .MuiAccordionDetails-root {
+                padding: 0;
+              }
+
+              .group {
+                margin: 1.2rem;
+
+                .form {
+                  display: flex;
+                  flex-direction: column;
+                  min-width: 15vw;
+                  max-width: 100%;
+                  margin: 1rem;
+
+                  .title {
+                    color: #48647f;
+                    font-size: 1rem;
+                    margin-bottom: 0.4rem;
+                  }
+
+                  .textField {
+                    border-radius: 0.2rem;
+                    font-size: 1rem;
+                    .MuiInputBase-root {
+                      height: 2.4rem;
+                      .Mui-disabled {
+                        background-color: #f1f5f8;
+                        height: 0.4rem;
+                        font-size: 1rem;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
         .avatar {
           display: flex;
           flex-direction: column;
           width: 30%;
           min-width: 25vw;
           max-width: 100%;
-          margin: 1rem;
+          margin: 0 1.2rem;
 
           .titleAvatar {
             color: #48647f;
@@ -106,60 +173,23 @@
         }
 
         .groupParent {
-          margin: 1.2rem 1rem;
+          margin: 2rem 1rem;
           .MuiAccordionSummary-root {
             min-height: 2rem;
           }
-          .headerGroup {
+          .headerParent {
             background-color: #bcccdc;
             height: 1.6rem;
             .MuiAccordionSummary-content {
               margin: 0;
             }
-            .titleGroup {
+            .titleParent {
               color: #48647f;
               font-size: 1rem;
-              font-weight: bold;
             }
           }
           .MuiAccordionDetails-root {
             padding: 0;
-          }
-          .group {
-            margin: 1.2rem 2.4rem;
-            .level {
-              display: flex;
-              flex-direction: row;
-
-              .form {
-                display: flex;
-                flex-direction: column;
-                width: 10%;
-                min-width: 10vw;
-                max-width: 100%;
-                margin: 1.2rem;
-
-                .title {
-                  color: #48647f;
-                  font-size: 1.6rem;
-                  font-weight: bold;
-                  margin-bottom: 0.4rem;
-                }
-
-                .textField {
-                  background-color: #f0f0f0;
-                  border-radius: 0.4rem;
-                  font-size: 1.6rem;
-                }
-
-                .group1 {
-                  margin-top: 2rem;
-                  background-color: #f0f0f0;
-                  border-radius: 0.4rem;
-                  font-size: 1.6rem;
-                }
-              }
-            }
           }
         }
       }

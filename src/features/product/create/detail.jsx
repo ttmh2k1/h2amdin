@@ -1,4 +1,4 @@
-import { Grid, InputLabel, MenuItem, TextareaAutosize, TextField } from '@mui/material'
+import { Grid, MenuItem, TextareaAutosize, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { getListProductParent } from '../../../apis/productApi'
 import MultiLEvelSelect from '../../../components/MultiLevelSelect'
@@ -28,7 +28,9 @@ export const ProductDetail = ({ product, setProduct }) => {
       <div className="createProduct">
         <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
           <div className="form">
-            <InputLabel>Product name</InputLabel>
+            <label className="title" for="name">
+              Product name
+            </label>
             <TextField
               isrequired
               className="textField"
@@ -38,7 +40,9 @@ export const ProductDetail = ({ product, setProduct }) => {
             />
           </div>
           <div className="form">
-            <InputLabel>Product group</InputLabel>
+            <label className="title" for="productParent">
+              Product group
+            </label>
             <MultiLEvelSelect
               className="select"
               id="productParent"
@@ -60,11 +64,15 @@ export const ProductDetail = ({ product, setProduct }) => {
       </div>
 
       <div className="descriptionForm">
-        <InputLabel>Description</InputLabel>
+        <label className="title" for="description">
+          Description
+        </label>
         <TextareaAutosize
           className="description"
           aria-label="maximum height"
           id="description"
+          minRows={3}
+          value={product?.description}
           onChange={(e) => {
             onChange('description', e.target.value)
           }}

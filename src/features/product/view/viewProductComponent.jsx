@@ -43,7 +43,7 @@ const ProductComponent = () => {
           </div>
           <div className="viewProductForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
-              <div className="level0">
+              <div className="detail">
                 <label className="levelHeader">{product?.name}</label>
                 <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
                   <div className="form">
@@ -99,90 +99,44 @@ const ProductComponent = () => {
                 </label>
                 <TextareaAutosize
                   disabled
+                  maxRows={5}
                   className="description"
                   aria-label="maximum height"
                   id="description"
                   value={product?.description}
                 />
               </div>
-              {product?.tierVariations &&
-                product?.tierVariations.map((item) => (
-                  <div>
-                    <Accordion className="groupParent">
-                      <AccordionSummary className="headerGroup">
-                        <Typography className="titleGroup">{item}</Typography>
-                      </AccordionSummary>
-                      <AccordionDetails>
-                        {product?.variations &&
-                          product?.variations?.map((item1) => (
-                            <Accordion className="group">
-                              <AccordionSummary className="headerGroup">
-                                <Typography className="titleGroup">
-                                  {item1?.variationName}
-                                </Typography>
-                              </AccordionSummary>
-                              <AccordionDetails>
-                                <Typography>
-                                  <Grid
-                                    container
-                                    spacing={0}
-                                    alignItems="flex-start"
-                                    alignContent="space-around"
-                                  >
-                                    <div className="level">
+
+              <div className="groupGroup">
+                <label className="title">Option</label>
+                <div className="option">
+                  {product?.options?.map((option, x) => (
+                    <AccordionDetails>
+                      <Accordion className="groupParent">
+                        <AccordionSummary className="headerParent">
+                          <Typography className="titleParent">{option?.optionName}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {option?.optionValues?.map((value, y) => (
+                            <AccordionDetails>
+                              <Accordion className="group">
+                                <AccordionDetails>
+                                  <Typography>
+                                    <Grid
+                                      container
+                                      spacing={0}
+                                      alignItems="flex-start"
+                                      alignContent="space-around"
+                                    >
                                       <div className="form">
-                                        <label className="title" for="variationID">
-                                          Variation ID
+                                        <label className="title" for="value">
+                                          Option value
                                         </label>
                                         <TextField
                                           disabled
                                           className="textField"
-                                          id="variationID"
-                                          value={item1?.id}
-                                        />
-                                      </div>
-                                      <div className="form">
-                                        <label className="title" for="variationName">
-                                          Variation name
-                                        </label>
-                                        <TextField
-                                          disabled
-                                          className="textField"
-                                          id="variationName"
-                                          value={item1?.variationName}
-                                        />
-                                      </div>
-                                      <div className="form">
-                                        <label className="title" for="price">
-                                          Price
-                                        </label>
-                                        <TextField
-                                          disabled
-                                          className="textField"
-                                          id="price"
-                                          value={formatNumber(item1?.price)}
-                                        />
-                                      </div>
-                                      <div className="form">
-                                        <label className="title" for="discount">
-                                          Discount
-                                        </label>
-                                        <TextField
-                                          disabled
-                                          className="textField"
-                                          id="discount"
-                                          value={item1?.discount}
-                                        />
-                                      </div>
-                                      <div className="form">
-                                        <label className="title" for="availableQuantity">
-                                          Available quantity
-                                        </label>
-                                        <TextField
-                                          disabled
-                                          className="textField"
-                                          id="availableQuantity"
-                                          value={item1?.availableQuantity}
+                                          id="value"
+                                          value={value.value}
                                         />
                                       </div>
                                       <div className="form">
@@ -193,66 +147,158 @@ const ProductComponent = () => {
                                           disabled
                                           className="textField"
                                           id="status"
-                                          value={item1?.status}
+                                          value={value.hidden ? 'Banned' : 'Active'}
                                         />
                                       </div>
-                                    </div>
-                                  </Grid>
-                                </Typography>
-                              </AccordionDetails>
-                            </Accordion>
+                                    </Grid>
+                                  </Typography>
+                                </AccordionDetails>
+                              </Accordion>
+                            </AccordionDetails>
                           ))}
-                      </AccordionDetails>
-                    </Accordion>
-                  </div>
-                ))}
-              <div className="avatar">
-                <label className="titleAvatar">Avatar</label>
-                <div className="imageAvatar">
-                  <img src={product?.avatar} height="200rem" style={{ margin: '0.06rem' }} />
+                        </AccordionDetails>
+                      </Accordion>
+                    </AccordionDetails>
+                  ))}
                 </div>
               </div>
-              {product?.images?.length > 0 && (
-                <Accordion className="groupParent">
-                  <AccordionSummary className="headerGroup">
-                    <Typography className="titleGroup">Images</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      <div
+
+              <div className="groupGroup">
+                <label className="title">Variation</label>
+                <div className="variation">
+                  {product?.variations &&
+                    product?.variations?.map((variation, a) => (
+                      <AccordionDetails>
+                        <Accordion className="groupParent">
+                          <AccordionSummary className="headerParent">
+                            <Typography className="titleParent">{variation?.name}</Typography>
+                          </AccordionSummary>
+                          <AccordionDetails>
+                            <AccordionDetails>
+                              <Accordion className="group">
+                                <AccordionDetails>
+                                  <Typography>
+                                    <Grid
+                                      container
+                                      spacing={0}
+                                      alignItems="flex-start"
+                                      alignContent="space-around"
+                                    >
+                                      <div className="form">
+                                        <label className="title" for="name">
+                                          Name
+                                        </label>
+                                        <TextField
+                                          disabled
+                                          className="textField"
+                                          id="name"
+                                          value={formatNumber(variation?.name)}
+                                        />
+                                      </div>
+                                      <div className="form">
+                                        <label className="title" for="price">
+                                          Price
+                                        </label>
+                                        <TextField
+                                          disabled
+                                          className="textField"
+                                          id="price"
+                                          value={formatNumber(variation?.price)}
+                                        />
+                                      </div>
+                                      <div className="form">
+                                        <label className="title" for="discount">
+                                          Discount
+                                        </label>
+                                        <TextField
+                                          disabled
+                                          className="textField"
+                                          id="discount"
+                                          value={formatNumber(variation?.discount)}
+                                        />
+                                      </div>
+                                      <div className="form">
+                                        <label className="title" for="priceAfterDiscount">
+                                          Price after discount
+                                        </label>
+                                        <TextField
+                                          disabled
+                                          className="textField"
+                                          id="priceAfterDiscount"
+                                          value={formatNumber(variation?.priceAfterDiscount)}
+                                        />
+                                      </div>
+                                      <div className="form">
+                                        <label className="title" for="status">
+                                          Status
+                                        </label>
+                                        <TextField
+                                          disabled
+                                          className="textField"
+                                          id="status"
+                                          value={variation?.hidden ? 'Banned' : 'Active'}
+                                        />
+                                      </div>
+                                    </Grid>
+                                  </Typography>
+                                </AccordionDetails>
+                              </Accordion>
+                            </AccordionDetails>
+                          </AccordionDetails>
+                        </Accordion>
+                      </AccordionDetails>
+                    ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="avatar">
+              <label className="titleAvatar">Avatar</label>
+              <div className="imageAvatar">
+                <img src={product?.avatar} height="200rem" style={{ margin: '0.06rem' }} />
+              </div>
+            </div>
+
+            {product?.images?.length > 0 && (
+              <Accordion className="groupParent">
+                <AccordionSummary className="headerParent">
+                  <Typography className="titleParent">Images</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Grid
+                        xs={6}
                         style={{
                           display: 'flex',
                           flexDirection: 'row',
-                          justifyContent: 'center',
+                          flexWrap: 'wrap',
                         }}
                       >
-                        <Grid
-                          xs={6}
-                          style={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            flexWrap: 'wrap',
-                          }}
-                        >
-                          {product?.images?.map((item) => (
-                            <Image
-                              preview={false}
-                              src={item?.url}
-                              style={{
-                                width: '12rem',
-                                height: '12rem',
-                                border: '0.08rem solid #955b36',
-                                margin: '1rem',
-                              }}
-                            />
-                          ))}
-                        </Grid>
-                      </div>
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              )}
-            </div>
+                        {product?.images?.map((item) => (
+                          <Image
+                            preview={false}
+                            src={item?.url}
+                            style={{
+                              width: '12rem',
+                              height: '12rem',
+                              border: '0.08rem solid #48647f',
+                              margin: '1rem',
+                            }}
+                          />
+                        ))}
+                      </Grid>
+                    </div>
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            )}
           </div>
           <div className="viewProductFooter">
             <Button

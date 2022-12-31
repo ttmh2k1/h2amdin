@@ -54,12 +54,12 @@ const FooterComponent = ({ children, isGoBack }) => {
       {children}
       {isGoBack && (
         <Button
-          startIcon={<FaArrowCircleLeft color='#955b36' size={"1.6rem"} />}
+          startIcon={<FaArrowCircleLeft color='#48647f' size={"1.6rem"} />}
           maxWidth="8rem"
           color="white"
           isFooterButton
           onClick={() => navigate(-1)}
-          style={{ color: '#955b36', height: '3.2rem', fontSize: "1.6rem" }}
+          style={{ color: '#48647f', height: '3.2rem', fontSize: "1.6rem" }}
         >
           Back
         </Button>

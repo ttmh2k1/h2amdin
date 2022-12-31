@@ -13,7 +13,7 @@ export const ProductOption = ({ product, setProduct }) => {
       <div className="groupParent">
         <label className="title">Option</label>
         <div className="option">
-          {product.options?.map((option, index) => {
+          {product?.options?.map((option, index) => {
             return (
               <FormOption
                 key={index}

@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         fontSize: '2rem',
-        color: '#955b36',
+        color: '#48647f',
         fontWeight: 'bold'
     },
     titleRight: {

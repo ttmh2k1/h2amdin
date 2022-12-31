@@ -15,7 +15,7 @@ import UpdateProductGroup from "./pages/productGroup/update/UpdateProductGroupPa
 import Product from "./pages/product/ProductPage"
 import CreateProduct from "./pages/product/create/CreateProductPage"
 import ViewProduct from "./pages/product/view/ViewProductPage"
-// import UpdateProduct from "./pages/product/update/updateProduct"
+import UpdateProduct from "./pages/product/update/UpdateProductPage"
 import CustomerGroup from "./pages/customerGroup/CustomerGroupPage"
 import ViewCustomerGroup from "./pages/customerGroup/view/ViewCustomerGroupPage"
 import UpdateCustomerGroup from "./pages/customerGroup/update/UpdateCustomerGroupPage"
@@ -70,9 +70,9 @@ function App() {
             <Route path="view">
               <Route path=":productId" element={<ViewProduct />} />
             </Route>
-            {/* <Route path="update">
-                <Route path=":productId" element={<UpdateProduct />} />
-              </Route> */}
+            <Route path="update">
+              <Route path=":productId" element={<UpdateProduct />} />
+            </Route>
           </Route>
           <Route path="customerGroup">
             <Route index element={<CustomerGroup />} />

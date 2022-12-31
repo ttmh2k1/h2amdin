@@ -39,7 +39,7 @@ export const ProductVariation = ({ product, setProduct }) => {
             }
           >
             <FaPlusSquare style={{ marginRight: '0.08rem' }} />
-            New option
+            New variation
           </button>
         </div>
       </div>
