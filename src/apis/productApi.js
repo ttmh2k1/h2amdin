@@ -37,7 +37,7 @@ export function updateProduct(id, params) {
 }
 
 export function updateStatusProduct(id, params) {
-    return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, { isHidden: params }, {
+    return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
         "Content-Type": "multipart/form-data",
     },);
 }

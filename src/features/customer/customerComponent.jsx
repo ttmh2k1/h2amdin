@@ -151,7 +151,7 @@ const CustomerComponent = () => {
               </div>
             </Link>
             <div className="disableButton">
-              {props?.row?.status === 'ACTIVE' ? (
+              {props?.row?.status === 'Active' ? (
                 <FaLock onClick={() => handleDisable(props.id)} />
               ) : (
                 <FaUnlock onClick={() => handleEnable(props.id)} />
