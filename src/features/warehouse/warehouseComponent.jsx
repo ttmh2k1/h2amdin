@@ -5,22 +5,45 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowCircleLeft, FaEye } from 'react-icons/fa'
 import { getListWarehouse } from '../../apis/warehouseApi'
-import { DataGrid } from '@mui/x-data-grid'
+import { DataGrid, GridPagination } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
 
 const WarehouseComponent = () => {
-  const [warehouse, setWarehouse] = useState([])
+  const [data, setData] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleWarehouse = async () => {
-      const resp = await getListWarehouse()
-      const list = resp?.data?.data
-      setWarehouse(list)
-    }
-    handleWarehouse()
-  })
+    getListWarehouse().then(resp => {
+      setData({
+        ...data,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData("loading", true);
+    getListWarehouse({page: data.page, size: data.pageSize}).then(resp => {
+      setData({
+        ...data,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    });
+  }, [data.page, data.pageSize]);
+
+  const updateData = (k, v) => setData((prev) => ({ ...prev, [k]: v }));
 
   const action = [
     {
@@ -63,6 +86,9 @@ const WarehouseComponent = () => {
       width: 200,
       align: 'center',
       headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.importer.fullname
+      }
     },
     {
       field: 'importQuantity',
@@ -80,15 +106,15 @@ const WarehouseComponent = () => {
     },
   ]
 
-  const content = warehouse.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      importerName: item?.importer?.fullname,
-      importQuantity: item?.importQuantity,
-      importTime: item?.importTime,
-    }
-  })
+  // const content = warehouse.map((item, index) => {
+  //   return {
+  //     stt: index + 1,
+  //     id: item?.id,
+  //     importerName: item?.importer?.fullname,
+  //     importQuantity: item?.importQuantity,
+  //     importTime: item?.importTime,
+  //   }
+  // })
 
   return (
     <div className="warehouse">
@@ -102,10 +128,21 @@ const WarehouseComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
+                rows={data.rows}
                 columns={header}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                paginationMode="server"
+                loading={data.loading}
+                rowCount={data.totalRows}
+                page={data.page - 1}
+                pageSize={data.pageSize}
+                rowsPerPageOptions={data.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData("page", page + 1);
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData("page", 1);
+                  updateData("pageSize", pageSize);
+                }}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

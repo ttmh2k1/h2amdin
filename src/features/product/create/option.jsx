@@ -1,7 +1,7 @@
 import { FaPlusSquare } from 'react-icons/fa'
 import FormOption from '../components/FormOption'
 
-export const ProductOption = ({ product, setProduct }) => {
+export const ProductOption = ({ product, setProduct, isCreate = true }) => {
   const handleOnChange = (index, option) => {
     const newOptions = product.options
     newOptions[index] = option
@@ -14,15 +14,18 @@ export const ProductOption = ({ product, setProduct }) => {
         <label className="title">Option</label>
         <div className="option">
           {product?.options?.map((option, index) => {
+            
             return (
               <FormOption
                 key={index}
                 option={option}
                 onChange={(option) => handleOnChange(index, option)}
+                isCreate={isCreate}
               />
             )
           })}
-          <button
+          {isCreate &&
+            <button
             className="newOption"
             onClick={() =>
               setProduct((prev) => ({
@@ -34,6 +37,8 @@ export const ProductOption = ({ product, setProduct }) => {
             <FaPlusSquare style={{ marginRight: '0.08rem' }} />
             New option
           </button>
+          }
+          
         </div>
       </div>
     </>

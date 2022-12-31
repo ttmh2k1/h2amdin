@@ -15,6 +15,7 @@ function LoginComponent() {
       if (resp?.token) {
         localStorage.setItem('token', resp?.token)
         localStorage.setItem('role', resp?.userInfo?.role?.name)
+        localStorage.setItem('fullname', resp?.userInfo?.fullname)
         navigate('/')
       }
     } catch (e) {

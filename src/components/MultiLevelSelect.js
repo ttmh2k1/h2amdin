@@ -30,7 +30,7 @@ export default function MultiLEvelSelect({ defaultValue, options, value, onChang
     }
     return (
         <Box sx={{ position: 'relative', width: '100%', border: '0.08rem solid #000000de', borderRadius: '0.2rem' }} >
-            <Button onClick={() => setShow(true)} onMouseLeave={() => setShow(false)}>{value.name || 'select'}</Button>
+            <Button onClick={() => setShow(true)} onMouseLeave={() => setShow(false)}>{value?.name || 'select'}</Button>
             {(show || onHover) && <Paper sx={{ position: "absolute", left: '0', top: '100%', zIndex: 5 }} elevation={4}
             >
                 <Box onMouseLeave={() => setOnHover(false)} onMouseOver={() => setOnHover(true)}>

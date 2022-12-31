@@ -10,7 +10,7 @@ import {
 } from '@mui/material'
 import { useEffect } from 'react'
 
-const FormProduct = ({ variation, setVariation, onChangeVariation, options }) => {
+const FormProduct = ({ variation, setVariation, onChangeVariation, options, isCreate = true }) => {
   const handleOptionOnChange = (name, value) => {
     const newOptionValues = variation.optionValues
     const index = newOptionValues.findIndex((e) => e.option === name)
@@ -27,7 +27,7 @@ const FormProduct = ({ variation, setVariation, onChangeVariation, options }) =>
   }
 
   useEffect(() => {
-    onChangeForm('priceAfterDiscount', Number(variation.discount) * Number(variation.price))
+    onChangeForm('priceAfterDiscount', (1 - Number(variation.discount) / 100.0) * Number(variation.price))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variation.price, variation.discount])
 
@@ -48,23 +48,50 @@ const FormProduct = ({ variation, setVariation, onChangeVariation, options }) =>
                         {options?.map((option) => (
                           <div className="form">
                             <label className="title" for="option">
-                              {option.name || 'Option'}
+                              {isCreate ? (option.name || 'Option') : (option.optionName || 'Option')}
                             </label>
                             <Select
                               className="select"
                               id="option"
                               value={
-                                variation.optionValues?.find(
-                                  (_option) => _option.option === option.name,
-                                )?.optionValue
+                                !isCreate ?
+                                  option.optionValues && 
+                                  (function () {
+                                    for (let optionValue of option.optionValues) {
+                                      if (variation.name?.includes(optionValue.value)) {
+                                        return optionValue.value;
+                                      }
+                                    }
+                                  })()
+                                :
+                                undefined
                               }
-                              onChange={(e) => handleOptionOnChange(option.name, e.target.value)}
+
+                              readOnly={!isCreate && variation.name}
+                              onChange={ isCreate ?
+                                  (e) => handleOptionOnChange(option.name, e.target.value)
+                                :
+                                  (e) => handleOptionOnChange(option.optionName, e.target.value)
+                              }
                             >
-                              {option.values?.map((value) => (
-                                <MenuItem value={value} key={value}>
-                                  {value}
+                              { isCreate ?
+                                option?.values?.map((optionValue) => (
+                                  <MenuItem value={optionValue} key={optionValue}>
+                                    {optionValue}
+                                  </MenuItem>
+                                ))
+                              :
+                                option?.optionValues?.map((optionValue) => (
+                                  <MenuItem value={optionValue.value} key={optionValue.id}>
+                                    {optionValue.value}
+                                  </MenuItem>
+                                ))
+                              }
+                              {/* {option?.optionValues?.map((optionValue) => (
+                                <MenuItem value={optionValue.value} key={optionValue.id}>
+                                  {optionValue.value}
                                 </MenuItem>
-                              ))}
+                              ))} */}
                             </Select>
                           </div>
                         ))}

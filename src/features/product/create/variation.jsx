@@ -1,7 +1,7 @@
 import { FaPlusSquare } from 'react-icons/fa'
 import FormVariation from '../components/FormVariation'
 
-export const ProductVariation = ({ product, setProduct }) => {
+export const ProductVariation = ({ product, setProduct, isCreate = true }) => {
   const handleChangeVariation = (index, variation) => {
     const newVariations = product.variations
     newVariations[index] = variation
@@ -18,6 +18,7 @@ export const ProductVariation = ({ product, setProduct }) => {
               variation={variation}
               options={product.options}
               onChangeVariation={(e) => handleChangeVariation(index, e)}
+              isCreate={isCreate}
             />
           ))}
           <button

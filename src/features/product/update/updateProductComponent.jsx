@@ -2,33 +2,18 @@ import './updateProductStyle.scss'
 import { useEffect, useState } from 'react'
 import Navbar from '../../../components/navbar/Navbar'
 import Sidebar from '../../../components/sidebar/Sidebar'
-import { ProductDetail } from '../create/detail'
+import { ProductDetail } from '../update/detail'
 import { ProductOption } from '../create/option'
 import { ProductVariation } from '../create/variation'
 import { FaArrowCircleLeft, FaRegTimesCircle, FaSave, FaUpload } from 'react-icons/fa'
 import { Button } from '@mui/material'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getProduct, updateProduct } from '../../../apis/productApi'
+import { createProductImage, createProductVariation, getProduct, updateProduct, updateProductOptionValue, updateProductVariation } from '../../../apis/productApi'
 import { toast } from 'react-toastify'
 
-const defaultProduct = {
-  name: '',
-  description: '',
-  idCategory: '',
-  options: [],
-  variations: [
-    {
-      optionValues: [],
-      price: 0,
-      priceAfterDiscount: 0,
-      discount: 0,
-      quantity: 0,
-    },
-  ],
-}
-
 const ProductComponent = () => {
-  const [product, setProduct] = useState(defaultProduct)
+  const [product, setProduct] = useState()
+  const [orgProduct, setOrgProduct] = useState()
   const { productId } = useParams()
   const [avatar, setAvatar] = useState()
   const [images, setImages] = useState([])
@@ -40,6 +25,7 @@ const ProductComponent = () => {
       const resp = await getProduct(productId)
       const data = resp?.data?.data
       setProduct(data)
+      setOrgProduct(structuredClone(data))
     }
     handleGetProduct()
   }, [productId])
@@ -79,20 +65,108 @@ const ProductComponent = () => {
     })
   }
 
+  const getChangedProductOptionValue = (orgOptionValue, editedOptionValue) => {
+    const changed = {}
+    if (orgOptionValue["value"] !== editedOptionValue["value"]) {
+      changed["value"] = editedOptionValue["value"]
+    }
+    return changed
+  }
+
+  const getChangedProductVariation = (orgVariation, editedVariation) => {
+    const changed = {}
+    if (orgVariation["price"] !== editedVariation["price"]) {
+      changed["price"] = editedVariation["price"]
+    }
+    if (orgVariation["discount"] !== editedVariation["discount"]) {
+      changed["discount"] = editedVariation["discount"]
+    }
+    return changed
+  }
+
+  const getChangedProductInfo = (org, edited) => {
+    const changed = {}
+    if (org["name"] !== edited["name"]) {
+      changed["name"] = edited["name"]
+    }
+    if (org["description"] !== edited["description"]) {
+      changed["description"] = edited["description"]
+    }
+    if (org["category"]["id"] !== edited["category"]["id"]) {
+      changed["idCategory"] = edited["category"]["id"]
+    }
+    return changed
+  }
+
+  const handleUpdateProductOptionValue = async () => {
+    
+    for (let i = 0; i < orgProduct.options.length; i++) {
+      for (let j = 0; j < orgProduct.options[i].optionValues.length; j++) {
+        let changed = getChangedProductOptionValue(orgProduct.options[i].optionValues[j], product.options[i].optionValues[j])
+        if (Object.keys(changed).length > 0) {
+          try {
+            
+            await updateProductOptionValue(product.id, product.options[i].optionValues[j].id, changed)
+          } catch (error) {
+            toast.error('Update product option value failed!', style)
+          }
+        }
+      }
+    }
+  }
+
+  const handleUpdateProductVariation = async () => {
+    
+    for (let i = 0; i < orgProduct.variations.length; i++) {
+      let changed = getChangedProductVariation(orgProduct.variations[i], product.variations[i])
+      if (Object.keys(changed).length > 0) {
+        try {
+          await updateProductVariation(product.id, orgProduct.variations[i].id, changed)
+        } catch (error) {
+          toast.error('Update product variation failed!', style)
+        }
+      }
+    }
+
+    var newData = {"variations": []}
+    for (let i = 0; i < product.variations.length; i++) {
+      
+      if (!("id" in product.variations[i])) {
+        newData["variations"].push(product.variations[i])
+      }
+    }
+
+    if (newData["variations"].length === 0) return
+
+    try {
+      await createProductVariation(product.id, newData)
+    } catch (error) {
+      toast.error('Create product variation failed!', style)
+    }
+
+  }
+
   const handleSave = async () => {
-    const avatar = document.getElementById('avatar').files
+    await handleUpdateProductOptionValue()
+    await handleUpdateProductVariation()
+    
     var transform = new FormData()
-    const json = JSON.stringify(product)
-    const blob = new Blob([json], {
+    var transform1 = new FormData()
+    const blob = new Blob([JSON.stringify(getChangedProductInfo(orgProduct, product))], {
       type: 'application/json',
     })
     transform.append('info', blob)
-    transform.append('avatar', avatar[0])
+    const avatar = document.getElementById('avatar').files
+    if (avatar.length > 0)
+      transform.append('avatar', avatar[0])
     for (let i = 0; i < imageList.length; i++) {
-      transform.append('images', imageList[i])
+      transform1.append('images', imageList[i])
     }
     try {
-      await updateProduct(transform)
+      await updateProduct(product.id, transform)
+      if (imageList.length > 0) {
+        await createProductImage(product.id, transform1)
+      }
       toast.success('Update product successful!', style)
       setTimeout(() => {
         navigate('/product')
@@ -115,8 +189,8 @@ const ProductComponent = () => {
             <div className="updateProductForm">
               <div style={{ width: '100%', padding: '0.4rem' }}>
                 <ProductDetail product={product} setProduct={setProduct} />
-                <ProductOption product={product} setProduct={setProduct} />
-                <ProductVariation product={product} setProduct={setProduct} />
+                <ProductOption product={product} setProduct={setProduct} isCreate={false} />
+                <ProductVariation product={product} setProduct={setProduct} isCreate={false} />
                 <div className="avatar">
                   <label className="titleAvatar">Avatar</label>
                   <label className="avatarButton">
