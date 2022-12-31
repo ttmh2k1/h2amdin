@@ -2,12 +2,21 @@ import './productStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { DataGrid } from '@mui/x-data-grid'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaPlusCircle, FaTrashAlt } from 'react-icons/fa'
+import {
+  FaArrowCircleLeft,
+  FaEye,
+  FaLock,
+  FaPen,
+  FaPlusCircle,
+  FaTrashAlt,
+  FaUnlock,
+} from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { getListProduct } from '../../apis/productApi'
+import { deleteProduct, getListProduct, updateStatusProduct } from '../../apis/productApi'
 import { Button } from '@mui/material'
+import { toast } from 'react-toastify'
 
 const ProductComponent = () => {
   const [listProduct, setListProduct] = useState([])
@@ -21,6 +30,53 @@ const ProductComponent = () => {
     }
     handleListProduct()
   }, [])
+
+  const style = {
+    position: 'bottom-right',
+    autoClose: 1000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  }
+
+  const handleDisable = async (id) => {
+    try {
+      await updateStatusProduct(id, true)
+      toast.success('Disable product successful!', style)
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 2000)
+    } catch (error) {
+      toast.error('Disable product failed!', style)
+    }
+  }
+
+  const handleEnable = async (id) => {
+    try {
+      await updateStatusProduct(id, false)
+      toast.success('Enable product successful!', style)
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 2000)
+    } catch (error) {
+      toast.error('Enable product failed!', style)
+    }
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteProduct(id)
+      toast.success('Delete product successfull!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Delete product failed!', style)
+    }
+  }
 
   const header = [
     {
@@ -52,7 +108,7 @@ const ProductComponent = () => {
       headerAlign: 'center',
     },
     {
-      field: 'status',
+      field: 'hidden',
       headerName: 'Status',
       width: 80,
       align: 'center',
@@ -66,7 +122,7 @@ const ProductComponent = () => {
       id: item?.id,
       name: item?.name,
       groupName: item?.category.name,
-      status: item?.hidden ? 'Banned' : 'Active',
+      hidden: item?.hidden ? 'Banned' : 'Active',
     }
   })
 
@@ -90,10 +146,14 @@ const ProductComponent = () => {
               </div>
             </Link>
             <div className="disableButton">
-              <FaLock />
+              {props?.row?.hidden === 'Active' ? (
+                <FaLock onClick={() => handleDisable(props.id)} />
+              ) : (
+                <FaUnlock onClick={() => handleEnable(props.id)} />
+              )}
             </div>
             <div className="deleteButton">
-              <FaTrashAlt />
+              <FaTrashAlt onClick={() => handleDelete(props.id)} />
             </div>
           </div>
         )

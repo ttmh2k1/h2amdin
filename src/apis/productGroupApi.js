@@ -1,4 +1,3 @@
-import { combineQueriesUrl } from '../utils/functionHelper';
 import api, { SERVICE } from './api';
 
 /**

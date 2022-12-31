@@ -13,11 +13,11 @@ export function getListProduct(req) {
 
 export function getListProductParent(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/product-category${queries}`);
+    return api.GET(`${SERVICE}/api/admin/product/category${queries}`);
 }
 
 export function getListCategory(id) {
-    return api.GET(`${SERVICE}/api/admin/product-category/${id}`);
+    return api.GET(`${SERVICE}/api/admin/product/category/${id}`);
 }
 
 export function getProduct(id) {
@@ -34,4 +34,14 @@ export function updateProduct(id, params) {
     return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
         "Content-Type": "multipart/form-data",
     },);
+}
+
+export function updateStatusProduct(id, params) {
+    return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, { isHidden: params }, {
+        "Content-Type": "multipart/form-data",
+    },);
+}
+
+export function deleteProduct(id) {
+    return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}`)
 }

@@ -84,7 +84,7 @@ const OrderComponent = () => {
       headerAlign: 'center',
     },
     {
-      field: 'payPrice',
+      field: 'totalPrice',
       headerName: 'Price',
       width: 100,
       align: 'right',
@@ -111,9 +111,9 @@ const OrderComponent = () => {
       stt: index + 1,
       id: item?.id,
       customerID: item?.buyer?.id,
-      customerName: item?.buyer?.fullname,
+      customerName: item?.buyer?.username,
       customerGroup: item?.buyer?.rank?.name,
-      payPrice: formatNumber(item?.payPrice),
+      totalPrice: formatNumber(item?.totalPrice),
       createTime: item?.createTime,
       status: item?.status,
     }
@@ -167,7 +167,7 @@ const OrderComponent = () => {
       <Sidebar />
       <div className="orderContainer">
         <Navbar />
-        <div className="body">
+        <div className="orderBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/order">Order</a>
           </div>

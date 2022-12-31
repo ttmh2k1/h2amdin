@@ -1,0 +1,433 @@
+.createProduct {
+  display: flex;
+  width: 100%;
+
+  .createProductContainer {
+    flex: 6;
+    background-color: #eee;
+
+    .createProductBody {
+      margin: 1rem 1.2rem;
+      .title {
+        margin-bottom: 0.4rem;
+        color: #48647f;
+        a {
+          color: #48647f;
+          text-decoration: none;
+        }
+      }
+
+      .createProductForm {
+        border-radius: 0.2rem;
+        border: 0.08rem solid #48647f;
+        background-color: #fff;
+
+        .createProduct {
+          .form {
+            display: flex;
+            flex-direction: column;
+            width: 30%;
+            min-width: 25vw;
+            max-width: 100%;
+            margin: 0.8rem;
+
+            .title {
+              color: #324d67;
+              margin-bottom: 0.2rem;
+            }
+
+            .textField {
+              border-radius: 0.2rem;
+              font-size: 1rem;
+              .MuiInputBase-root {
+                height: 2.4rem;
+                .Mui-disabled {
+                  background-color: #f1f5f8;
+                  height: 0.4rem;
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .select {
+              border-radius: 0.2rem;
+              font-size: 1rem;
+              .MuiSelect-select {
+                height: 2.4rem !important;
+                padding: 0 0.8rem;
+                font-size: 1rem;
+                display: flex;
+                align-items: center;
+              }
+            }
+          }
+        }
+
+        .descriptionForm {
+          display: flex;
+          flex-direction: column;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0 0.8rem;
+
+          .descriptionTitle {
+            color: #48647f;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .description {
+            height: 30rem;
+            border-radius: 0.2rem;
+            font-size: 0.8rem;
+            resize: vertical;
+          }
+        }
+
+        .groupParent {
+          margin: 1.2rem;
+          .MuiAccordionSummary-root {
+            min-height: 2rem;
+          }
+
+          .title {
+            color: #324d67;
+            margin-bottom: 0.2rem;
+          }
+
+          .option {
+            border-radius: 0.2rem;
+            border: 0.08rem solid #48647f;
+            background-color: #fff;
+
+            .headerParent {
+              background-color: #bcccdc;
+              height: 1.6rem;
+              .MuiAccordionSummary-content {
+                margin: 0;
+              }
+              .titleParent {
+                color: #48647f;
+                font-size: 1rem;
+              }
+            }
+
+            .newOptionValue {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              margin: 1.2rem;
+              border: 0.08rem solid #48647f;
+              border-radius: 0.2rem;
+              height: 2rem;
+              width: 6.8rem;
+              color: #48647f;
+              background-color: #bcccdc;
+              font-size: 0.8rem;
+              text-transform: none;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #bcccdc;
+                color: #fff;
+              }
+            }
+
+            .MuiAccordionDetails-root {
+              padding: 0;
+            }
+
+            .textFieldOption {
+              display: flex;
+              flex-direction: column;
+              width: 30%;
+              min-width: 25vw;
+              max-width: 100%;
+              margin: 1.2rem;
+              border-radius: 0.2rem;
+              font-size: 1rem;
+              .MuiInputBase-root {
+                height: 2.4rem;
+                .Mui-disabled {
+                  background-color: #f1f5f8;
+                  height: 0.4rem;
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .group {
+              margin: 1.2rem;
+
+              .level {
+                display: flex;
+                flex-direction: row;
+
+                .form {
+                  display: flex;
+                  flex-direction: column;
+                  min-width: 15vw;
+                  max-width: 100%;
+                  margin: 1rem;
+
+                  .title {
+                    color: #48647f;
+                    font-size: 1rem;
+                    margin-bottom: 0.4rem;
+                  }
+
+                  .textField {
+                    border-radius: 0.2rem;
+                    font-size: 1rem;
+                    .MuiInputBase-root {
+                      height: 2.4rem;
+                      .Mui-disabled {
+                        background-color: #f1f5f8;
+                        height: 0.4rem;
+                        font-size: 1rem;
+                      }
+                    }
+                  }
+
+                  .select {
+                    border-radius: 0.2rem;
+                    font-size: 1rem;
+                    .MuiSelect-select {
+                      height: 2.4rem !important;
+                      padding: 0 0.8rem;
+                      font-size: 1rem;
+                      display: flex;
+                      align-items: center;
+                    }
+                  }
+                }
+              }
+            }
+
+            .newOption {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              margin: 1.2rem;
+              border: 0.08rem solid #48647f;
+              border-radius: 0.2rem;
+              height: 2rem;
+              width: 6.8rem;
+              color: #48647f;
+              background-color: #bcccdc;
+              font-size: 0.8rem;
+              text-transform: none;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #bcccdc;
+                color: #fff;
+              }
+            }
+
+            .newVariation {
+              display: flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              margin: 1.2rem;
+              border: 0.08rem solid #48647f;
+              border-radius: 0.2rem;
+              height: 2rem;
+              width: 6.8rem;
+              color: #48647f;
+              background-color: #bcccdc;
+              font-size: 0.8rem;
+              text-transform: none;
+              cursor: pointer;
+
+              &:hover {
+                background-color: #bcccdc;
+                color: #fff;
+              }
+            }
+          }
+        }
+
+        .avatar {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 1.2rem;
+
+          .titleAvatar {
+            color: #48647f;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .avatarButton {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 0.08rem solid #48647f;
+            border-radius: 0.2rem;
+            height: 2rem;
+            width: 6.4rem;
+            color: #48647f;
+            background-color: #bcccdc;
+            font-size: 0.8rem;
+            text-transform: none;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #48647f;
+              color: #fff;
+            }
+
+            input {
+              display: none;
+            }
+          }
+
+          .imageAvatar {
+            margin-top: 1.2rem;
+            border: 0.08rem solid #48647f;
+            border-radius: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+          }
+        }
+
+        .imagesGroup {
+          display: flex;
+          flex-direction: column;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 1.2rem;
+
+          .titleImage {
+            color: #48647f;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .imageButton {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 0.08rem solid #48647f;
+            border-radius: 0.2rem;
+            height: 2rem;
+            width: 6.4rem;
+            color: #48647f;
+            background-color: #bcccdc;
+            font-size: 0.8rem;
+            text-transform: none;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #48647f;
+              color: #fff;
+            }
+
+            input {
+              display: none;
+            }
+          }
+
+          .note {
+            margin-top: 1.2rem;
+            font-size: 1rem;
+            line-height: 2rem;
+          }
+
+          .imageAvatar {
+            margin-top: 0.8rem;
+            border: 0.08rem solid black;
+            border-radius: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+          }
+
+          .images {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+
+            .image {
+              margin: 0.8rem;
+              position: relative;
+
+              .img {
+                height: 20rem;
+                width: 20rem;
+                border: 0.08rem solid black;
+                border-radius: 0.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              .deleteButton {
+                background-color: red;
+                color: #fff;
+                border: 0.08rem solid #48647f;
+                border-radius: 0.2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 2.4rem;
+                width: 2.4rem;
+                margin-top: 0.4rem;
+              }
+            }
+          }
+        }
+      }
+
+      .createProductFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 1rem;
+
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
+          }
+        }
+
+        .createButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #829ab0;
+
+          &:hover {
+            background-color: #243a52;
+          }
+        }
+      }
+    }
+  }
+}

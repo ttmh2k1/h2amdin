@@ -28,6 +28,7 @@ const ProductGroupComponent = () => {
     }
     handleGetProductGroup()
   }, [productGroupId])
+
   const renderChildren = (category) => {
     if (category) {
       return (
@@ -85,24 +86,25 @@ const ProductGroupComponent = () => {
       )
     } else return null
   }
+
   return (
-    <div className="updateProductGroup">
+    <div className="viewProductGroup">
       <Sidebar />
-      <div className="updateProductGroupContainer">
+      <div className="viewProductGroupContainer">
         <Navbar />
-        <div className="updateProductGroupBody">
+        <div className="viewProductGroupBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/productGroup">Product group</a>/{' '}
             <a href=" ">Product group detail</a>
           </div>
 
-          <div className="updateProductGroupForm">
+          <div className="viewProductGroupForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
               {productGroup && productGroup.map((c) => renderChildren(c))}
             </div>
           </div>
 
-          <div className="updateProductGroupFooter">
+          <div className="viewProductGroupFooter">
             <Button
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
               className="backButton"
