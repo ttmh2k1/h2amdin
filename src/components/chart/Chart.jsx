@@ -2,7 +2,6 @@ import './chart.scss'
 import { XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, BarChart, Bar } from 'recharts'
 import { getStatistic } from '../../apis/statistic'
 import { useEffect, useState } from 'react'
-
 const Chart = () => {
   const [statistic, setStatistic] = useState()
   useEffect(() => {
