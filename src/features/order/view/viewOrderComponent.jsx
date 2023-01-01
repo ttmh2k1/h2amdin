@@ -13,7 +13,6 @@ import { FaArrowCircleLeft } from 'react-icons/fa'
 
 const OrderComponent = () => {
   const [order, setOrder] = useState()
-  console.log('🚀 ~ file: viewOrderComponent.jsx:16 ~ OrderComponent ~ order', order)
   const { orderId } = useParams()
   const navigate = useNavigate()
 

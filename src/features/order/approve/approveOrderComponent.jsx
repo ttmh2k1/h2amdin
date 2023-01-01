@@ -14,7 +14,6 @@ import { formatNumber } from '../../../utils/functionHelper'
 
 const OrderComponent = () => {
   const [order, setOrder] = useState({ status: '' })
-  console.log('🚀 ~ file: approveOrderComponent.jsx:17 ~ OrderComponent ~ order', order)
   const params = useParams()
   const orderId = params.orderId
   const navigate = useNavigate()
