@@ -1,3 +1,4 @@
+import { combineQueriesUrl } from '../utils/functionHelper';
 import api, { SERVICE } from './api';
 
 /**
@@ -5,6 +6,7 @@ import api, { SERVICE } from './api';
  * @param {*} req
  * @returns {Promise<import('axios').AxiosResponse<any>>}
  */
-export function getLogs() {
-    return api.GET(`${SERVICE}/api/admin/log?size=1000`);
+export function getLogs(req) {
+    const queries = combineQueriesUrl({ ...req });
+    return api.GET(`${SERVICE}/api/admin/log${queries}`);
 }

@@ -52,6 +52,8 @@ const WarehouseComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
+      filterable: false,
+      renderCell:(index) => index.api.getRowIndex(index.row.id) + 1
     },
     {
       field: 'id',
@@ -120,7 +122,7 @@ const WarehouseComponent = () => {
                 // onPageSizeChange={(pageSize) => {
                 //   updateData('page', 1)
                 //   updateData('pageSize', pageSize)
-                // }}
+                }}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',
