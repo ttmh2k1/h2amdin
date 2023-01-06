@@ -6,7 +6,7 @@ import api, { SERVICE } from './api';
  * @returns {Promise<import('axios').AxiosResponse<any>>}
  */
 export function getStatistic() {
-    return api.GET(`${SERVICE}/api/admin/statistic?month=11&year=2022&type=MONTH`);
+    return api.GET(`${SERVICE}/api/admin/statistic?month=1&year=2023&type=MONTH`);
 }
 
 export function getStatisticMonth(month, year, type) {
