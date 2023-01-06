@@ -8,5 +8,5 @@ import api, { SERVICE } from './api';
  */
 export function getListWarehouse(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/inventory-manage?size=20000${queries}`);
+    return api.GET(`${SERVICE}/api/admin/inventory-manage${queries}`);
 }

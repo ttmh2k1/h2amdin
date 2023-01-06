@@ -388,7 +388,7 @@ const arrayStatus = [
   { name: 'Delivering', value: 'DELIVERING' },
   { name: 'Delivered', value: 'DELIVERED' },
   { name: 'Completed', value: 'COMPLETED' },
-  //   { name: 'Cancelled', value: 'CANCELLED' },
+  //   { name: 'Cancelled', value: 'CANCELED' },
 ]
 
 export default OrderComponent

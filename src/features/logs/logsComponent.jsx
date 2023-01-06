@@ -10,21 +10,21 @@ import { FaArrowCircleLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const LogsComponent = () => {
-  const [data, setData] = useState({
+  const [logs, setLogs] = useState({
     loading: true,
     rows: [],
     totalRows: 0,
     rowsPerPageOptions: [10, 20, 50],
     pageSize: 10,
-    page: 1
+    page: 1,
   })
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    getLogs({page : data.page, size: data.pageSize, sortByDateDescending: true}).then(resp => {
-      setData({
-        ...data,
+    getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then((resp) => {
+      setLogs({
+        ...logs,
         loading: false,
         rows: resp?.data?.data,
         totalRows: resp?.data?.totalElement,
@@ -33,18 +33,18 @@ const LogsComponent = () => {
   }, [])
 
   useEffect(() => {
-    updateData("loading", true);
-    getLogs({page: data.page, size: data.pageSize, sortByDateDescending: true}).then(resp => {
-      setData({
-        ...data,
+    updateData('loading', true)
+    getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then((resp) => {
+      setLogs({
+        ...logs,
         loading: false,
         rows: resp?.data?.data,
         totalRows: resp?.data?.totalElement,
       })
-    });
-  }, [data.page, data.pageSize]);
+    })
+  }, [logs.page, logs.pageSize])
 
-  const updateData = (k, v) => setData((prev) => ({ ...prev, [k]: v }));
+  const updateData = (k, v) => setLogs((prev) => ({ ...prev, [k]: v }))
 
   const header = [
     {
@@ -53,7 +53,7 @@ const LogsComponent = () => {
       width: 100,
       align: 'center',
       headerAlign: 'center',
-      renderCell:(index) => index.api.getRowIndex(index.row.id) + 1
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
     },
     {
       field: 'id',
@@ -85,17 +85,6 @@ const LogsComponent = () => {
     },
   ]
 
-   const logsContent = logs.map((item, index) => {
-    return {
-       stt: index + 1,
-       id: item?.id,
-       date: item?.date,
-       logType: item?.logType,
-       content: item?.content,
-     }
-   })
-
-
   return (
     <div className="logs">
       <Sidebar />
@@ -108,22 +97,22 @@ const LogsComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={data.rows}
+                rows={logs.rows}
                 columns={header}
                 paginationMode="server"
-                loading={data.loading}
-                rowCount={data.totalRows}
-                page={data.page - 1}
-                pageSize={data.pageSize}
-                rowsPerPageOptions={data.rowsPerPageOptions}
+                loading={logs.loading}
+                rowCount={logs.totalRows}
+                page={logs.page - 1}
+                pageSize={logs.pageSize}
+                rowsPerPageOptions={logs.rowsPerPageOptions}
                 onPageChange={(page) => {
-                  updateData("page", page + 1);
+                  updateData('page', page + 1)
                 }}
                 onPageSizeChange={(pageSize) => {
-                  updateData("page", 1);
-                  updateData("pageSize", pageSize);
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
                 }}
-                getRowId= {(row) => row.id}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: 'white',
                   fontSize: '0.8rem',

@@ -10,40 +10,60 @@ import styled from 'styled-components'
 import { Button } from '@mui/material'
 
 const WarehouseComponent = () => {
-  const [warehouse, setWarehouse] = useState([])
+  const [warehouse, setWarehouse] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleWarehouse = async () => {
-      const resp = await getListWarehouse()
-      const list = resp?.data?.data
-      setWarehouse(list)
-    }
-    handleWarehouse()
-  })
+    getListWarehouse().then((resp) => {
+      setWarehouse({
+        ...warehouse,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
 
-  // useEffect(() => {
-  //   getListWarehouse().then((resp) => {
-  //     setData({
-  //       ...data,
-  //       loading: false,
-  //       rows: resp?.data?.data,
-  //       totalRows: resp?.data?.totalElement,
-  //     })
-  //   })
-  // }, [])
+  useEffect(() => {
+    updateData('loading', true)
+    getListWarehouse({ page: warehouse.page, size: warehouse.pageSize }).then((resp) => {
+      setWarehouse({
+        ...warehouse,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [warehouse.page, warehouse.pageSize])
 
-  // useEffect(() => {
-  //   updateData('loading', true)
-  //   getListWarehouse({ page: data.page, size: data.pageSize }).then((resp) => {
-  //     setData({
-  //       ...data,
-  //       loading: false,
-  //       rows: resp?.data?.data,
-  //       totalRows: resp?.data?.totalElement,
-  //     })
-  //   })
-  // }, [data.page, data.pageSize])
+  const updateData = (k, v) => setWarehouse((prev) => ({ ...prev, [k]: v }))
+
+  const action = [
+    {
+      headerName: 'Action',
+      width: 60,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (props) => {
+        return (
+          <div className="cellAction">
+            <Link to={`/warehouse/${props.id}`} style={{ textDecoration: 'none' }}>
+              <div className="viewButton">
+                <FaEye />
+              </div>
+            </Link>
+          </div>
+        )
+      },
+    },
+  ]
 
   const header = [
     {
@@ -53,7 +73,7 @@ const WarehouseComponent = () => {
       align: 'center',
       headerAlign: 'center',
       filterable: false,
-      renderCell:(index) => index.api.getRowIndex(index.row.id) + 1
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
     },
     {
       field: 'id',
@@ -63,11 +83,24 @@ const WarehouseComponent = () => {
       headerAlign: 'center',
     },
     {
+      field: 'variationName',
+      headerName: 'Variation name',
+      width: 200,
+      align: 'left',
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.variation.name
+      },
+    },
+    {
       field: 'importerName',
       headerName: 'Importer name',
       width: 200,
-      align: 'center',
+      align: 'left',
       headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.importer.fullname
+      },
     },
     {
       field: 'importQuantity',
@@ -83,17 +116,17 @@ const WarehouseComponent = () => {
       align: 'center',
       headerAlign: 'center',
     },
+    {
+      field: 'nSold',
+      headerName: 'Quantity sold',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+      valueGetter: (params) => {
+        return params.row.variation.nsold
+      },
+    },
   ]
-
-  const content = warehouse.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      importerName: item?.importer?.fullname,
-      importQuantity: item?.importQuantity,
-      importTime: item?.importTime,
-    }
-  })
 
   return (
     <div className="warehouse">
@@ -107,22 +140,22 @@ const WarehouseComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
+                rows={warehouse.rows}
                 columns={header}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                // loading={data.loading}
-                // rowCount={data.totalRows}
-                // page={data.page - 1}
-                // pageSize={data.pageSize}
-                // rowsPerPageOptions={data.rowsPerPageOptions}
-                // onPageChange={(page) => {
-                //   updateData('page', page + 1)
-                // }}
-                // onPageSizeChange={(pageSize) => {
-                //   updateData('page', 1)
-                //   updateData('pageSize', pageSize)
+                paginationMode="server"
+                loading={warehouse.loading}
+                rowCount={warehouse.totalRows}
+                page={warehouse.page - 1}
+                pageSize={warehouse.pageSize}
+                rowsPerPageOptions={warehouse.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
                 }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

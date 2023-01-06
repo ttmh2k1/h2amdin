@@ -37,7 +37,7 @@ const OrderComponent = () => {
 
   const handleCancel = async (id) => {
     try {
-      await updateOrder(id, 'CANCELLED')
+      await updateOrder(id, 'CANCELED')
       toast.success('Cancel successful!', style)
       setTimeout(() => {
         window.location.reload()
