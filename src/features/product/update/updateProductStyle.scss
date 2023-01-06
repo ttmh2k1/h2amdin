@@ -339,12 +339,6 @@
             }
           }
 
-          .note {
-            margin-top: 1.2rem;
-            font-size: 1rem;
-            line-height: 2rem;
-          }
-
           .imageAvatar {
             margin-top: 0.8rem;
             border: 0.08rem solid black;
@@ -376,16 +370,36 @@
               }
 
               .deleteButton {
-                background-color: red;
-                color: #fff;
-                border: 0.08rem solid #48647f;
-                border-radius: 0.2rem;
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                height: 2.4rem;
-                width: 2.4rem;
+                padding: 0.2rem;
+                border-radius: 0.2rem;
+                border: 0.1rem solid #bb2525;
+                color: #bb2525;
+                background-color: #fff;
                 margin-top: 0.4rem;
+                cursor: pointer;
+              }
+            }
+
+            .groupImage {
+              margin: 1.2rem 0;
+              .MuiAccordionSummary-root {
+                min-height: 2rem;
+              }
+              .headerImage {
+                background-color: #bcccdc;
+                height: 1.6rem;
+                .MuiAccordionSummary-content {
+                  margin: 0;
+                }
+                .titleImage {
+                  color: #48647f;
+                  font-size: 1rem;
+                }
+              }
+              .MuiAccordionDetails-root {
+                padding: 0;
               }
             }
           }

@@ -61,7 +61,7 @@ export const ProductDetail = ({ product, setProduct }) => {
               id="productParent"
               value={idCategory}
               options={listCategory}
-              onChange={ (e) => {
+              onChange={(e) => {
                 onCategoryChange(e)
                 setIdCategory(e)
               }}
@@ -84,7 +84,7 @@ export const ProductDetail = ({ product, setProduct }) => {
           className="description"
           aria-label="maximum height"
           id="description"
-          minRows={3}
+          maxRows={5}
           value={product?.description}
           onChange={(e) => {
             onChange('description', e.target.value)

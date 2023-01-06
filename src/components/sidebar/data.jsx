@@ -12,6 +12,7 @@ import {
   FaUser,
   FaWarehouse,
 } from 'react-icons/fa'
+
 export const links = [
   {
     name: 'SETTING',

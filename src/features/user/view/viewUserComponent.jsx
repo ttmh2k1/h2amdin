@@ -1,15 +1,17 @@
 import './viewUserStyle.scss'
-import { Grid, TextField } from '@mui/material'
+import { Button, Grid, TextField } from '@mui/material'
 import Navbar from '../../../components/navbar/Navbar'
 import Sidebar from '../../../components/sidebar/Sidebar'
-import { styled } from '@material-ui/styles'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getUser } from '../../../apis/userApi'
+import { FaArrowCircleLeft } from 'react-icons/fa'
 
 const UserComponent = () => {
   const [user, setUser] = useState()
   const { userId } = useParams()
+  const navigate = useNavigate()
+
   useEffect(() => {
     const handleGetUser = async () => {
       const resp = await getUser(userId)
@@ -36,50 +38,48 @@ const UserComponent = () => {
                   <label className="title" for="usercode">
                     User code
                   </label>
-                  <Item disabled className="textField" id="usercode" value={user?.id} />
+                  <TextField disabled className="textField" id="usercode" value={user?.id} />
                 </div>
                 <div className="form">
                   <label className="title" for="name">
                     Full name
                   </label>
-                  <Item disabled className="textField" id="name" value={user?.fullname} />
+                  <TextField disabled className="textField" id="name" value={user?.fullname} />
                 </div>
                 <div className="form">
                   <label className="title" for="role">
                     Role
                   </label>
-                  <Item disabled className="textField" id="role" value={user?.role?.name} />
+                  <TextField disabled className="textField" id="role" value={user?.role?.name} />
                 </div>
                 <div className="form">
                   <label className="title" for="email">
                     Email
                   </label>
-                  <Item disabled className="textField" id="email" value={user?.email} />
+                  <TextField disabled className="textField" id="email" value={user?.email} />
                 </div>
                 <div className="form">
                   <label className="title" for="phone">
                     Phone
                   </label>
-                  <Item disabled className="textField" id="phone" value={user?.phone} />
+                  <TextField disabled className="textField" id="phone" value={user?.phone} />
                 </div>
               </Grid>
             </div>
           </div>
-          <footer isGoBack>
-            <Link to="/user" style={{ textDecoration: 'none' }} />
-          </footer>
+          <div className="viewUserFooter">
+            <Button
+              startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}
+              className="backButton"
+              onClick={() => navigate(-1)}
+            >
+              Back
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   )
 }
-
-const Item = styled(TextField)({
-  '& .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input.Mui-disabled': {
-    height: '0.4rem',
-    fontSize: '1rem',
-    WebkitTextFillColor: '#707070',
-  },
-})
 
 export default UserComponent

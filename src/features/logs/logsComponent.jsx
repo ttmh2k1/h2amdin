@@ -85,15 +85,16 @@ const LogsComponent = () => {
     },
   ]
 
-  // const logsContent = logs.map((item, index) => {
-  //   return {
-  //     stt: index + 1,
-  //     id: item?.id,
-  //     date: item?.date,
-  //     logType: item?.logType,
-  //     content: item?.content,
-  //   }
-  // })
+   const logsContent = logs.map((item, index) => {
+    return {
+       stt: index + 1,
+       id: item?.id,
+       date: item?.date,
+       logType: item?.logType,
+       content: item?.content,
+     }
+   })
+
 
   return (
     <div className="logs">

@@ -376,16 +376,15 @@
               }
 
               .deleteButton {
-                background-color: red;
-                color: #fff;
-                border: 0.08rem solid #48647f;
-                border-radius: 0.2rem;
                 display: flex;
-                justify-content: center;
                 align-items: center;
-                height: 2.4rem;
-                width: 2.4rem;
+                padding: 0.2rem;
+                border-radius: 0.2rem;
+                border: 0.1rem solid #bb2525;
+                color: #bb2525;
+                background-color: #fff;
                 margin-top: 0.4rem;
+                cursor: pointer;
               }
             }
           }
