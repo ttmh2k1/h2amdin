@@ -69,6 +69,7 @@ const LogsComponent = () => {
       content: item?.content,
     }
   })
+  console.log('🚀 ~ file: logsComponent.jsx:72 ~ logsContent ~ logs', logs)
 
   return (
     <div className="logs">

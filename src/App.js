@@ -9,6 +9,8 @@ import Logs from "./pages/logs/LogsPage"
 import Order from "./pages/order/OrderPage"
 import ViewOrder from "./pages/order/view/ViewOrderPage"
 import ApproveOrder from "./pages/order/approve/ApproveOrderPage"
+import Delivery from "./pages/delivery/DeliveryPage"
+import ViewDelivery from "./pages/delivery/view/ViewDeliveryPage"
 import ProductGroup from "./pages/productGroup/ProductGroupPage"
 import ViewProductGroup from "./pages/productGroup/view/ViewProductGroupPage"
 import UpdateProductGroup from "./pages/productGroup/update/UpdateProductGroupPage"
@@ -53,6 +55,12 @@ function App() {
             </Route>
             <Route path="approve">
               <Route path=":orderId" element={<ApproveOrder />} />
+            </Route>
+          </Route>
+          <Route path="delivery">
+            <Route index element={<Delivery />} />
+            <Route path="view">
+              <Route path=":orderId" element={<ViewDelivery />} />
             </Route>
           </Route>
           <Route path="productGroup">

@@ -14,7 +14,6 @@ export const ProductOption = ({ product, setProduct, isCreate = true }) => {
         <label className="title">Option</label>
         <div className="option">
           {product?.options?.map((option, index) => {
-            
             return (
               <FormOption
                 key={index}
@@ -24,21 +23,20 @@ export const ProductOption = ({ product, setProduct, isCreate = true }) => {
               />
             )
           })}
-          {isCreate &&
+          {isCreate && (
             <button
-            className="newOption"
-            onClick={() =>
-              setProduct((prev) => ({
-                ...prev,
-                options: [...prev.options, { name: '', values: [''] }],
-              }))
-            }
-          >
-            <FaPlusSquare style={{ marginRight: '0.08rem' }} />
-            New option
-          </button>
-          }
-          
+              className="newOption"
+              onClick={() =>
+                setProduct((prev) => ({
+                  ...prev,
+                  options: [...prev.options, { name: '', values: [''] }],
+                }))
+              }
+            >
+              <FaPlusSquare style={{ marginRight: '0.08rem' }} />
+              New option
+            </button>
+          )}
         </div>
       </div>
     </>

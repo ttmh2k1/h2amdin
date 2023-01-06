@@ -38,6 +38,35 @@
             background-color: #f1f5f8;
             border-radius: 0.4rem;
             font-size: 1rem;
+            .MuiInputBase-root {
+              height: 2.4rem;
+              .Mui-disabled {
+                background-color: #f1f5f8;
+                height: 0.4rem;
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+      }
+
+      .viewUserFooter {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
           }
         }
       }

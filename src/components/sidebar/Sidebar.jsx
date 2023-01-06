@@ -3,6 +3,7 @@ import { FaSignOutAlt } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../commons/assets/brand.png'
 import { links } from './data'
+import { shipper } from './dataShipper'
 import './sidebarStyle.scss'
 
 const Sidebar = () => {
@@ -29,23 +30,41 @@ const Sidebar = () => {
           </Link>
         </div>
         <ul className="links">
-          {links.map((link) => {
-            const { name, items } = link
-            return (
-              <>
-                <p className="name">{name}</p>
-                {items.map((item) => {
-                  const { url, text, icon } = item
-                  return (
-                    <a href={url} className="items">
-                      {icon}
-                      {text}
-                    </a>
-                  )
-                })}
-              </>
-            )
-          })}
+          {localStorage.getItem('role') !== 'SHIPPER'
+            ? links.map((link) => {
+                const { name, items } = link
+                return (
+                  <>
+                    <p className="name">{name}</p>
+                    {items.map((item) => {
+                      const { url, text, icon } = item
+                      return (
+                        <a href={url} className="items">
+                          {icon}
+                          {text}
+                        </a>
+                      )
+                    })}
+                  </>
+                )
+              })
+            : shipper.map((link) => {
+                const { name, items } = link
+                return (
+                  <>
+                    <p className="name">{name}</p>
+                    {items.map((item) => {
+                      const { url, text, icon } = item
+                      return (
+                        <a href={url} className="items">
+                          {icon}
+                          {text}
+                        </a>
+                      )
+                    })}
+                  </>
+                )
+              })}
           <li onClick={handleSignOut} className="items" style={{ cursor: 'pointer' }}>
             <FaSignOutAlt className="icon" />
             <span>Sign out</span>
