@@ -8,7 +8,7 @@ import api, { SERVICE } from './api';
  */
 export function getListProduct(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/product-manage?size=500${queries}`);
+    return api.GET(`${SERVICE}/api/admin/product-manage${queries}`);
 }
 
 export function getListProductParent(req) {

@@ -11,17 +11,15 @@ import { Button } from '@mui/material'
 import { toast } from 'react-toastify'
 
 const CustomerComponent = () => {
-  const [listCustomer, setListCustomer] = useState([])
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleListCustomer = async () => {
-      const resp = await getListCustomer()
-      const list = resp?.data?.data
-      setListCustomer(list)
-    }
-    handleListCustomer()
-  }, [])
+  const [listCustomer, setListCustomer] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
 
   const style = {
     position: 'bottom-right',
@@ -58,79 +56,6 @@ const CustomerComponent = () => {
     }
   }
 
-  const header = [
-    {
-      field: 'stt',
-      headerName: 'No',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'id',
-      headerName: 'Customer ID',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'username',
-      headerName: 'Username',
-      width: 100,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'fullname',
-      headerName: 'Full name',
-      width: 200,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'gender',
-      headerName: 'Gender',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      width: 200,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'phone',
-      headerName: 'Phone',
-      width: 100,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 150,
-      align: 'center',
-      headerAlign: 'center',
-    },
-  ]
-
-  const content = listCustomer.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      username: item?.username,
-      fullname: item?.fullname,
-      gender: item?.gender,
-      email: item?.email,
-      phone: item?.phone,
-      status:
-        item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
-    }
-  })
-
   const action = [
     {
       headerName: 'Action',
@@ -163,6 +88,124 @@ const CustomerComponent = () => {
     },
   ]
 
+  const header = [
+    {
+      field: 'stt',
+      headerName: 'No',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'id',
+      headerName: 'Customer ID',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'username',
+      headerName: 'Username',
+      width: 100,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'fullname',
+      headerName: 'Full name',
+      width: 200,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'gender',
+      headerName: 'Gender',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.gender === 'FEMALE' ? 'Female' : 'Male'}`,
+    },
+    {
+      field: 'email',
+      headerName: 'Email',
+      width: 200,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'phone',
+      headerName: 'Phone',
+      width: 100,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 150,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) =>
+        `${
+          params?.row?.status === 'ACTIVE'
+            ? 'Active'
+            : params?.row?.status === 'BANNED'
+            ? 'Banned'
+            : 'Wait banned'
+        }`,
+    },
+  ]
+
+  const updateData = (k, v) => setListCustomer((prev) => ({ ...prev, [k]: v }))
+
+  useEffect(() => {
+    getListCustomer({
+      page: listCustomer.page,
+      size: listCustomer.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setListCustomer({
+        ...listCustomer,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListCustomer({
+      page: listCustomer.page,
+      size: listCustomer.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setListCustomer({
+        ...listCustomer,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [listCustomer.page, listCustomer.pageSize])
+
+  // const content = listCustomer.map((item, index) => {
+  //   return {
+  //     stt: index + 1,
+  //     id: item?.id,
+  //     username: item?.username,
+  //     fullname: item?.fullname,
+  //     gender: item?.gender,
+  //     email: item?.email,
+  //     phone: item?.phone,
+  //     status:
+  //       item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
+  //   }
+  // })
+
   return (
     <div className="customer">
       <Sidebar />
@@ -175,10 +218,22 @@ const CustomerComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
+                rows={listCustomer.rows}
                 columns={header.concat(action)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                paginationMode="server"
+                loading={listCustomer.loading}
+                rowCount={listCustomer.totalRows}
+                page={listCustomer.page - 1}
+                pageSize={listCustomer.pageSize}
+                rowsPerPageOptions={listCustomer.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

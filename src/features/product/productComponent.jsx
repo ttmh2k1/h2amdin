@@ -19,17 +19,15 @@ import { Button } from '@mui/material'
 import { toast } from 'react-toastify'
 
 const ProductComponent = () => {
-  const [listProduct, setListProduct] = useState([])
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleListProduct = async () => {
-      const resp = await getListProduct()
-      const list = resp?.data?.data
-      setListProduct(list)
-    }
-    handleListProduct()
-  }, [])
+  const [listProduct, setListProduct] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
 
   const style = {
     position: 'bottom-right',
@@ -90,54 +88,6 @@ const ProductComponent = () => {
     }
   }
 
-  const header = [
-    {
-      field: 'stt',
-      headerName: 'No',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'id',
-      headerName: 'Product ID',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'name',
-      headerName: 'Product name',
-      width: 600,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'groupName',
-      headerName: 'Group name',
-      width: 150,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'hidden',
-      headerName: 'Status',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-  ]
-
-  const content = listProduct.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      name: item?.name,
-      groupName: item?.category.name,
-      hidden: item?.hidden ? 'Banned' : 'Active',
-    }
-  })
-
   const action = [
     {
       headerName: 'Action',
@@ -173,6 +123,82 @@ const ProductComponent = () => {
     },
   ]
 
+  const header = [
+    {
+      field: 'stt',
+      headerName: 'No',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'id',
+      headerName: 'Product ID',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'name',
+      headerName: 'Product name',
+      width: 600,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'groupName',
+      headerName: 'Group name',
+      width: 150,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.category?.name}`,
+    },
+    {
+      field: 'hidden',
+      headerName: 'Status',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.hidden ? 'Banned' : 'Active'}`,
+    },
+  ]
+
+  const updateData = (k, v) => setListProduct((prev) => ({ ...prev, [k]: v }))
+
+  useEffect(() => {
+    getListProduct({
+      page: listProduct.page,
+      size: listProduct.pageSize,
+      sortBy: 8,
+      sortDescending: true,
+    }).then((resp) => {
+      setListProduct({
+        ...listProduct,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListProduct({
+      page: listProduct.page,
+      size: listProduct.pageSize,
+      sortBy: 8,
+      sortDescending: true,
+    }).then((resp) => {
+      setListProduct({
+        ...listProduct,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [listProduct.page, listProduct.pageSize])
+
   return (
     <div className="product">
       <Sidebar />
@@ -186,10 +212,22 @@ const ProductComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
+                rows={listProduct.rows}
                 columns={header.concat(action)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                paginationMode="server"
+                loading={listProduct.loading}
+                rowCount={listProduct.totalRows}
+                page={listProduct.page - 1}
+                pageSize={listProduct.pageSize}
+                rowsPerPageOptions={listProduct.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

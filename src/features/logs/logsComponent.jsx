@@ -10,6 +10,7 @@ import { FaArrowCircleLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 
 const LogsComponent = () => {
+  const navigate = useNavigate()
   const [logs, setLogs] = useState({
     loading: true,
     rows: [],
@@ -19,7 +20,53 @@ const LogsComponent = () => {
     page: 1,
   })
 
-  const navigate = useNavigate()
+  const logsHeader = [
+    {
+      field: 'stt',
+      headerName: 'No',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'date',
+      headerName: 'Date',
+      width: 150,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'username',
+      headerName: 'User name',
+      width: 200,
+      align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'logType',
+      headerName: 'Logs type',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'content',
+      headerName: 'Content',
+      width: 500,
+      align: 'left',
+      headerAlign: 'center',
+    },
+  ]
+
+  const updateData = (k, v) => setLogs((prev) => ({ ...prev, [k]: v }))
 
   useEffect(() => {
     getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then((resp) => {
@@ -44,47 +91,6 @@ const LogsComponent = () => {
     })
   }, [logs.page, logs.pageSize])
 
-  const updateData = (k, v) => setLogs((prev) => ({ ...prev, [k]: v }))
-
-  const header = [
-    {
-      field: 'stt',
-      headerName: 'No',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
-    },
-    {
-      field: 'id',
-      headerName: 'User ID',
-      width: 150,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'date',
-      headerName: 'Date',
-      width: 250,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'logType',
-      headerName: 'Logs type',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'content',
-      headerName: 'Content',
-      width: 500,
-      align: 'left',
-      headerAlign: 'center',
-    },
-  ]
-
   return (
     <div className="logs">
       <Sidebar />
@@ -98,7 +104,7 @@ const LogsComponent = () => {
             <div className="datatable">
               <Tab
                 rows={logs.rows}
-                columns={header}
+                columns={logsHeader}
                 paginationMode="server"
                 loading={logs.loading}
                 rowCount={logs.totalRows}
