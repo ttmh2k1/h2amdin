@@ -8,7 +8,7 @@ import api, { SERVICE } from './api';
  */
 export function getListOrder(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/order?size=2000${queries}`);
+    return api.GET(`${SERVICE}/api/admin/order${queries}`);
 }
 
 export function getOrder(id) {
@@ -21,10 +21,10 @@ export function updateOrder(id, params) {
 
 export function listDelivery(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/order?status=WAIT_FOR_SEND&size=2000${queries}`)
+    return api.GET(`${SERVICE}/api/admin/order?status=WAIT_FOR_SEND&${queries}`)
 }
 
 export function listDelivery1(req) {
     const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/order?status=DELIVERING&size=2000${queries}`)
+    return api.GET(`${SERVICE}/api/admin/order?status=DELIVERING${queries}`)
 }

@@ -10,17 +10,15 @@ import { FaArrowCircleLeft, FaEye } from 'react-icons/fa'
 import { Button } from '@mui/material'
 
 const UserComponent = () => {
-  const [users, setUsers] = useState([])
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleGetUser = async () => {
-      const resp = await getListUsers()
-      const list = resp?.data?.data
-      setUsers(list)
-    }
-    handleGetUser()
-  }, [])
+  const [users, setUsers] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
 
   const actionColumn = [
     {
@@ -49,6 +47,7 @@ const UserComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
     },
     {
       field: 'id',
@@ -77,6 +76,7 @@ const UserComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.role?.name}`,
     },
     {
       field: 'email',
@@ -103,19 +103,39 @@ const UserComponent = () => {
       headerAlign: 'center',
     },
   ]
-  const userContent = users.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      username: item?.username,
-      fullname: item?.fullname,
-      role: item?.role.name,
-      email: item?.email,
-      phone: item?.phone,
-      status:
-        item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
-    }
-  })
+
+  const updateData = (k, v) => setUsers((prev) => ({ ...prev, [k]: v }))
+
+  useEffect(() => {
+    getListUsers({
+      page: users.page,
+      size: users.pageSize,
+      sortByDateDescending: true,
+    }).then((resp) => {
+      setUsers({
+        ...users,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListUsers({
+      page: users.page,
+      size: users.pageSize,
+      sortByDateDescending: true,
+    }).then((resp) => {
+      setUsers({
+        ...users,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [users.page, users.pageSize])
 
   return (
     <div className="user">
@@ -129,10 +149,22 @@ const UserComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={userContent}
+                rows={users.rows}
                 columns={userHeader.concat(actionColumn)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                paginationMode="server"
+                loading={users.loading}
+                rowCount={users.totalRows}
+                page={users.page - 1}
+                pageSize={users.pageSize}
+                rowsPerPageOptions={users.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

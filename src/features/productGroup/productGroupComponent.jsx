@@ -13,15 +13,6 @@ const ProductGroupComponent = () => {
   const [listProductGroup, setListProductGroup] = useState([])
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const handleListProductGroup = async () => {
-      const resp = await getListProductGroup()
-      const list = resp?.data?.data
-      setListProductGroup(list)
-    }
-    handleListProductGroup()
-  }, [])
-
   const header = [
     {
       field: 'stt',
@@ -86,6 +77,15 @@ const ProductGroupComponent = () => {
       },
     },
   ]
+
+  useEffect(() => {
+    const handleListProductGroup = async () => {
+      const resp = await getListProductGroup()
+      const list = resp?.data?.data
+      setListProductGroup(list)
+    }
+    handleListProductGroup()
+  }, [])
 
   return (
     <div className="productGroup">

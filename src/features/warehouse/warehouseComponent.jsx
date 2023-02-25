@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import { Button } from '@mui/material'
 
 const WarehouseComponent = () => {
+  const navigate = useNavigate()
   const [warehouse, setWarehouse] = useState({
     loading: true,
     rows: [],
@@ -18,52 +19,26 @@ const WarehouseComponent = () => {
     pageSize: 10,
     page: 1,
   })
-  const navigate = useNavigate()
 
-  useEffect(() => {
-    getListWarehouse().then((resp) => {
-      setWarehouse({
-        ...warehouse,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
-
-  useEffect(() => {
-    updateData('loading', true)
-    getListWarehouse({ page: warehouse.page, size: warehouse.pageSize }).then((resp) => {
-      setWarehouse({
-        ...warehouse,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [warehouse.page, warehouse.pageSize])
-
-  const updateData = (k, v) => setWarehouse((prev) => ({ ...prev, [k]: v }))
-
-  const action = [
-    {
-      headerName: 'Action',
-      width: 60,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (props) => {
-        return (
-          <div className="cellAction">
-            <Link to={`/warehouse/${props.id}`} style={{ textDecoration: 'none' }}>
-              <div className="viewButton">
-                <FaEye />
-              </div>
-            </Link>
-          </div>
-        )
-      },
-    },
-  ]
+  // const action = [
+  //   {
+  //     headerName: 'Action',
+  //     width: 60,
+  //     align: 'center',
+  //     headerAlign: 'center',
+  //     renderCell: (props) => {
+  //       return (
+  //         <div className="cellAction">
+  //           <Link to={`/warehouse/${props.id}`} style={{ textDecoration: 'none' }}>
+  //             <div className="viewButton">
+  //               <FaEye />
+  //             </div>
+  //           </Link>
+  //         </div>
+  //       )
+  //     },
+  //   },
+  // ]
 
   const header = [
     {
@@ -88,9 +63,7 @@ const WarehouseComponent = () => {
       width: 200,
       align: 'left',
       headerAlign: 'center',
-      valueGetter: (params) => {
-        return params.row.variation.name
-      },
+      renderCell: (params) => `${params?.row?.variation?.name}`,
     },
     {
       field: 'importerName',
@@ -98,9 +71,7 @@ const WarehouseComponent = () => {
       width: 200,
       align: 'left',
       headerAlign: 'center',
-      valueGetter: (params) => {
-        return params.row.importer.fullname
-      },
+      renderCell: (params) => `${params?.row?.importer?.fullname}`,
     },
     {
       field: 'importQuantity',
@@ -122,11 +93,43 @@ const WarehouseComponent = () => {
       width: 200,
       align: 'center',
       headerAlign: 'center',
-      valueGetter: (params) => {
-        return params.row.variation.nsold
-      },
+
+      renderCell: (params) => `${params?.row?.variation?.nsold}`,
     },
   ]
+
+  const updateData = (k, v) => setWarehouse((prev) => ({ ...prev, [k]: v }))
+
+  useEffect(() => {
+    getListWarehouse({
+      page: warehouse.page,
+      size: warehouse.pageSize,
+      sortDescending: true,
+    }).then((resp) => {
+      setWarehouse({
+        ...warehouse,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListWarehouse({
+      page: warehouse.page,
+      size: warehouse.pageSize,
+      sortDescending: true,
+    }).then((resp) => {
+      setWarehouse({
+        ...warehouse,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [warehouse.page, warehouse.pageSize])
 
   return (
     <div className="warehouse">

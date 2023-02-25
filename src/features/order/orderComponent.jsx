@@ -12,17 +12,15 @@ import { formatNumber } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
 
 const OrderComponent = () => {
-  const [listOrder, setListOrder] = useState([])
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleListOrder = async () => {
-      const resp = await getListOrder()
-      const list = resp?.data?.data
-      setListOrder(list)
-    }
-    handleListOrder()
-  }, [])
+  const [listOrder, setListOrder] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
 
   const style = {
     position: 'bottom-right',
@@ -47,79 +45,7 @@ const OrderComponent = () => {
     }
   }
 
-  const header = [
-    {
-      field: 'stt',
-      headerName: 'No',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'id',
-      headerName: 'Order ID',
-      width: 80,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'customerID',
-      headerName: 'Customer ID',
-      width: 100,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'customerName',
-      headerName: 'Customer name',
-      width: 150,
-      align: 'left',
-      headerAlign: 'center',
-    },
-    {
-      field: 'customerGroup',
-      headerName: 'Customer group',
-      width: 120,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'totalPrice',
-      headerName: 'Price',
-      width: 100,
-      align: 'right',
-      headerAlign: 'center',
-    },
-    {
-      field: 'createTime',
-      headerName: 'Create time',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 200,
-      align: 'center',
-      headerAlign: 'center',
-    },
-  ]
-
-  const content = listOrder.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      customerID: item?.buyer?.id,
-      customerName: item?.buyer?.username,
-      customerGroup: item?.buyer?.rank?.name,
-      totalPrice: formatNumber(item?.totalPrice),
-      createTime: item?.createTime,
-      status: item?.status,
-    }
-  })
-
-  const action = [
+  const actionColumn = [
     {
       headerName: 'Action',
       width: 150,
@@ -162,6 +88,105 @@ const OrderComponent = () => {
     },
   ]
 
+  const orderHeader = [
+    {
+      field: 'stt',
+      headerName: 'No',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'id',
+      headerName: 'Order ID',
+      width: 80,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'customerID',
+      headerName: 'Customer ID',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.id}`,
+    },
+    {
+      field: 'customerName',
+      headerName: 'Customer name',
+      width: 200,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.fullname}`,
+    },
+    {
+      field: 'customerGroup',
+      headerName: 'Customer group',
+      width: 120,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.rank?.name}`,
+    },
+    {
+      field: 'totalPrice',
+      headerName: 'Price',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+      renderCell: (params) => `${formatNumber(params?.row?.totalPrice)}`,
+    },
+    {
+      field: 'createTime',
+      headerName: 'Create time',
+      width: 180,
+      align: 'center',
+      headerAlign: 'center',
+    },
+    {
+      field: 'status',
+      headerName: 'Status',
+      width: 200,
+      align: 'center',
+      headerAlign: 'center',
+    },
+  ]
+
+  const updateData = (k, v) => setListOrder((prev) => ({ ...prev, [k]: v }))
+
+  useEffect(() => {
+    getListOrder({
+      page: listOrder.page,
+      size: listOrder.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setListOrder({
+        ...listOrder,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListOrder({
+      page: listOrder.page,
+      size: listOrder.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setListOrder({
+        ...listOrder,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [listOrder.page, listOrder.pageSize])
+
   return (
     <div className="order">
       <Sidebar />
@@ -174,10 +199,22 @@ const OrderComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
-                columns={header.concat(action)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                rows={listOrder.rows}
+                columns={orderHeader.concat(actionColumn)}
+                paginationMode="server"
+                loading={listOrder.loading}
+                rowCount={listOrder.totalRows}
+                page={listOrder.page - 1}
+                pageSize={listOrder.pageSize}
+                rowsPerPageOptions={listOrder.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',
