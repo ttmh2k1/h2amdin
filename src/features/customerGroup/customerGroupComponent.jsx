@@ -58,7 +58,7 @@ const CustomerGroupComponent = () => {
       stt: index + 1,
       id: item?.id,
       name: item?.name,
-      discountRate: item?.discountRate + '%',
+      discountRate: item?.discountRate * 100 + '%',
     }
   })
 

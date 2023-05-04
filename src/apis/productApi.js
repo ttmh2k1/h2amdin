@@ -6,6 +6,11 @@ import api, { SERVICE } from './api';
  * @param {*} req
  * @returns {Promise<import('axios').AxiosResponse<any>>}
  */
+export function getListProductSearch(req) {
+    const queries = combineQueriesUrl({ ...req });
+    return api.GET(`${SERVICE}/api/admin/product-manage?size=500${queries}`);
+}
+
 export function getListProduct(req) {
     const queries = combineQueriesUrl({ ...req });
     return api.GET(`${SERVICE}/api/admin/product-manage${queries}`);

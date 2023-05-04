@@ -55,6 +55,20 @@
         align-items: center;
         gap: 1rem;
 
+        .importButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #104e7a;
+
+          &:hover {
+            background-color: #1a6aa2;
+          }
+        }
         .backButton {
           font-size: 1rem;
           justify-content: center;

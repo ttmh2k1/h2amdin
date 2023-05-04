@@ -59,7 +59,7 @@ const CustomerGroupComponent = () => {
                     disabled
                     className="textField"
                     id="customerGroupDiscount"
-                    value={customerGroup?.discountRate}
+                    value={customerGroup?.discountRate * 100 + '%'}
                   />
                 </div>
               </Grid>

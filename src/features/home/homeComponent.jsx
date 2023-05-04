@@ -6,7 +6,7 @@ import { FaBox, FaChartPie, FaReceipt, FaUser } from 'react-icons/fa'
 import Navbar from '../../components/navbar/Navbar'
 import Chart from '../../components/chart/Chart'
 import Widget from '../../components/widget/Widget'
-import { formatNumber } from '../../utils/functionHelper'
+import { formatMoney } from '../../utils/functionHelper'
 
 const HomeComponent = () => {
   const [statistic, setStatistic] = useState()
@@ -29,7 +29,7 @@ const HomeComponent = () => {
           <div className="widgets">
             <Widget
               title={'REVENUE'}
-              data={statistic?.income ? formatNumber(statistic?.income) : 0}
+              data={statistic?.income ? formatMoney(statistic?.income) : 0}
               icon={
                 <FaChartPie
                   className="icon"

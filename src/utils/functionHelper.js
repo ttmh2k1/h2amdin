@@ -50,11 +50,16 @@ export function getAvailablePage(page, limit, total) {
     return result;
 }
 
-export function formatNumber(num) {
+export function formatMoney(num) {
     if (!num) return num;
     // return `${num.toLocaleString('en-UK').split('.')[0]}`;
     // console.log(num);
     // console.log(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     // return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+}
+
+export function formatNumber(num) {
+    if (!num) return num;
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
