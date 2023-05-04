@@ -10,7 +10,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { FaArrowCircleLeft, FaSave } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { Divider, Typography } from 'antd'
-import { formatNumber } from '../../../utils/functionHelper'
+import { formatMoney } from '../../../utils/functionHelper'
 
 const OrderComponent = () => {
   const [order, setOrder] = useState({ status: '' })
@@ -92,9 +92,9 @@ const OrderComponent = () => {
       id: item?.variation?.product?.id,
       productName: item?.variation?.product?.name,
       variationName: item?.variation?.name,
-      price: formatNumber(item?.variation?.price),
+      price: formatMoney(item?.variation?.price),
       discount: item?.variation?.discount + '%',
-      priceAfterDiscount: formatNumber(item?.variation?.priceAfterDiscount),
+      priceAfterDiscount: formatMoney(item?.variation?.priceAfterDiscount),
       quantity: item?.quantity,
     }
   })
@@ -325,11 +325,11 @@ const OrderComponent = () => {
                 >
                   <Typography>
                     {'Price: '}
-                    {formatNumber(order?.price)}
+                    {formatMoney(order?.price)}
                   </Typography>
                   {/* <Typography>
                     {'Customer discount: - '}
-                    {formatNumber(
+                    {formatMoney(
                       order?.buyer?.rank?.discountRate *
                         order?.orderDetails
                           ?.map((item) => {
@@ -340,7 +340,7 @@ const OrderComponent = () => {
                   </Typography> */}
                   <Typography>
                     {'Ship: '}
-                    {formatNumber(order?.shipPrice)}
+                    {formatMoney(order?.shipPrice)}
                   </Typography>
                   <Divider style={{ width: '100%' }} />
                   <div style={{ display: 'flex' }}>
@@ -350,7 +350,7 @@ const OrderComponent = () => {
                       }}
                     >
                       {'Total price: '}
-                      {formatNumber(order?.totalPrice)}
+                      {formatMoney(order?.totalPrice)}
                     </Typography>
                   </div>
                 </Grid>

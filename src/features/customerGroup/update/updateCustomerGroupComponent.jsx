@@ -1,17 +1,20 @@
 import './updateCustomerGroupStyle.scss'
-import { Grid, TextField } from '@mui/material'
-import ContentBox from '../../../components/ContentBox'
+import { Button, Grid, TextField } from '@mui/material'
 import Navbar from '../../../components/navbar/Navbar'
 import Sidebar from '../../../components/sidebar/Sidebar'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCustomerGroup, updateCustomerGroup } from '../../../apis/customerGroupApi'
 import { FaArrowCircleLeft, FaSave } from 'react-icons/fa'
-import { Button } from '@material-ui/core'
+
 import { toast } from 'react-toastify'
 
 const CustomerGroupComponent = () => {
   const [customerGroup, setCustomerGroup] = useState()
+  console.log(
+    '🚀 ~ file: updateCustomerGroupComponent.jsx:14 ~ CustomerGroupComponent ~ customerGroup:',
+    customerGroup,
+  )
   const params = useParams()
   const customerGroupId = params.customerGroupId
   const navigate = useNavigate()
@@ -39,7 +42,7 @@ const CustomerGroupComponent = () => {
   const handleSave = async () => {
     const discountRate = customerGroup?.discountRate
     try {
-      await updateCustomerGroup(customerGroupId, discountRate)
+      await updateCustomerGroup(customerGroupId, discountRate * 100)
       toast.success('Update successful!', style)
       setTimeout(() => {
         navigate('/customerGroup')
@@ -88,9 +91,12 @@ const CustomerGroupComponent = () => {
                     className="textField"
                     id="customerGroupDiscount"
                     type="number"
-                    value={customerGroup?.discountRate}
+                    value={customerGroup?.discountRate * 100}
                     onChange={(e) =>
-                      setCustomerGroup((state) => ({ ...state, discountRate: e.target.value }))
+                      setCustomerGroup((state) => ({
+                        ...state,
+                        discountRate: e.target.value / 100,
+                      }))
                     }
                   />
                 </div>

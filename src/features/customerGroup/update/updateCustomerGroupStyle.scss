@@ -55,20 +55,7 @@
         justify-content: flex-end;
         align-items: center;
         gap: 1rem;
-        .backButton {
-          font-size: 1rem;
-          justify-content: center;
-          text-transform: none;
-          margin: 0.8rem 0rem;
-          padding: 0.2rem 1rem;
-          border-radius: 0.2rem;
-          color: #fff;
-          background-color: #bcccdc;
 
-          &:hover {
-            background-color: #829ab0;
-          }
-        }
         .saveButton {
           font-size: 1rem;
           justify-content: center;
@@ -81,6 +68,21 @@
 
           &:hover {
             background-color: #243a52;
+          }
+        }
+
+        .backButton {
+          font-size: 1rem;
+          justify-content: center;
+          text-transform: none;
+          margin: 0.8rem 0rem;
+          padding: 0.2rem 1rem;
+          border-radius: 0.2rem;
+          color: #fff;
+          background-color: #bcccdc;
+
+          &:hover {
+            background-color: #829ab0;
           }
         }
       }

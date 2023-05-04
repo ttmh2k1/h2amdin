@@ -8,7 +8,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { getListOrder, updateOrder } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
-import { formatNumber } from '../../utils/functionHelper'
+import { formatMoney } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
 
 const OrderComponent = () => {
@@ -134,7 +134,7 @@ const OrderComponent = () => {
       width: 100,
       align: 'right',
       headerAlign: 'center',
-      renderCell: (params) => `${formatNumber(params?.row?.totalPrice)}`,
+      renderCell: (params) => `${formatMoney(params?.row?.totalPrice)}`,
     },
     {
       field: 'createTime',

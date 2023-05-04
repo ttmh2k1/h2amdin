@@ -8,7 +8,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { listDelivery, listDelivery1, updateOrder } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
-import { formatNumber } from '../../utils/functionHelper'
+import { formatMoney } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
 
 const DeliveryComponent = () => {
@@ -127,7 +127,7 @@ const DeliveryComponent = () => {
       customerID: item?.buyer?.id,
       customerName: item?.buyer?.fullname,
       customerGroup: item?.buyer?.rank?.name,
-      price: formatNumber(item?.price),
+      price: formatMoney(item?.price),
       createTime: item?.createTime,
       status: item?.status,
     }

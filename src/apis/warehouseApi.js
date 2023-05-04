@@ -10,3 +10,7 @@ export function getListWarehouse(req) {
     const queries = combineQueriesUrl({ ...req });
     return api.GET(`${SERVICE}/api/admin/inventory-manage${queries}`);
 }
+
+export function importWarehouse(params) {
+    return api.POST(`${SERVICE}/api/admin/inventory-manage`, params);
+}

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import './updateProductStyle.scss'
 import { useEffect, useState } from 'react'
 import Navbar from '../../../components/navbar/Navbar'

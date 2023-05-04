@@ -15,7 +15,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getProduct } from '../../../apis/productApi'
 import { Image } from 'antd'
-import { formatNumber } from '../../../utils/functionHelper'
+import { formatMoney } from '../../../utils/functionHelper'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 
 const ProductComponent = () => {
@@ -192,7 +192,7 @@ const ProductComponent = () => {
                                           disabled
                                           className="textField"
                                           id="name"
-                                          value={formatNumber(variation?.name)}
+                                          value={formatMoney(variation?.name)}
                                         />
                                       </div>
                                       <div className="form">
@@ -203,7 +203,7 @@ const ProductComponent = () => {
                                           disabled
                                           className="textField"
                                           id="price"
-                                          value={formatNumber(variation?.price)}
+                                          value={formatMoney(variation?.price)}
                                         />
                                       </div>
                                       <div className="form">
@@ -214,7 +214,7 @@ const ProductComponent = () => {
                                           disabled
                                           className="textField"
                                           id="discount"
-                                          value={formatNumber(variation?.discount)}
+                                          value={formatMoney(variation?.discount)}
                                         />
                                       </div>
                                       <div className="form">
@@ -225,7 +225,7 @@ const ProductComponent = () => {
                                           disabled
                                           className="textField"
                                           id="priceAfterDiscount"
-                                          value={formatNumber(variation?.priceAfterDiscount)}
+                                          value={formatMoney(variation?.priceAfterDiscount)}
                                         />
                                       </div>
                                       <div className="form">

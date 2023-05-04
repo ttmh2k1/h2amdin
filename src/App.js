@@ -25,6 +25,7 @@ import Customer from "./pages/customer/CustomerPage"
 import ViewCustomer from "./pages/customer/view/ViewCustomerPage"
 import UpdateCustomer from "./pages/customer/update/UpdateCustomerPage"
 import Warehouse from "./pages/warehouse/WarehousePage"
+import ImportWarehouse from "./pages/warehouse/import/ImportWarehousePage"
 import BusinessReport from "./pages/businessReport/BusinessReportPage"
 import SystemReport from "./pages/systemReport/SystemReportPage"
 // import ChangePassword from "./pages/changePassword"
@@ -102,6 +103,7 @@ function App() {
           </Route>
           <Route path="warehouse">
             <Route index element={<Warehouse />} />
+            <Route path="import" element={<ImportWarehouse />} />
           </Route>
           <Route path="businessReport">
             <Route index element={<BusinessReport />} />
