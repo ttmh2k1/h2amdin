@@ -59,7 +59,7 @@ const RoleComponent = () => {
       <Sidebar />
       <div className="roleContainer">
         <Navbar />
-        <div className="body">
+        <div className="roleBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/role">Role</a>
           </div>

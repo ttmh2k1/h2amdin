@@ -1,0 +1,475 @@
+.app.dark {
+  background-color: #102a42;
+  color: #dae2ec;
+  .div1 {
+    display: flex;
+    width: 100%;
+
+    .div2 {
+      flex: 6;
+      background-color: #eee;
+
+      .div3 {
+        margin: 1rem 1.2rem;
+      }
+    }
+  }
+  .homeContainer,
+  .userContainer,
+  .viewUserContainer,
+  .roleContainer,
+  .logsContainer,
+  .orderContainer,
+  .viewOrderContainer,
+  .approveOrderContainer,
+  .deliveryContainer,
+  .viewDeliveryContainer,
+  .productGroupContainer,
+  .viewProductGroupContainer,
+  .updateProductGroupContainer,
+  .productContainer,
+  .createProductContainer,
+  .viewProductContainer,
+  .updateProductContainer,
+  .customerGroupContainer,
+  .viewCustomerGroupContainer,
+  .updateCustomerGroupContainer,
+  .customerContainer,
+  .viewCustomerContainer,
+  .updateCustomerContainer,
+  .warehouseContainer,
+  .importWarehouseContainer,
+  .businessReportContainer,
+  .systemReportContainer,
+  .notifyContainer {
+    background-color: #243a52;
+
+    .homeBody,
+    .userBody,
+    .viewUserBody,
+    .roleBody,
+    .logsBody,
+    .orderBody,
+    .viewOrderBody,
+    .approveOrderBody,
+    .deliveryBody,
+    .viewDeliveryBody,
+    .productGroupBody,
+    .viewProductGroupBody,
+    .updateProductGroupBody,
+    .productBody,
+    .createProductBody,
+    .viewProductBody,
+    .updateProductBody,
+    .customerGroupBody,
+    .viewCustomerGroupBody,
+    .updateCustomerGroupBody,
+    .customerBody,
+    .viewCustomerBody,
+    .updateCustomerBody,
+    .warehouseBody,
+    .importWarehouseBody,
+    .businessReportBody,
+    .systemReportBody,
+    .notifyBody {
+      .title {
+        color: #dae2ec;
+        a {
+          color: #dae2ec;
+        }
+      }
+
+      .template {
+        .datatable {
+          .MuiDataGrid-main {
+            background-color: #48647f;
+            color: #dae2ec;
+          }
+          .MuiDataGrid-footerContainer {
+            background-color: #48647f;
+          }
+          .MuiTablePagination-root {
+            color: #dae2ec;
+          }
+        }
+      }
+
+      .widgets {
+        .widget {
+          background-color: #324d67 !important;
+          box-shadow: 0.2rem 0.4rem 0.8rem 0.08rem #243a52 !important;
+          .left {
+            .link {
+              a {
+                color: #9eb2c7 !important;
+              }
+            }
+          }
+        }
+      }
+
+      .charts {
+        .chart {
+          background-color: #324d67 !important;
+          box-shadow: 0.2rem 0.4rem 0.8rem 0.08rem #243a52 !important;
+        }
+      }
+    }
+
+    .homeForm,
+    .userForm,
+    .viewUserForm,
+    .roleForm,
+    .logsForm,
+    .orderForm,
+    .viewOrderForm,
+    .approveOrderForm,
+    .deliveryForm,
+    .viewDeliveryForm,
+    .productGroupForm,
+    .viewProductGroupForm,
+    .updateProductGroupForm,
+    .productForm,
+    .createProductForm,
+    .viewProductForm,
+    .updateProductForm,
+    .customerGroupForm,
+    .viewCustomerGroupForm,
+    .updateCustomerGroupForm,
+    .customerForm,
+    .viewCustomerForm,
+    .updateCustomerForm,
+    .warehouseForm,
+    .importWarehouseForm,
+    .businessReportForm,
+    .systemReportForm,
+    .notifyForm {
+      background-color: #324d67 !important;
+      border-radius: 0.4rem !important;
+      border: 0.08rem solid #48647f !important;
+
+      .header,
+      .levelHeader {
+        color: #dae2ec !important;
+      }
+
+      .form {
+        .title {
+          color: #bcccdc !important;
+        }
+
+        .textField {
+          background: #48647f !important;
+          border-radius: 0.4rem !important;
+          .MuiInputBase-root {
+            background: #48647f !important;
+            color: #9eb2c7 !important;
+            .Mui-disabled {
+              background: #48647f !important;
+              border-radius: 0.4rem !important;
+              color: #9eb2c7 !important;
+              -webkit-text-fill-color: inherit !important;
+            }
+          }
+        }
+
+        .select {
+          background-color: #48647f !important;
+          border-radius: 0.4rem !important;
+          .MuiSelect-select {
+            background-color: #48647f !important;
+            border-radius: 0.4rem !important;
+            color: #9eb2c7 !important;
+          }
+        }
+      }
+
+      .group {
+        .headerGroup {
+          background-color: #243a52 !important;
+        }
+      }
+
+      .MuiPaper-root {
+        background-color: #617d98 !important;
+        color: #dae2ec !important;
+      }
+
+      .MuiBox-root {
+        background-color: #48647f !important;
+        border: none !important;
+      }
+
+      .MuiButtonBase-root {
+        .titleGroup {
+          color: #dae2ec !important;
+        }
+      }
+
+      .text {
+        color: #dae2ec !important;
+      }
+
+      .descriptionForm {
+        .descriptionTitle {
+          color: #bcccdc !important;
+        }
+        .description {
+          background-color: #48647f !important;
+          color: #9eb2c7 !important;
+        }
+      }
+
+      .titleAvatar {
+        color: #bcccdc !important;
+      }
+
+      .imagesGroup {
+        .titleImage {
+          color: #bcccdc !important;
+        }
+        .MuiButtonBase-root {
+          display: -webkit-inline-box !important;
+          -webkit-box-pack: start !important;
+          width: 100% !important;
+          background-color: #243a52 !important;
+          color: #dae2ec !important;
+          .titleGroup {
+            color: #dae2ec !important;
+          }
+        }
+      }
+
+      .groupGroup {
+        .title {
+          color: #bcccdc !important;
+        }
+        .option,
+        .variation {
+          background-color: #617d98 !important;
+        }
+        .groupParent {
+          background-color: #48647f !important;
+          .titleParent {
+            color: #dae2ec !important;
+          }
+        }
+      }
+
+      .MuiButton-text {
+        color: #bcccdc !important;
+      }
+
+      .groupParent {
+        .MuiButtonBase-root {
+          display: -webkit-inline-box !important;
+          -webkit-box-pack: start !important;
+          width: 100% !important;
+          background-color: #243a52 !important;
+          color: #dae2ec !important;
+          .titleGroup {
+            color: #dae2ec !important;
+          }
+        }
+        .titleParent {
+          color: #dae2ec !important;
+        }
+        .title {
+          color: #bcccdc !important;
+        }
+        .option,
+        .variation {
+          background-color: #617d98 !important;
+        }
+
+        .groupParent {
+          background-color: #48647f !important;
+          .titleParent {
+            color: #dae2ec !important;
+          }
+          .textFieldOption {
+            background: #617d98 !important;
+            border-radius: 0.4rem !important;
+            .MuiInputBase-root {
+              background: #617d98 !important;
+              color: #bcccdc !important;
+              .Mui-disabled {
+                background: #617d98 !important;
+                border-radius: 0.4rem !important;
+                color: #bcccdc !important;
+                -webkit-text-fill-color: inherit !important;
+              }
+            }
+          }
+
+          .group {
+            .textField {
+              background: #617d98 !important;
+              border-radius: 0.4rem !important;
+              .MuiInputBase-root {
+                background: #617d98 !important;
+                color: #bcccdc !important;
+                .Mui-disabled {
+                  background: #617d98 !important;
+                  border-radius: 0.4rem !important;
+                  color: #bcccdc !important;
+                  -webkit-text-fill-color: inherit !important;
+                }
+              }
+            }
+            .select {
+              background-color: #617d98 !important;
+              border-radius: 0.4rem !important;
+              .MuiSelect-select {
+                background-color: #617d98 !important;
+                border-radius: 0.4rem !important;
+                color: #bcccdc !important;
+              }
+            }
+
+            .level {
+              .textField {
+                background: #617d98 !important;
+                border-radius: 0.4rem !important;
+                .MuiInputBase-root {
+                  background: #617d98 !important;
+                  color: #bcccdc !important;
+                  .Mui-disabled {
+                    background: #617d98 !important;
+                    border-radius: 0.4rem !important;
+                    color: #bcccdc !important;
+                    -webkit-text-fill-color: inherit !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .revenueStatistics {
+      background-color: #324d67 !important;
+      .filter {
+        .form {
+          .title {
+            color: #dae2ec !important;
+          }
+          .select {
+            background-color: #617d98 !important;
+            border-radius: 0.4rem !important;
+            color: #bcccdc !important;
+            .MuiSelect-select {
+              background-color: #617d98 !important;
+              border-radius: 0.4rem !important;
+              color: #bcccdc !important;
+            }
+          }
+          .filterButton {
+            background-color: #617d98 !important;
+            color: #bcccdc !important;
+          }
+        }
+      }
+      .chartSystem {
+        span {
+          color: #dae2ec !important;
+        }
+      }
+    }
+
+    .systemStatistic {
+      background-color: #324d67 !important;
+      .filter {
+        .form {
+          .title {
+            color: #dae2ec !important;
+          }
+          .select {
+            background-color: #617d98 !important;
+            border-radius: 0.4rem !important;
+            color: #bcccdc !important;
+            .MuiSelect-select {
+              background-color: #617d98 !important;
+              border-radius: 0.4rem !important;
+              color: #bcccdc !important;
+            }
+          }
+          .filterButton {
+            background-color: #617d98 !important;
+            color: #bcccdc !important;
+          }
+        }
+      }
+      .chartSystem {
+        span {
+          color: #dae2ec !important;
+        }
+      }
+    }
+  }
+
+  .addButton {
+    background-color: #48647f !important;
+    color: #dae2ec !important;
+    svg {
+      color: #dae2ec !important;
+    }
+    &:hover {
+      background-color: #243a52 !important;
+    }
+  }
+
+  .backButton {
+    background-color: #48647f !important;
+    color: #dae2ec !important;
+    svg {
+      color: #dae2ec !important;
+    }
+    &:hover {
+      background-color: #829ab0 !important;
+    }
+  }
+
+  .createButton,
+  .importButton,
+  .saveButton {
+    background-color: #829ab0 !important;
+    color: #dae2ec !important;
+    svg {
+      color: #dae2ec !important;
+    }
+    &:hover {
+      background-color: #48647f !important;
+    }
+  }
+
+  .sidebar {
+    .header {
+      background-color: #243a52;
+    }
+    .links {
+      color: #9eb2c7;
+      .items {
+        color: #a5d5f8;
+        &:hover {
+          background: #243a52;
+          color: #a5d5f8;
+        }
+        svg {
+          color: #a5d5f8;
+        }
+      }
+    }
+  }
+
+  .navbar {
+    border-bottom: 0.16rem solid #243a52;
+    color: #dae2ec;
+    background-color: #102a42;
+  }
+
+  .stockSum {
+    color: #9eb2c7 !important;
+  }
+}

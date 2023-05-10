@@ -142,7 +142,7 @@ const UserComponent = () => {
       <Sidebar />
       <div className="userContainer">
         <Navbar />
-        <div className="body">
+        <div className="userBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/user">User</a>
           </div>

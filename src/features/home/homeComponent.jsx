@@ -1,12 +1,12 @@
 import './homeStyle.scss'
 import React, { useEffect, useState } from 'react'
-import { statisticToday } from '../../apis/home'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { FaBox, FaChartPie, FaReceipt, FaUser } from 'react-icons/fa'
 import Navbar from '../../components/navbar/Navbar'
 import Chart from '../../components/chart/Chart'
 import Widget from '../../components/widget/Widget'
 import { formatMoney } from '../../utils/functionHelper'
+import { statisticToday } from '../../apis/home'
+import { FaBox, FaChartPie, FaReceipt, FaUser } from 'react-icons/fa'
 
 const HomeComponent = () => {
   const [statistic, setStatistic] = useState()

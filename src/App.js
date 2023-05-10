@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext, useState } from "react"
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Home from "./pages/home"
 import LoginPage from "./pages/login/LoginPage"
@@ -28,11 +28,15 @@ import Warehouse from "./pages/warehouse/WarehousePage"
 import ImportWarehouse from "./pages/warehouse/import/ImportWarehousePage"
 import BusinessReport from "./pages/businessReport/BusinessReportPage"
 import SystemReport from "./pages/systemReport/SystemReportPage"
-// import ChangePassword from "./pages/changePassword"
+import Notification from './pages/notification'
+import './styles/dark.scss'
+import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
+  const { darkMode } = useContext(DarkModeContext);
+
   return (
-    <div>
+    <div className={darkMode ? "app dark" : "app"}>
       <BrowserRouter>
         <Routes>
           <Route path='/'>
@@ -110,6 +114,9 @@ function App() {
           </Route>
           <Route path="systemReport">
             <Route index element={<SystemReport />} />
+          </Route>
+          <Route path="notification">
+            <Route index element={<Notification />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,32 +1,60 @@
+import './navbar.scss'
 import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined'
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined'
+import DarkModeIcon from '@mui/icons-material/DarkMode'
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit'
 import ReorderOutlinedIcon from '@mui/icons-material/ReorderOutlined'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Avatar from 'react-avatar'
-import './navbar.scss'
+import { Link } from 'react-router-dom'
+import { DarkModeContext } from '../../context/darkModeContext'
+import useLocalStorage from 'use-local-storage'
 
 const Navbar = () => {
+  const { dispatch } = useContext(DarkModeContext)
+  const defaultDark = useContext(DarkModeContext).darkMode
+  const [theme, setTheme] = useLocalStorage('them', defaultDark ? true : false)
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(theme))
+  })
+  const switchTheme = () => {
+    const newTheme = theme === true ? false : true
+    setTheme(newTheme)
+  }
+
   return (
     <div className="navbar">
       <div className="wrapper">
         <div className="items">
-          <DarkModeOutlinedIcon className="icon" />
-        </div>
-        <div className="items">
-          <FullscreenExitIcon className="icon" />
+          {theme ? (
+            <DarkModeOutlinedIcon
+              className="icon"
+              onClick={() => {
+                switchTheme(theme)
+                dispatch({ type: 'MODE' })
+              }}
+            />
+          ) : (
+            <DarkModeIcon
+              className="icon"
+              style={{ color: '#243a52' }}
+              onClick={() => {
+                switchTheme(theme)
+                dispatch({ type: 'MODE' })
+              }}
+            />
+          )}
         </div>
         <div className="items">
           <ChatBubbleOutlineOutlinedIcon className="icon" />
           <div className="couter">1</div>
         </div>
         <div className="items">
-          <NotificationsNoneOutlinedIcon className="icon" />
-          <div className="couter">1</div>
-        </div>
-        <div className="items">
-          <ReorderOutlinedIcon className="icon" />
+          <Link to={'/notification'}>
+            <NotificationsNoneOutlinedIcon className="icon" />
+            <div className="couter">1</div>
+          </Link>
         </div>
         <div className="items">
           <Avatar className="avatar" name={localStorage.getItem('fullname')} />
@@ -35,6 +63,9 @@ const Navbar = () => {
             alt="avatar"
             className="avatar"
           /> */}
+        </div>{' '}
+        <div className="items">
+          <ReorderOutlinedIcon className="icon" />
         </div>
       </div>
     </div>

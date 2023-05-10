@@ -1,7 +1,7 @@
 import { Grid, MenuItem, TextareaAutosize, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { getListProductParent } from '../../../apis/productApi'
-import MultiLEvelSelect from '../../../components/MultiLevelSelect'
+import MultiLevelSelect from '../../../components/MultiLevelSelect'
 
 export const ProductDetail = ({ product, setProduct }) => {
   const [listCategory, setListCategory] = useState([])
@@ -43,8 +43,8 @@ export const ProductDetail = ({ product, setProduct }) => {
             <label className="title" for="productParent">
               Product group
             </label>
-            <MultiLEvelSelect
-              className="select"
+            <MultiLevelSelect
+              className="levelSelect"
               id="productParent"
               value={idCategory}
               options={listCategory}
@@ -58,7 +58,7 @@ export const ProductDetail = ({ product, setProduct }) => {
                   {item.name}
                 </MenuItem>
               ))}
-            </MultiLEvelSelect>
+            </MultiLevelSelect>
           </div>
         </Grid>
       </div>

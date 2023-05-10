@@ -1,12 +1,12 @@
-.user {
+.notify {
   display: flex;
   width: 100%;
 
-  .userContainer {
+  .notifyContainer {
     flex: 6;
     background-color: #eee;
 
-    .userBody {
+    .notifyBody {
       margin: 1rem 1.2rem;
       .title {
         color: #324d67;
@@ -30,27 +30,10 @@
               font-size: 0.8rem !important;
             }
           }
-
-          .cellAction {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-
-            .viewButton {
-              display: flex;
-              align-items: center;
-              padding: 0.4rem;
-              border-radius: 0.2rem;
-              border: 0.1rem solid #9eb2c7;
-              color: #9eb2c7;
-              cursor: pointer;
-            }
-          }
         }
       }
 
-      .userFooter {
+      .notifyFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;

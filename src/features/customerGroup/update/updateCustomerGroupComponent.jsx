@@ -11,10 +11,6 @@ import { toast } from 'react-toastify'
 
 const CustomerGroupComponent = () => {
   const [customerGroup, setCustomerGroup] = useState()
-  console.log(
-    '🚀 ~ file: updateCustomerGroupComponent.jsx:14 ~ CustomerGroupComponent ~ customerGroup:',
-    customerGroup,
-  )
   const params = useParams()
   const customerGroupId = params.customerGroupId
   const navigate = useNavigate()

@@ -18,9 +18,7 @@ const ImportWarehouseComponent = () => {
   const [listProduct, setListProduct] = useState([]) //lấy danh sách sản phẩm
   const [productId, setProductId] = useState(null) //lấy id sản phẩm
   const [selected, setSelected] = useState(null) //lấy thông tin sản phẩm đã chọn
-  // const [listVariation, setListVariation] = useState([]) //lấy danh sách thuộc tính
   const [variation, setVariation] = useState(null) //lấy thông tin thuộc tính
-  // const [variationId, setVariationId] = useState(null)
   const [quantity, setQuantity] = useState(null)
   const [warehouse, setWarehouse] = useState([])
 
@@ -42,19 +40,27 @@ const ImportWarehouseComponent = () => {
       width: 50,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
     },
     {
-      field: 'id',
+      field: 'idProduct',
       headerName: 'Product ID',
-      width: 100,
+      width: 120,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'productName',
       headerName: 'Product name',
-      width: 500,
+      width: 480,
       align: 'left',
+      headerAlign: 'center',
+    },
+    {
+      field: 'id',
+      headerName: 'Variation ID',
+      width: 100,
+      align: 'center',
       headerAlign: 'center',
     },
     {
@@ -83,8 +89,9 @@ const ImportWarehouseComponent = () => {
   const content = warehouse.map((item, index) => {
     return {
       stt: index + 1,
-      id: item?.variation?.id || 2,
+      idProduct: item?.id || 2,
       productName: item?.name,
+      id: item?.variation?.id || 2,
       variationName: item?.variation?.name,
       price: formatMoney(item?.variation?.price),
       quantity: formatNumber(item?.quantity),
@@ -109,6 +116,13 @@ const ImportWarehouseComponent = () => {
     },
   ]
 
+  const [sortModel, setSortModel] = useState([
+    {
+      field: 'idProduct',
+      sort: 'asc',
+    },
+  ])
+
   const onChange = (event, params) => {
     setSelected(params)
     setProductId(params.id)
@@ -127,6 +141,7 @@ const ImportWarehouseComponent = () => {
     const existProduct = warehouse?.findIndex(
       (product) => product.variation.id === newWarehouse.variation.id,
     )
+
     // Khi da co sp trong list
     if (existProduct !== -1) {
       warehouse[existProduct].quantity += newWarehouse?.quantity
@@ -157,7 +172,6 @@ const ImportWarehouseComponent = () => {
         _.mergeWith({}, ...g, (obj, src) => (_.isArray(obj) ? obj.concat(src) : undefined)),
       )
       .value()
-    console.log('🚀 ~ file: importWarehouseComponent.jsx:155 ~ handleImport ~ _:', result)
     try {
       await importWarehouse({ inventories: result })
       toast.success('Update successful!', style)
@@ -305,6 +319,7 @@ const ImportWarehouseComponent = () => {
                 <div className="template">
                   <div className="datatable">
                     <Tab
+                      sortModel={sortModel}
                       rows={content}
                       columns={header.concat(actionButton)}
                       pageSize={5}

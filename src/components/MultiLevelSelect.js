@@ -20,7 +20,7 @@ const Select = ({ id, name, children, onChange }) => {
     )
 }
 
-export default function MultiLEvelSelect({ defaultValue, options, value, onChange }) {
+export default function MultiLevelSelect({ defaultValue, options, value, onChange }) {
     const [show, setShow] = React.useState(false)
     const [onHover, setOnHover] = React.useState(false);
     const handleChange = (e) => {
