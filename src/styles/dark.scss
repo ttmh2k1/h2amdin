@@ -98,11 +98,12 @@
         .widget {
           background-color: #324d67 !important;
           box-shadow: 0.2rem 0.4rem 0.8rem 0.08rem #243a52 !important;
-          .left {
-            .link {
-              a {
-                color: #9eb2c7 !important;
-              }
+
+          .link {
+            color: #9eb2c7 !important;
+            a,
+            a:visited {
+              color: #9eb2c7 !important;
             }
           }
         }
@@ -348,36 +349,37 @@
       }
     }
 
-    .revenueStatistics {
-      background-color: #324d67 !important;
-      .filter {
-        .form {
-          .title {
-            color: #dae2ec !important;
-          }
-          .select {
-            background-color: #617d98 !important;
-            border-radius: 0.4rem !important;
-            color: #bcccdc !important;
-            .MuiSelect-select {
-              background-color: #617d98 !important;
-              border-radius: 0.4rem !important;
-              color: #bcccdc !important;
-            }
-          }
-          .filterButton {
-            background-color: #617d98 !important;
-            color: #bcccdc !important;
-          }
-        }
-      }
-      .chartSystem {
-        span {
-          color: #dae2ec !important;
-        }
-      }
-    }
+    // .revenueStatistics {
+    //   background-color: #324d67 !important;
+    //   .filter {
+    //     .form {
+    //       .title {
+    //         color: #dae2ec !important;
+    //       }
+    //       .select {
+    //         background-color: #617d98 !important;
+    //         border-radius: 0.4rem !important;
+    //         color: #bcccdc !important;
+    //         .MuiSelect-select {
+    //           background-color: #617d98 !important;
+    //           border-radius: 0.4rem !important;
+    //           color: #bcccdc !important;
+    //         }
+    //       }
+    //       .filterButton {
+    //         background-color: #617d98 !important;
+    //         color: #bcccdc !important;
+    //       }
+    //     }
+    //   }
+    //   .chartSystem {
+    //     span {
+    //       color: #dae2ec !important;
+    //     }
+    //   }
+    // }
 
+    .revenueStatistics,
     .systemStatistic {
       background-color: #324d67 !important;
       .filter {
@@ -385,15 +387,10 @@
           .title {
             color: #dae2ec !important;
           }
-          .select {
+          select {
             background-color: #617d98 !important;
             border-radius: 0.4rem !important;
-            color: #bcccdc !important;
-            .MuiSelect-select {
-              background-color: #617d98 !important;
-              border-radius: 0.4rem !important;
-              color: #bcccdc !important;
-            }
+            color: #dae2ec !important;
           }
           .filterButton {
             background-color: #617d98 !important;
@@ -404,6 +401,37 @@
       .chartSystem {
         span {
           color: #dae2ec !important;
+        }
+        .recharts-tooltip-wrapper {
+          background-color: #617d98 !important;
+
+          .recharts-default-tooltip {
+            background-color: #617d98 !important;
+          }
+        }
+      }
+    }
+
+    .productReport {
+      background-color: #324d67 !important;
+      .productBg {
+        .title {
+          color: #bcccdc !important;
+        }
+        .MuiPaper-root {
+          border: 0.08rem solid #bcccdc !important;
+          background-color: #48647f !important;
+          color: #bcccdc !important;
+          .MuiTableCell-root {
+            background-color: #48647f !important;
+            color: #dae2ec !important;
+          }
+          a {
+            color: #dae2ec !important;
+          }
+          .MuiTableCell-body {
+            background-color: #617d98 !important;
+          }
         }
       }
     }
@@ -467,6 +495,12 @@
     border-bottom: 0.16rem solid #243a52;
     color: #dae2ec;
     background-color: #102a42;
+
+    .items {
+      a {
+        color: #dae2ec !important;
+      }
+    }
   }
 
   .stockSum {

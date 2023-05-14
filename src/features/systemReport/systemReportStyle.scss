@@ -70,6 +70,44 @@
         }
       }
 
+      .productReport {
+        background-color: #fff;
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        display: grid;
+        margin: 1vw 0;
+        justify-content: center;
+        grid-template-columns: 41vw 41vw;
+        grid-template-rows: 40vh 43vh;
+        grid-gap: 1vw;
+
+        .productBg {
+          display: flex;
+          flex-direction: column;
+          margin: 0.8rem;
+          .title {
+            margin: 0.1rem;
+            color: #324d67;
+          }
+          .list {
+            border: 0.08rem solid #48647f;
+            border-radius: 0.2rem;
+            margin: 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .MuiTableCell-head {
+              background-color: #bcccdc;
+            }
+            a {
+              color: #000;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+
       .systemReportFooter {
         display: flex;
         justify-content: flex-end;

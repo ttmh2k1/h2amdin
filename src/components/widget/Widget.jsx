@@ -16,7 +16,7 @@ const Widget = ({ type, data, title, icon, isMoney, link }) => {
 
   return (
     <div className="widget">
-      <div className="left">
+      <div className="model">
         <span className="title">
           {icon}
           {title}

@@ -65,6 +65,7 @@ const SystemReportComponent = () => {
                     setIncomeType(e.target.value)
                   }}
                 >
+                  <option hidden value="default"></option>
                   <option value="MONTH">Month</option>
                   <option value="QUARTER">Quarter</option>
                 </select>
@@ -79,6 +80,7 @@ const SystemReportComponent = () => {
                     setIncomeYear(e.target.value)
                   }}
                 >
+                  <option hidden value="default"></option>
                   <option value="2023">2023</option>
                   <option value="2022">2022</option>
                   <option value="2021">2021</option>
@@ -97,6 +99,7 @@ const SystemReportComponent = () => {
                         setIncomeMonth(e.target.value)
                       }}
                     >
+                      <option hidden value="default"></option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -132,6 +135,7 @@ const SystemReportComponent = () => {
                         setIncomeQuarter(e.target.value)
                       }}
                     >
+                      <option hidden value="default"></option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -158,14 +162,25 @@ const SystemReportComponent = () => {
                   height={300}
                   margin={{ top: 20, right: 100, left: 20, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="timeUnit" interval={'preserveStartEnd'} />
-                  <YAxis />
-                  <Tooltip
-                    contentStyle={{ backgroundColor: 'antiquewhite', borderRadius: '0.4rem' }}
+                  <CartesianGrid
+                    stroke={localStorage.getItem('theme') === 'false' ? '#ddd' : '#fff'}
+                    strokeDasharray="3 3"
                   />
+                  <XAxis
+                    dataKey="timeUnit"
+                    interval={'preserveStartEnd'}
+                    stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'}
+                  />
+                  <YAxis stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'} />
+                  <Tooltip contentStyle={{ backgroundColor: '#bcccdc', borderRadius: '0.4rem' }} />
                   <Legend />
-                  <Line type="monotone" dataKey="income" stroke="orange" activeDot={{ r: 8 }} />
+                  <Line
+                    type="monotone"
+                    dataKey="income"
+                    name="Income"
+                    stroke="orange"
+                    activeDot={{ r: 8 }}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>
