@@ -16,3 +16,19 @@ export function getStatisticMonth(month, year, type) {
 export function getStatisticQuarter(quarter, year, type) {
     return api.GET(`${SERVICE}/api/admin/statistic?quarter=${quarter}&year=${year}&type=${type}`);
 }
+
+export function getTopView() {
+    return api.GET(`${SERVICE}/api/product/most-viewed`)
+}
+
+export function getTopSale() {
+    return api.GET(`${SERVICE}/api/product/sale`)
+}
+
+export function getTopSold() {
+    return api.GET(`${SERVICE}/api/product/most-sold`)
+}
+
+export function getTopRating() {
+    return api.GET(`${SERVICE}/api/product/high-rating`)
+}

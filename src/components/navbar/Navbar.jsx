@@ -13,7 +13,7 @@ import useLocalStorage from 'use-local-storage'
 const Navbar = () => {
   const { dispatch } = useContext(DarkModeContext)
   const defaultDark = useContext(DarkModeContext).darkMode
-  const [theme, setTheme] = useLocalStorage('them', defaultDark ? true : false)
+  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? true : false)
 
   useEffect(() => {
     localStorage.setItem('theme', JSON.stringify(theme))

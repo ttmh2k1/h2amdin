@@ -3,7 +3,7 @@ import DarkModeReducer from "./darkModeReducer";
 
 
 const INITIAL_STATE = {
-  darkMode: JSON.parse(localStorage.getItem('theme'))
+  darkMode: JSON.parse(localStorage.getItem('theme')) || false
 };
 
 export const DarkModeContext = createContext(INITIAL_STATE);
