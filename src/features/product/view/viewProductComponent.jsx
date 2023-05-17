@@ -255,7 +255,7 @@ const ProductComponent = () => {
             <div className="avatar">
               <label className="titleAvatar">Avatar</label>
               <div className="imageAvatar">
-                <img src={product?.avatar} height="200rem" style={{ margin: '0.06rem' }} />
+                <img src={product?.avatar} alt="" height="200rem" style={{ margin: '0.06rem'}} />
               </div>
             </div>
 
