@@ -24,7 +24,7 @@ const LogsComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
@@ -32,7 +32,7 @@ const LogsComponent = () => {
     {
       field: 'id',
       headerName: 'ID',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
@@ -46,7 +46,7 @@ const LogsComponent = () => {
     {
       field: 'username',
       headerName: 'User name',
-      width: 200,
+      width: 150,
       align: 'left',
       headerAlign: 'center',
     },
@@ -60,7 +60,7 @@ const LogsComponent = () => {
     {
       field: 'content',
       headerName: 'Content',
-      width: 500,
+      width: 450,
       align: 'left',
       headerAlign: 'center',
     },

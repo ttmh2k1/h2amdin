@@ -98,7 +98,7 @@ const WarehouseComponent = () => {
     {
       field: 'nSold',
       headerName: 'Quantity sold',
-      width: 150,
+      width: 100,
       align: 'right',
       headerAlign: 'center',
 

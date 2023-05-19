@@ -62,7 +62,7 @@ const ProductComponent = () => {
     try {
       var transform = new FormData()
       const blob = new Blob(['{"isHidden": false}'], {
-        type: 'application/json',
+                type: 'application/json',
       })
       transform.append('info', blob)
 
@@ -108,7 +108,7 @@ const ProductComponent = () => {
               </div>
             </Link>
             <div className="disableButton">
-              {props?.row?.hidden === 'Active' ? (
+              {props?.row?.hidden === false ? (
                 <FaLock onClick={() => handleDisable(props.id)} />
               ) : (
                 <FaUnlock onClick={() => handleEnable(props.id)} />
@@ -142,7 +142,7 @@ const ProductComponent = () => {
     {
       field: 'name',
       headerName: 'Product name',
-      width: 600,
+      width: 550,
       align: 'left',
       headerAlign: 'center',
     },

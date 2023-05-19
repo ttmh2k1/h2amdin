@@ -4,7 +4,7 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import { getListCustomer, updateCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaPen, FaTrashAlt, FaUnlock } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaEye, FaLock, FaLockOpen, FaPen, FaTrashAlt, FaUnlock } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
@@ -76,10 +76,12 @@ const CustomerComponent = () => {
               </div>
             </Link>
             <div className="disableButton">
-              {props?.row?.status === 'Active' ? (
+              {props?.row?.status === 'ACTIVE' ? (
                 <FaLock onClick={() => handleDisable(props.id)} />
+              ) : props?.row?.status === 'BANNED' ? (
+                <FaLockOpen onClick={() => handleEnable(props.id)} />
               ) : (
-                <FaUnlock onClick={() => handleEnable(props.id)} />
+                <FaUnlock onClick={() => handleDisable(props.id)} />
               )}
             </div>
           </div>
@@ -121,7 +123,7 @@ const CustomerComponent = () => {
     {
       field: 'gender',
       headerName: 'Gender',
-      width: 100,
+      width: 80,
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => `${params?.row?.gender === 'FEMALE' ? 'Female' : 'Male'}`,

@@ -40,7 +40,7 @@ const RoleComponent = () => {
     {
       field: 'permissions',
       headerName: 'Permissions',
-      width: 700,
+      width: 650,
       align: 'center',
       headerAlign: 'center',
     },

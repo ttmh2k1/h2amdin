@@ -92,7 +92,7 @@ const OrderComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
@@ -100,7 +100,7 @@ const OrderComponent = () => {
     {
       field: 'id',
       headerName: 'Order ID',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
@@ -115,7 +115,7 @@ const OrderComponent = () => {
     {
       field: 'customerName',
       headerName: 'Customer name',
-      width: 200,
+      width: 100,
       align: 'left',
       headerAlign: 'center',
       renderCell: (params) => `${params?.row?.buyer?.fullname}`,
