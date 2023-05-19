@@ -37,7 +37,7 @@ const ImportWarehouseComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 50,
+      width: 80,
       align: 'center',
       headerAlign: 'center',
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
@@ -52,7 +52,7 @@ const ImportWarehouseComponent = () => {
     {
       field: 'productName',
       headerName: 'Product name',
-      width: 480,
+      width: 400,
       align: 'left',
       headerAlign: 'center',
     },

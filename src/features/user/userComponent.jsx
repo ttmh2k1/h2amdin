@@ -44,7 +44,7 @@ const UserComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
       renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
@@ -59,7 +59,7 @@ const UserComponent = () => {
     {
       field: 'username',
       headerName: 'User name',
-      width: 150,
+      width: 100,
       align: 'left',
       headerAlign: 'center',
     },

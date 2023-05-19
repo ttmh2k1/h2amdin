@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-
 import HomeComponent from '../features/home/homeComponent';
 
 function Home() {

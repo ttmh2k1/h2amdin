@@ -26,7 +26,7 @@ const CustomerGroupComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
@@ -47,7 +47,7 @@ const CustomerGroupComponent = () => {
     {
       field: 'discountRate',
       headerName: 'Customer group discount',
-      width: 250,
+      width: 200,
       align: 'center',
       headerAlign: 'center',
     },
