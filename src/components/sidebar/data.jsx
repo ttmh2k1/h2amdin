@@ -11,6 +11,7 @@ import {
   FaBox,
   FaUser,
   FaWarehouse,
+  FaTicketAlt,
 } from 'react-icons/fa'
 
 export const links = [
@@ -41,6 +42,11 @@ export const links = [
         url: '/order',
         text: 'Order',
         icon: <FaReceipt />,
+      },
+      {
+        url: '/voucher',
+        text: 'Voucher',
+        icon: <FaTicketAlt />,
       },
     ],
   },

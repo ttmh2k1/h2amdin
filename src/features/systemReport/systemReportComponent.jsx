@@ -233,7 +233,6 @@ const SystemReportComponent = () => {
       totalRatingTimes: item?.totalRatingTimes,
     }
   })
-  console.log('🚀 ~ file: systemReportComponent.jsx:229 ~ rating ~ topRating:', topRating)
 
   return (
     <div className="systemReport">
