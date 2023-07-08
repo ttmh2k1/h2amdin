@@ -1,8 +1,8 @@
 import './businessReportStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getStatisticMonth, getStatisticQuarter } from '../../apis/statistic'
-import { useState } from 'react'
+import { getStatistic } from '../../apis/statistic'
+import { useEffect, useState } from 'react'
 import {
   CartesianGrid,
   Legend,
@@ -19,25 +19,25 @@ import { useNavigate } from 'react-router-dom'
 
 const SystemReportComponent = () => {
   const [income, setIncome] = useState()
-  const [incomeType, setIncomeType] = useState()
-  const [incomYear, setIncomeYear] = useState()
-  const [incomeMonth, setIncomeMonth] = useState()
-  const [incomeQuarter, setIncomeQuarter] = useState()
+  const [theme, setTheme] = useState()
+
+  const [reportByQuarter, setReportByQuarter] = useState(false)
+  const [typeValue, setTypeValue] = useState('')
+  const [year, setYear] = useState('')
+
   const navigate = useNavigate()
 
-  const handleIncomeMonth = async () => {
-    try {
-      const resp = await getStatisticMonth(incomeMonth, incomYear, incomeType)
-      const data = resp?.data?.data
-      setIncome(data)
-    } catch (error) {
-      return error
-    }
-  }
+  useEffect(() => {
+    setTheme(localStorage?.getItem('theme'))
+  }, [localStorage])
 
-  const handleIncomeQuarter = async () => {
+  const handleGetStatisc = async () => {
     try {
-      const resp = await getStatisticQuarter(incomeQuarter, incomYear, incomeType)
+      const resp = await getStatistic({
+        reportByQuarter: reportByQuarter,
+        typeValue: typeValue,
+        year: year,
+      })
       const data = resp?.data?.data
       setIncome(data)
     } catch (error) {
@@ -57,30 +57,15 @@ const SystemReportComponent = () => {
           <div className="revenueStatistics">
             <div className="filter">
               <div className="form">
-                <div className="title">Type</div>
-                <select
-                  className="select"
-                  id="type"
-                  onChange={(e) => {
-                    setIncomeType(e.target.value)
-                  }}
-                >
-                  <option hidden value="default"></option>
-                  <option value="MONTH">Month</option>
-                  <option value="QUARTER">Quarter</option>
-                </select>
-              </div>
-
-              <div className="form">
                 <div className="title">Year</div>
                 <select
                   className="select"
                   id="year"
                   onChange={(e) => {
-                    setIncomeYear(e.target.value)
+                    setYear(e?.target?.value)
                   }}
                 >
-                  <option hidden value="default"></option>
+                  <option value="">All</option>
                   <option value="2023">2023</option>
                   <option value="2022">2022</option>
                   <option value="2021">2021</option>
@@ -88,101 +73,115 @@ const SystemReportComponent = () => {
                 </select>
               </div>
 
-              {incomeType && incomeType === 'MONTH' ? (
-                <>
-                  <div className="form">
-                    <div className="title">Month</div>
-                    <select
-                      className="select"
-                      id="incomeMonth"
-                      onChange={(e) => {
-                        setIncomeMonth(e.target.value)
-                      }}
-                    >
-                      <option hidden value="default"></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                      <option value="8">8</option>
-                      <option value="9">9</option>
-                      <option value="10">10</option>
-                      <option value="11">11</option>
-                      <option value="12">12</option>
-                    </select>
-                  </div>
+              <div className="form">
+                <div className="title">Type</div>
+                <select
+                  className="select"
+                  id="type"
+                  onChange={(e) => {
+                    setReportByQuarter(e?.target?.value)
+                  }}
+                >
+                  <option value="false">Month</option>
+                  <option value="true">Quarter</option>
+                </select>
+              </div>
 
-                  <div className="form">
-                    <button
-                      className="filterButton"
-                      onClick={() => handleIncomeMonth(incomeMonth, incomYear, incomeType)}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="form">
-                    <div className="title">Quarter</div>
-                    <select
-                      className="select"
-                      id="incomeQuarter"
-                      onChange={(e) => {
-                        setIncomeQuarter(e.target.value)
-                      }}
-                    >
-                      <option hidden value="default"></option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
-                  </div>
-                  <div className="form">
-                    <button
-                      className="filterButton"
-                      onClick={() => handleIncomeQuarter(incomeQuarter, incomYear, incomeType)}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </>
-              )}
+              <>
+                <div className="form">
+                  {reportByQuarter === 'true' ? (
+                    <>
+                      <div className="title">Quarter</div>
+                      <select
+                        className="select"
+                        id="typeValue"
+                        onChange={(e) => {
+                          setTypeValue(e?.target?.value)
+                        }}
+                      >
+                        <option value="">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                      </select>
+                    </>
+                  ) : (
+                    <>
+                      <div className="title">Month</div>
+                      <select
+                        className="select"
+                        id="typeValue"
+                        onChange={(e) => {
+                          setTypeValue(e?.target?.value)
+                        }}
+                      >
+                        <option value="">All</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                      </select>
+                    </>
+                  )}
+                </div>
+
+                <div className="form">
+                  <button className="filterButton" onClick={() => handleGetStatisc()}>
+                    Filter
+                  </button>
+                </div>
+              </>
             </div>
             <div className="chartSystem">
-              <ResponsiveContainer width="100%" aspect={3}>
-                <LineChart
-                  label="Income"
-                  data={income}
-                  width={500}
-                  height={300}
-                  margin={{ top: 20, right: 100, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid
-                    stroke={localStorage.getItem('theme') === 'false' ? '#ddd' : '#fff'}
-                    strokeDasharray="3 3"
-                  />
-                  <XAxis
-                    dataKey="timeUnit"
-                    interval={'preserveStartEnd'}
-                    stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'}
-                  />
-                  <YAxis stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'} />
-                  <Tooltip contentStyle={{ backgroundColor: '#bcccdc', borderRadius: '0.4rem' }} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="income"
-                    name="Income"
-                    stroke="orange"
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              {income?.map((item) => (
+                <>
+                  <ResponsiveContainer width="98%" aspect={3}>
+                    <LineChart
+                      label="Income"
+                      data={item?.data}
+                      width={500}
+                      height={300}
+                      tension="0.1"
+                      margin={{ top: 20, right: 100, left: 70, bottom: 5 }}
+                    >
+                      <CartesianGrid stroke="#ddd" strokeDasharray="3 3" />
+                      <XAxis
+                        dataKey="typeValue"
+                        interval={'preserveStartEnd'}
+                        stroke={theme === 'false' ? '#000' : '#fff'}
+                      />
+                      <YAxis stroke={theme === 'false' ? '#000' : '#fff'} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: '#ddd',
+                          color: '#000',
+                          borderRadius: '0.4rem',
+                        }}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="income"
+                        name="Income"
+                        stroke={theme === 'false' ? 'red' : 'orange'}
+                        activeDot={{ r: 8 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                  <div className="title" style={{ marginLeft: '1.6rem' }}>
+                    Year {item?.year}
+                  </div>
+                </>
+              ))}
             </div>
           </div>
 

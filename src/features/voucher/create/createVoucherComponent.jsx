@@ -15,7 +15,7 @@ export const CreateVoucher = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -39,7 +39,7 @@ export const CreateVoucher = () => {
         navigate('/voucher')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response.data.message, style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -142,8 +142,7 @@ export const CreateVoucher = () => {
                         className="textField"
                         id="validFrom"
                         type="datetime-local"
-                        defaultValue={moment().format('YYYY-MM-DDThh:mm')}
-                        onChange={(e) => onChange('validFrom', e.target.value)}
+                        onChange={(e) => onChange('validFrom', moment(e?.target?.value).format())}
                       />
                     </div>
                     <div className="form">
@@ -155,8 +154,7 @@ export const CreateVoucher = () => {
                         className="textField"
                         id="validTo"
                         type="datetime-local"
-                        defaultValue={moment().format('YYYY-MM-DDThh:mm')}
-                        onChange={(e) => onChange('validTo', e.target.value)}
+                        onChange={(e) => onChange('validTo', moment(e?.target?.value).format())}
                       />
                     </div>
                     <div className="form">

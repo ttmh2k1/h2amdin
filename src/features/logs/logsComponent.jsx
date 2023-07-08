@@ -89,7 +89,7 @@ const LogsComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [logs.page, logs.pageSize])
+  }, [logs?.page, logs?.pageSize])
 
   return (
     <div className="logs">

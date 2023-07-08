@@ -13,6 +13,17 @@ import { Divider, Typography } from 'antd'
 import { formatMoney } from '../../../utils/functionHelper'
 
 const OrderComponent = () => {
+  const style = {
+    position: 'bottom-right',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  }
+
   const [order, setOrder] = useState({ status: '' })
   const params = useParams()
   const orderId = params.orderId
@@ -34,10 +45,18 @@ const OrderComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'productID',
+      headerName: 'Product ID',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
     },
     {
       field: 'id',
-      headerName: 'Product ID',
+      headerName: 'Variation ID',
       width: 100,
       align: 'center',
       headerAlign: 'center',
@@ -45,13 +64,15 @@ const OrderComponent = () => {
     {
       field: 'productName',
       headerName: 'Product name',
-      width: 450,
+      flex: 1,
+      width: 250,
       align: 'left',
       headerAlign: 'center',
     },
     {
       field: 'variationName',
       headerName: 'Variation',
+      flex: 1,
       width: 100,
       align: 'left',
       headerAlign: 'center',
@@ -88,38 +109,28 @@ const OrderComponent = () => {
 
   const content = order?.orderDetails?.map((item, index) => {
     return {
-      stt: index + 1,
-      id: item?.variation?.product?.id,
+      stt: index,
+      productID: item?.variation?.product?.id,
+      id: item?.variation?.id,
       productName: item?.variation?.product?.name,
       variationName: item?.variation?.name,
       price: formatMoney(item?.variation?.price),
       discount: item?.variation?.discount + '%',
-      priceAfterDiscount: formatMoney(item?.variation?.priceAfterDiscount),
+      priceAfterDiscount: formatMoney(item?.unitPrice),
       quantity: item?.quantity,
     }
   })
 
-  const style = {
-    position: 'bottom-right',
-    autoClose: 1000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: 'colored',
-  }
-
   const handleSave = async () => {
     const status = order?.status
     try {
-      await updateOrder(orderId, status)
-      toast.success('Update successful!', style)
+      await updateOrder(orderId, { newStatus: status })
+      toast.success('Update order successful!', style)
       setTimeout(() => {
         navigate('/order')
       }, 2000)
     } catch (error) {
-      toast.error('Update failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
   return (
@@ -327,17 +338,17 @@ const OrderComponent = () => {
                     {'Price: '}
                     {formatMoney(order?.price)}
                   </Typography>
-                  {/* <Typography>
+                  <Typography>
                     {'Customer discount: - '}
                     {formatMoney(
                       order?.buyer?.rank?.discountRate *
                         order?.orderDetails
                           ?.map((item) => {
-                            return item?.unitPrice * item?.quantity
+                            return (item?.unitPrice * item?.quantity) / 100
                           })
                           .reduce((acc, item) => acc + item, 0),
                     )}
-                  </Typography> */}
+                  </Typography>
                   <Typography>
                     {'Ship: '}
                     {formatMoney(order?.shipPrice)}

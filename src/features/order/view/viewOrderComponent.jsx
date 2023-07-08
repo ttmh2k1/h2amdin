@@ -32,10 +32,18 @@ const OrderComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+    },
+    {
+      field: 'productID',
+      headerName: 'Product ID',
+      width: 100,
+      align: 'center',
+      headerAlign: 'center',
     },
     {
       field: 'id',
-      headerName: 'Product ID',
+      headerName: 'Variation ID',
       width: 100,
       align: 'center',
       headerAlign: 'center',
@@ -44,7 +52,7 @@ const OrderComponent = () => {
       field: 'productName',
       headerName: 'Product name',
       flex: 1,
-      width: 450,
+      width: 250,
       align: 'left',
       headerAlign: 'center',
     },
@@ -63,20 +71,20 @@ const OrderComponent = () => {
       align: 'right',
       headerAlign: 'center',
     },
-    // {
-    //   field: 'discount',
-    //   headerName: 'Discount',
-    //   width: 100,
-    //   align: 'right',
-    //   headerAlign: 'center',
-    // },
-    // {
-    //   field: 'priceAfterDiscount',
-    //   headerName: 'Price after discount',
-    //   width: 130,
-    //   align: 'right',
-    //   headerAlign: 'center',
-    // },
+    {
+      field: 'discount',
+      headerName: 'Discount',
+      width: 100,
+      align: 'right',
+      headerAlign: 'center',
+    },
+    {
+      field: 'priceAfterDiscount',
+      headerName: 'Price after discount',
+      width: 130,
+      align: 'right',
+      headerAlign: 'center',
+    },
     {
       field: 'quantity',
       headerName: 'Quantity',
@@ -88,13 +96,14 @@ const OrderComponent = () => {
 
   const content = order?.orderDetails?.map((item, index) => {
     return {
-      stt: index + 1,
-      id: item?.variation?.product?.id,
+      stt: index,
+      productID: item?.variation?.product?.id,
+      id: item?.variation?.id,
       productName: item?.variation?.product?.name,
       variationName: item?.variation?.name,
-      price: formatMoney(item?.unitPrice),
-      // discount: item?.variation?.discount + '%',
-      // priceAfterDiscount: formatMoney(item?.variation?.priceAfterDiscount),
+      price: formatMoney(item?.variation?.price),
+      discount: item?.variation?.discount + '%',
+      priceAfterDiscount: formatMoney(item?.unitPrice),
       quantity: item?.quantity,
     }
   })

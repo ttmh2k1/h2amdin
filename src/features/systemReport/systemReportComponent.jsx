@@ -2,8 +2,8 @@ import './systemReportStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import {
-  getStatisticMonth,
-  getStatisticQuarter,
+  getStatistic,
+  getStatisticExport,
   getTopRating,
   getTopSale,
   getTopSold,
@@ -32,19 +32,47 @@ import {
 } from '@mui/material'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const SystemReportComponent = () => {
+  const [theme, setTheme] = useState()
   const [statistic, setStatistic] = useState()
-  const [type, setType] = useState()
-  const [year, setYear] = useState()
-  const [month, setMonth] = useState()
-  const [quarter, setQuarter] = useState()
-
+  const [reportByQuarter, setReportByQuarter] = useState(false)
+  const [type, setType] = useState('')
+  const [typeValue, setTypeValue] = useState('')
+  const [year, setYear] = useState('')
+  const [topView, setTopView] = useState([])
+  const [topSale, setTopSale] = useState([])
+  const [topSold, setTopSold] = useState([])
+  const [topRating, setTopRating] = useState([])
   const navigate = useNavigate()
 
-  const handleFilterMonth = async () => {
+  const style = {
+    position: 'bottom-right',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  }
+
+  useEffect(() => {
+    setTheme(localStorage?.getItem('theme'))
+  }, [localStorage])
+
+  useEffect(() => {
+    setType(reportByQuarter === 'true' ? 'quarter' : 'month')
+  }, [reportByQuarter])
+
+  const handleGetStatisc = async () => {
     try {
-      const resp = await getStatisticMonth(month, year, type)
+      const resp = await getStatistic({
+        reportByQuarter: reportByQuarter,
+        typeValue: typeValue,
+        year: year,
+      })
       const data = resp?.data?.data
       setStatistic(data)
     } catch (error) {
@@ -52,17 +80,25 @@ const SystemReportComponent = () => {
     }
   }
 
-  const handleFilterQuarter = async () => {
+  const handleGetExport = async () => {
     try {
-      const resp = await getStatisticQuarter(quarter, year, type)
-      const data = resp?.data?.data
-      setStatistic(data)
+      const response = await getStatisticExport({
+        reportByQuarter: reportByQuarter,
+        typeValue: typeValue,
+        year: year,
+      })
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', `h2store_statistic${year}_${type}${typeValue}.xlsx`)
+      document.body.appendChild(link)
+      link.click()
+      // toast.success('Download file successful!', style)
     } catch (error) {
-      return error
+      toast.error(error?.message, style)
     }
   }
 
-  const [topView, setTopView] = useState([])
   useEffect(() => {
     const handleGetTopView = async () => {
       const resp = await getTopView()
@@ -72,7 +108,6 @@ const SystemReportComponent = () => {
     handleGetTopView()
   }, [])
 
-  const [topSale, setTopSale] = useState([])
   useEffect(() => {
     const handleGetTopSale = async () => {
       const resp = await getTopSale()
@@ -82,7 +117,6 @@ const SystemReportComponent = () => {
     handleGetTopSale()
   }, [])
 
-  const [topSold, setTopSold] = useState([])
   useEffect(() => {
     const handleGetTopSold = async () => {
       const resp = await getTopSold()
@@ -92,7 +126,6 @@ const SystemReportComponent = () => {
     handleGetTopSold()
   }, [])
 
-  const [topRating, setTopRating] = useState([])
   useEffect(() => {
     const handleGetTopRating = async () => {
       const resp = await getTopRating()
@@ -229,7 +262,7 @@ const SystemReportComponent = () => {
     return {
       id: item?.id,
       name: item?.name,
-      averageRating: item?.averageRating,
+      averageRating: item?.averageRating.toFixed(2),
       totalRatingTimes: item?.totalRatingTimes,
     }
   })
@@ -246,21 +279,6 @@ const SystemReportComponent = () => {
           <div className="systemStatistic">
             <div className="filter">
               <div className="form">
-                <div className="title">Type</div>
-                <select
-                  className="select"
-                  id="type"
-                  onChange={(e) => {
-                    setType(e.target.value)
-                  }}
-                >
-                  <option hidden value="default"></option>
-                  <option value="MONTH">Month</option>
-                  <option value="QUARTER">Quarter</option>
-                </select>
-              </div>
-
-              <div className="form">
                 <div className="title">Year</div>
                 <select
                   className="select"
@@ -269,7 +287,7 @@ const SystemReportComponent = () => {
                     setYear(e.target.value)
                   }}
                 >
-                  <option hidden value="default"></option>
+                  <option value="">All</option>
                   <option value="2023">2023</option>
                   <option value="2022">2022</option>
                   <option value="2021">2021</option>
@@ -277,18 +295,32 @@ const SystemReportComponent = () => {
                 </select>
               </div>
 
-              {type && type === 'MONTH' ? (
-                <>
-                  <div className="form">
+              <div className="form">
+                <div className="title">Type</div>
+                <select
+                  className="select"
+                  id="reportByQuarter"
+                  onChange={(e) => {
+                    setReportByQuarter(e?.target?.value)
+                  }}
+                >
+                  <option value="false">Month</option>
+                  <option value="true">Quarter</option>
+                </select>
+              </div>
+
+              <div className="form">
+                {reportByQuarter === false ? (
+                  <>
                     <div className="title">Month</div>
                     <select
                       className="select"
-                      id="month"
+                      id="typeValue"
                       onChange={(e) => {
-                        setMonth(e.target.value)
+                        setTypeValue(e?.target?.value)
                       }}
                     >
-                      <option hidden value="default"></option>
+                      <option value="">All</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -302,89 +334,84 @@ const SystemReportComponent = () => {
                       <option value="11">11</option>
                       <option value="12">12</option>
                     </select>
-                  </div>
-
-                  <div className="form">
-                    <button
-                      className="filterButton"
-                      onClick={() => handleFilterMonth(month, year, type)}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="form">
+                  </>
+                ) : (
+                  <>
                     <div className="title">Quarter</div>
                     <select
                       className="select"
-                      id="quarter"
+                      id="typeValue"
                       onChange={(e) => {
-                        setQuarter(e.target.value)
+                        setTypeValue(e?.target?.value)
                       }}
                     >
-                      <option hidden value="default"></option>
+                      <option value="">All</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
                       <option value="4">4</option>
                     </select>
-                  </div>
-                  <div className="form">
-                    <button
-                      className="filterButton"
-                      onClick={() => handleFilterQuarter(quarter, year, type)}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </>
-              )}
+                  </>
+                )}
+              </div>
+              <div className="form">
+                <button className="filterButton" onClick={() => handleGetStatisc()}>
+                  Filter
+                </button>
+              </div>
+              <button className="exportButton" onClick={() => handleGetExport()}>
+                Export
+              </button>
             </div>
             <div className="chartSystem">
-              <ResponsiveContainer width="100%" aspect={3}>
-                <LineChart
-                  data={statistic}
-                  width={500}
-                  height={300}
-                  margin={{ top: 20, right: 100, left: 20, bottom: 5 }}
-                >
-                  <CartesianGrid
-                    stroke={localStorage.getItem('theme') ? '#ddd' : '#fff'}
-                    strokeDasharray="3 3"
-                  />
-                  <XAxis
-                    dataKey="timeUnit"
-                    interval={'preserveStartEnd'}
-                    stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'}
-                  />
-                  <YAxis stroke={localStorage.getItem('theme') === 'false' ? '#000' : '#fff'} />
-                  <Tooltip contentStyle={{ backgroundColor: '#bcccdc', borderRadius: '0.4rem' }} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="nbuyer"
-                    name="New customer"
-                    stroke={localStorage.getItem('theme') === 'false' ? 'red' : '#bb2525'}
-                    activeDot={{ r: 8 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="nproduct"
-                    name="New product"
-                    stroke={localStorage.getItem('theme') === 'false' ? 'green' : '#25bb32'}
-                    activeDot={{ r: 8 }}
-                  />
-                  <Line
-                    type="monotone"
-                    dataKey="norder"
-                    name="New order"
-                    stroke={localStorage.getItem('theme') === 'false' ? 'blue' : '#8bcbf9'}
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              {statistic?.map((item) => (
+                <>
+                  <ResponsiveContainer width="98%" aspect={3}>
+                    <LineChart
+                      data={item?.data}
+                      width={500}
+                      height={300}
+                      margin={{ top: 20, right: 100, left: 60, bottom: 5 }}
+                    >
+                      <CartesianGrid stroke={theme ? '#ddd' : '#fff'} strokeDasharray="3 3" />
+                      <XAxis
+                        dataKey="typeValue"
+                        interval={'preserveStartEnd'}
+                        stroke={theme === 'false' ? '#000' : '#fff'}
+                      />
+                      <YAxis stroke={theme === 'false' ? '#000' : '#fff'} />
+                      <Tooltip
+                        contentStyle={{ backgroundColor: '#bcccdc', borderRadius: '0.4rem' }}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="nbuyer"
+                        name="New customer"
+                        stroke={theme === 'false' ? 'red' : 'cyan'}
+                        activeDot={{ r: 8 }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="nproduct"
+                        name="New product"
+                        stroke={theme === 'false' ? 'green' : '#25bb32'}
+                        activeDot={{ r: 8 }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="norder"
+                        name="New order"
+                        stroke={theme === 'false' ? 'blue' : 'orange'}
+                        activeDot={{ r: 8 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                  <div className="title" style={{ marginLeft: '1.6rem' }}>
+                    Year {item?.year}
+                  </div>
+                </>
+              ))}
             </div>
           </div>
           <div className="productReport">

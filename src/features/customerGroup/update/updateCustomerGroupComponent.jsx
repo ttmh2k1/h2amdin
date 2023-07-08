@@ -16,7 +16,7 @@ const CustomerGroupComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -37,13 +37,13 @@ const CustomerGroupComponent = () => {
   const handleSave = async () => {
     const discountRate = customerGroup?.discountRate
     try {
-      await updateCustomerGroup(customerGroupId, discountRate * 100)
-      toast.success('Update successful!', style)
+      await updateCustomerGroup(customerGroupId, discountRate)
+      toast.success('Update customer group successful!', style)
       setTimeout(() => {
         navigate('/customerGroup')
       }, 2000)
     } catch (error) {
-      toast.error('Update failed!', style)
+      toast.error('Discount rate ' + error?.response?.data?.data?.discountRate, style)
     }
   }
 
@@ -86,11 +86,11 @@ const CustomerGroupComponent = () => {
                     className="textField"
                     id="customerGroupDiscount"
                     type="number"
-                    value={customerGroup?.discountRate * 100}
+                    value={customerGroup?.discountRate}
                     onChange={(e) =>
                       setCustomerGroup((state) => ({
                         ...state,
-                        discountRate: e.target.value / 100,
+                        discountRate: e.target.value,
                       }))
                     }
                   />

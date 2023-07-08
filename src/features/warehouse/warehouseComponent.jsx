@@ -8,6 +8,7 @@ import { getListWarehouse } from '../../apis/warehouseApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
+import moment from 'moment'
 
 const WarehouseComponent = () => {
   const navigate = useNavigate()
@@ -94,6 +95,7 @@ const WarehouseComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${moment(params?.row?.importTime).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'nSold',
@@ -139,7 +141,7 @@ const WarehouseComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [warehouse.page, warehouse.pageSize])
+  }, [warehouse?.page, warehouse?.pageSize])
 
   return (
     <div className="warehouse">
@@ -153,14 +155,14 @@ const WarehouseComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={warehouse.rows}
+                rows={warehouse?.rows}
                 columns={header}
                 paginationMode="server"
-                loading={warehouse.loading}
-                rowCount={warehouse.totalRows}
-                page={warehouse.page - 1}
-                pageSize={warehouse.pageSize}
-                rowsPerPageOptions={warehouse.rowsPerPageOptions}
+                loading={warehouse?.loading}
+                rowCount={warehouse?.totalRows}
+                page={warehouse?.page - 1}
+                pageSize={warehouse?.pageSize}
+                rowsPerPageOptions={warehouse?.rowsPerPageOptions}
                 onPageChange={(page) => {
                   updateData('page', page + 1)
                 }}

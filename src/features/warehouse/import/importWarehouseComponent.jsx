@@ -24,7 +24,7 @@ const ImportWarehouseComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -139,7 +139,7 @@ const ImportWarehouseComponent = () => {
   const handleAddProduct = async () => {
     const newWarehouse = { ...selected, variation, quantity: +quantity }
     const existProduct = warehouse?.findIndex(
-      (product) => product.variation.id === newWarehouse.variation.id,
+      (product) => product?.variation?.id === newWarehouse?.variation?.id,
     )
 
     // Khi da co sp trong list
@@ -184,7 +184,7 @@ const ImportWarehouseComponent = () => {
   }
 
   const handleDelete = (tmp) => {
-    const proIndex = warehouse?.findIndex((item) => item?.variation.id === tmp)
+    const proIndex = warehouse?.findIndex((item) => item?.variation?.id === tmp)
     warehouse.splice(proIndex, 1)
     setWarehouse([...warehouse])
   }
@@ -193,16 +193,18 @@ const ImportWarehouseComponent = () => {
     const handleListProduct = async () => {
       const resp = await getListProductSearch()
       const list = resp?.data?.data
-      setListProduct(list?.filter((item) => item.id)?.filter((item) => item.name))
+      setListProduct(list?.filter((item) => item?.id)?.filter((item) => item?.name))
     }
     handleListProduct()
   }, [])
 
   useEffect(() => {
     const handleGetProduct = async () => {
-      const resp = await getProduct(productId)
-      const data = resp?.data?.data
-      setSelected(data)
+      if (productId) {
+        const resp = await getProduct(productId)
+        const data = resp?.data?.data
+        setSelected(data)
+      }
       // setListVariation(data?.variations)
     }
     handleGetProduct()

@@ -1,13 +1,14 @@
 import './chart.scss'
 import { XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, BarChart, Bar } from 'recharts'
-import { getStatistic } from '../../apis/statistic'
+import { getStatisticMoment } from '../../apis/statistic'
 import { useEffect, useState } from 'react'
 const Chart = () => {
   const [statistic, setStatistic] = useState()
+
   useEffect(() => {
     const handleGetStatisticByDate = async () => {
-      const resp = await getStatistic()
-      const data = resp?.data?.data
+      const resp = await getStatisticMoment()
+      const data = resp?.data?.data[0]?.data
       setStatistic(data)
     }
     handleGetStatisticByDate()
@@ -15,7 +16,7 @@ const Chart = () => {
 
   return (
     <div className="chart">
-      <div className="title">Revenue in month</div>
+      <div className="title">Revenue in year</div>
       <ResponsiveContainer width="100%" aspect={3 / 1}>
         <BarChart
           width={600}
@@ -29,7 +30,7 @@ const Chart = () => {
               <stop offset="95%" stopColor="#829ab0" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <XAxis dataKey="timeUnit" stroke="gray" />
+          <XAxis dataKey="typeValue" stroke="gray" />
           <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
           <Tooltip />
           <Bar
