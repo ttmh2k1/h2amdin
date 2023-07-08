@@ -88,7 +88,8 @@ export const CreateProduct = () => {
         navigate('/product')
       }, 2000)
     } catch (error) {
-      toast.error('Create product failed!', style)
+      toast.error(error?.response.data.message, style)
+      // toast.error('Create product failed!', style)
     }
   }
 

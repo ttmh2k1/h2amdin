@@ -6,7 +6,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getCustomerGroup, updateCustomerGroup } from '../../../apis/customerGroupApi'
 import { FaArrowCircleLeft, FaSave } from 'react-icons/fa'
-
 import { toast } from 'react-toastify'
 
 const CustomerGroupComponent = () => {
@@ -14,15 +13,6 @@ const CustomerGroupComponent = () => {
   const params = useParams()
   const customerGroupId = params.customerGroupId
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleGetCustomerGroup = async () => {
-      const resp = await getCustomerGroup(customerGroupId)
-      const data = resp?.data?.data
-      setCustomerGroup(data)
-    }
-    handleGetCustomerGroup()
-  }, [])
 
   const style = {
     position: 'bottom-right',
@@ -34,6 +24,15 @@ const CustomerGroupComponent = () => {
     progress: undefined,
     theme: 'colored',
   }
+
+  useEffect(() => {
+    const handleGetCustomerGroup = async () => {
+      const resp = await getCustomerGroup(customerGroupId)
+      const data = resp?.data?.data
+      setCustomerGroup(data)
+    }
+    handleGetCustomerGroup()
+  }, [])
 
   const handleSave = async () => {
     const discountRate = customerGroup?.discountRate
@@ -103,7 +102,7 @@ const CustomerGroupComponent = () => {
             <Button
               className="saveButton"
               startIcon={<FaSave color="#fff" size={'1rem'} />}
-              onClick={(e) => handleSave()}
+              onClick={() => handleSave()}
             >
               Save
             </Button>
