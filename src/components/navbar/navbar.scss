@@ -2,14 +2,18 @@
   height: 4.2rem;
   border-bottom: 0.16rem solid #dae2ec;
   display: flex;
+  flex: 6;
+  right: 0;
+  width: 100%;
   align-items: center;
   font-size: 1rem;
   color: #48647f;
   background-color: #fff;
+  position: fixed;
+  z-index: 99;
 
   .wrapper {
     width: 100%;
-    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;

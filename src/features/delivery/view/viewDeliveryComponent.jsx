@@ -99,7 +99,7 @@ const DeliveryComponent = () => {
   })
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

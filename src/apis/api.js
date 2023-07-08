@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 export const SERVICE = 'http://localhost:8080'
 
@@ -11,33 +11,34 @@ export const SERVICE = 'http://localhost:8080'
  * @returns {Promise<import("axios").AxiosResponse<any>>}
  */
 async function api(method, path, body, headers) {
-    // const session = await getSession();
-    // const token = session?.token || null;
-    const token = localStorage.getItem('token') || null;
-    const defaultHeaderOptions = {
-        Authorization: token ? `Bearer ${token}` : '',
-        'Content-Type': 'application/json'
-    };
+  // const session = await getSession();
+  // const token = session?.token || null;
+  const token = localStorage.getItem('token') || null
+  const defaultHeaderOptions = {
+    Authorization: token ? `Bearer ${token}` : '',
+    'Content-Type': 'application/json',
+  }
 
-    const headerAuth = {
-    };
-    const options = {
-    };
-    options.headers = { ...defaultHeaderOptions, ...headerAuth };
+  const headerAuth = {}
+  const options = {}
+  options.headers = { ...defaultHeaderOptions, ...headerAuth }
 
-    const res = await axios({
-        method,
-        url: `${path}`,
-        headers: { ...options.headers, ...headers },
-        data: body
-    });
+  const res = await axios({
+    method,
+    url: `${path}`,
+    headers: { ...options.headers, ...headers },
+    data: body,
+  })
 
-    return res;
+  return res
 }
+export const apiDownload = axios.create({
+  baseURL: SERVICE,
+})
 
 export default {
-    GET: (path, headers) => api('GET', path, null, headers),
-    POST: (path, body, headers) => api('POST', path, body, headers),
-    PUT: (path, body, headers) => api('PUT', path, body, headers),
-    DELETE: (path, body, headers) => api('DELETE', path, body, headers),
-};
+  GET: (path, headers) => api('GET', path, null, headers),
+  POST: (path, body, headers) => api('POST', path, body, headers),
+  PUT: (path, body, headers) => api('PUT', path, body, headers),
+  DELETE: (path, body, headers) => api('DELETE', path, body, headers),
+}

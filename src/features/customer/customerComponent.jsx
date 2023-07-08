@@ -4,7 +4,15 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import { getListCustomer, updateCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaLockOpen, FaPen, FaTrashAlt, FaUnlock } from 'react-icons/fa'
+import {
+  FaArrowCircleLeft,
+  FaEye,
+  FaLock,
+  FaLockOpen,
+  FaPen,
+  FaTrashAlt,
+  FaUnlock,
+} from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
@@ -23,7 +31,7 @@ const CustomerComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,

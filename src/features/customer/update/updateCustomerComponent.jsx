@@ -28,7 +28,7 @@ const CustomerComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -41,12 +41,12 @@ const CustomerComponent = () => {
     const status = customer?.status
     try {
       await updateCustomer(customerId, status)
-      toast.success('Update successful!', style)
+      toast.success('Update customer information successful!', style)
       setTimeout(() => {
         navigate('/customer')
       }, 2000)
     } catch (error) {
-      toast.error('Update failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 

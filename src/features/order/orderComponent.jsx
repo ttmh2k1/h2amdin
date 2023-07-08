@@ -10,6 +10,7 @@ import { getListOrder, updateOrder } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
 import { formatMoney } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
+import moment from 'moment'
 
 const OrderComponent = () => {
   const navigate = useNavigate()
@@ -24,7 +25,7 @@ const OrderComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -36,19 +37,19 @@ const OrderComponent = () => {
   const handleCancel = async (id) => {
     try {
       await updateOrder(id, 'CANCELED')
-      toast.success('Cancel successful!', style)
+      toast.success('Cancel order successful!', style)
       setTimeout(() => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error(error, style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
   const actionColumn = [
     {
       headerName: 'Action',
-      width: 150,
+      width: 120,
       align: 'left',
       headerAlign: 'center',
       renderCell: (props) => {
@@ -92,10 +93,10 @@ const OrderComponent = () => {
     {
       field: 'stt',
       headerName: 'No',
-      width: 100,
+      width: 80,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (index) => index.api.getRowIndex(index.row.id) + 1,
+      renderCell: (index) => index.api.getRowIndex(index?.row?.id) + 1,
     },
     {
       field: 'id',
@@ -113,12 +114,20 @@ const OrderComponent = () => {
       renderCell: (params) => `${params?.row?.buyer?.id}`,
     },
     {
-      field: 'customerName',
-      headerName: 'Customer name',
+      field: 'username',
+      headerName: 'Username',
       width: 100,
       align: 'left',
       headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.buyer?.fullname}`,
+      renderCell: (params) => `${params?.row?.buyer?.username}`,
+    },
+    {
+      field: 'customerName',
+      headerName: 'Customer name',
+      width: 150,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.fullname || ''}`,
     },
     {
       field: 'customerGroup',
@@ -139,14 +148,15 @@ const OrderComponent = () => {
     {
       field: 'createTime',
       headerName: 'Create time',
-      width: 180,
+      width: 150,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${moment(params?.row?.createTime).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'status',
       headerName: 'Status',
-      width: 200,
+      width: 180,
       align: 'center',
       headerAlign: 'center',
     },
@@ -185,7 +195,7 @@ const OrderComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [listOrder.page, listOrder.pageSize])
+  }, [listOrder?.page, listOrder?.pageSize])
 
   return (
     <div className="order">

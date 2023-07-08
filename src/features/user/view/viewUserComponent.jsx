@@ -50,7 +50,12 @@ const UserComponent = () => {
                   <label className="title" for="role">
                     Role
                   </label>
-                  <TextField disabled className="textField" id="role" value={user?.role?.name} />
+                  <TextField
+                    disabled
+                    className="textField"
+                    id="role"
+                    value={user?.adminRole?.roleName}
+                  />
                 </div>
                 <div className="form">
                   <label className="title" for="email">

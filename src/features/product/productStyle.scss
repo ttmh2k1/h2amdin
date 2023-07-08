@@ -7,7 +7,9 @@
     background-color: #eee;
 
     .productBody {
+      padding-top: 4rem;
       margin: 1rem 1.2rem;
+
       .title {
         color: #324d67;
         margin-bottom: 0.4rem;
@@ -22,10 +24,10 @@
         border: 0.08rem solid #48647f;
 
         .datatable {
-          height: 40rem;
+          height: 38rem;
           .MuiDataGrid-footerContainer {
             min-height: auto;
-            height: 2.4rem;
+            height: 1.6rem;
             .MuiTablePagination-displayedRows {
               font-size: 0.8rem !important;
             }
@@ -86,7 +88,7 @@
           font-size: 1rem;
           justify-content: center;
           text-transform: none;
-          margin: 0.8rem 0rem;
+          margin: 0.8rem 0 0 0;
           padding: 0.2rem 1rem;
           border-radius: 0.2rem;
           color: #fff;
@@ -100,7 +102,7 @@
           font-size: 1rem;
           justify-content: center;
           text-transform: none;
-          margin: 0.8rem 0rem;
+          margin: 0.8rem 0 0 0;
           padding: 0.2rem 1rem;
           border-radius: 0.2rem;
           color: #fff;

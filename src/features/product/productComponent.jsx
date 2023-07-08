@@ -31,7 +31,7 @@ const ProductComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -62,7 +62,7 @@ const ProductComponent = () => {
     try {
       var transform = new FormData()
       const blob = new Blob(['{"isHidden": false}'], {
-                type: 'application/json',
+        type: 'application/json',
       })
       transform.append('info', blob)
 

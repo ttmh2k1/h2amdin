@@ -17,7 +17,7 @@ const Navbar = () => {
 
   useEffect(() => {
     localStorage.setItem('theme', JSON.stringify(theme))
-  })
+  }, [theme])
   const switchTheme = () => {
     const newTheme = theme === true ? false : true
     setTheme(newTheme)
@@ -25,6 +25,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
+      {/* <div style={{ position: 'fixed' }}> */}
       <div className="wrapper">
         <div className="items">
           {theme ? (
@@ -68,6 +69,7 @@ const Navbar = () => {
           <ReorderOutlinedIcon className="icon" />
         </div>
       </div>
+      {/* </div> */}
     </div>
   )
 }

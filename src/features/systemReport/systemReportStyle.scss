@@ -7,10 +7,13 @@
     background-color: #eee;
 
     .systemReportBody {
+      padding-top: 4rem;
       margin: 1rem 1.2rem;
+
       .title {
         color: #324d67;
         margin-bottom: 0.4rem;
+
         a {
           color: #48647f;
           text-decoration: none;
@@ -26,6 +29,7 @@
           display: flex;
           flex-direction: row;
           margin-top: 0.8rem;
+          padding-bottom: 2rem;
 
           .form {
             height: 4rem;
@@ -67,6 +71,30 @@
               }
             }
           }
+
+          .exportButton {
+            font-size: 1rem;
+            justify-content: center;
+            text-transform: none;
+            margin-top: 1.8rem;
+            border-radius: 0.2rem;
+            height: 2rem;
+            width: 4rem;
+            color: #324d67;
+            background-color: #bcccdc;
+            border: 0.04rem solid #48647f;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #829ab0;
+              color: #fff;
+            }
+          }
+        }
+
+        .chartSystem {
+          display: flex;
+          flex-direction: column-reverse;
         }
       }
 
@@ -79,7 +107,7 @@
         justify-content: center;
         grid-template-columns: 41vw 41vw;
         grid-template-rows: 40vh 43vh;
-        grid-gap: 1vw;
+        grid-gap: 1vw 0;
 
         .productBg {
           display: flex;
@@ -118,7 +146,7 @@
           font-size: 1rem;
           justify-content: center;
           text-transform: none;
-          margin: 0.8rem 0rem;
+          margin: 0.8rem 0 0 0;
           padding: 0.2rem 1rem;
           border-radius: 0.2rem;
           color: #fff;

@@ -36,7 +36,7 @@ export const CreateProduct = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -88,8 +88,7 @@ export const CreateProduct = () => {
         navigate('/product')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response.data.message, style)
-      // toast.error('Create product failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 

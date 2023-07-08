@@ -25,7 +25,7 @@ const VoucherComponent = () => {
 
   const style = {
     position: 'bottom-right',
-    autoClose: 1000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -113,7 +113,7 @@ const VoucherComponent = () => {
       renderCell: (params) =>
         `${
           params?.row?.discountType === 'PERCENT'
-            ? params?.row?.discountAmount + ' %'
+            ? params?.row?.discountAmount + '%'
             : formatMoney(params?.row?.discountAmount) + 'VND'
         }`,
     },
