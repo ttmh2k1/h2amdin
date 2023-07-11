@@ -25,7 +25,6 @@ const Navbar = () => {
 
   return (
     <div className="navbar">
-      {/* <div style={{ position: 'fixed' }}> */}
       <div className="wrapper">
         <div className="items">
           {theme ? (
@@ -47,10 +46,10 @@ const Navbar = () => {
             />
           )}
         </div>
-        <div className="items">
+        {/* <div className="items">
           <ChatBubbleOutlineOutlinedIcon className="icon" />
           <div className="couter">1</div>
-        </div>
+        </div> */}
         <div className="items">
           <Link to={'/notification'}>
             <NotificationsNoneOutlinedIcon className="icon" />
@@ -64,12 +63,11 @@ const Navbar = () => {
             alt="avatar"
             className="avatar"
           /> */}
-        </div>{' '}
-        <div className="items">
-          <ReorderOutlinedIcon className="icon" />
         </div>
+        {/* <div className="items">
+          <ReorderOutlinedIcon className="icon" />
+        </div> */}
       </div>
-      {/* </div> */}
     </div>
   )
 }

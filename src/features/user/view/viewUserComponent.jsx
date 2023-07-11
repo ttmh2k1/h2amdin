@@ -41,6 +41,12 @@ const UserComponent = () => {
                   <TextField disabled className="textField" id="usercode" value={user?.id} />
                 </div>
                 <div className="form">
+                  <label className="title" for="username">
+                    Username
+                  </label>
+                  <TextField disabled className="textField" id="username" value={user?.username} />
+                </div>
+                <div className="form">
                   <label className="title" for="name">
                     Full name
                   </label>
@@ -68,6 +74,12 @@ const UserComponent = () => {
                     Phone
                   </label>
                   <TextField disabled className="textField" id="phone" value={user?.phone} />
+                </div>
+                <div className="form">
+                  <label className="title" for="status">
+                    Status
+                  </label>
+                  <TextField disabled className="textField" id="status" value={user?.status} />
                 </div>
               </Grid>
             </div>

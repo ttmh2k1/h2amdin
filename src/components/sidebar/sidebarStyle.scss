@@ -34,13 +34,14 @@
     .items {
       display: flex;
       align-items: center;
-      padding: 0.6rem 0.8rem;
+      padding: 0.6rem 1rem;
       font-size: 1rem;
       text-transform: capitalize;
       color: #324d67;
       text-decoration: none;
 
       &:hover {
+        padding: 0.6rem 1.6rem;
         background: #f1f5f8;
         color: #102a42;
         box-shadow: 0.8rem;

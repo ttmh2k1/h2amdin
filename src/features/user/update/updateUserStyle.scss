@@ -1,73 +1,76 @@
-.role {
+.updateUser {
   display: flex;
   width: 100%;
 
-  .roleContainer {
+  .updateUserContainer {
     flex: 6;
     background-color: #eee;
 
-    .roleBody {
+    .updateUserBody {
       padding-top: 4rem;
       margin: 1rem 1.2rem;
 
       .title {
-        color: #324d67;
         margin-bottom: 0.4rem;
+        color: #48647f;
         a {
           color: #48647f;
           text-decoration: none;
         }
       }
 
-      .template {
+      .updateUserForm {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;
+        background-color: #fff;
 
-        .datatable {
-          height: 38rem;
-          .MuiDataGrid-footerContainer {
-            min-height: auto;
-            height: 1.6rem;
-            .MuiTablePagination-displayedRows {
-              font-size: 0.8rem !important;
+        .form {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0.8rem;
+
+          .title {
+            color: #324d67;
+            margin-bottom: 0.2rem;
+          }
+
+          .textField {
+            border-radius: 0.4rem;
+            font-size: 1rem;
+            .MuiInputBase-root {
+              height: 2.4rem;
+              .Mui-disabled {
+                background-color: #f1f5f8;
+                height: 0.4rem;
+                font-size: 1rem;
+              }
             }
           }
 
-          .cellAction {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-
-            .viewButton {
+          .select {
+            border-radius: 0.2rem;
+            font-size: 1rem;
+            .MuiSelect-select {
+              height: 2.4rem !important;
+              padding: 0 0.8rem;
+              font-size: 1rem;
               display: flex;
               align-items: center;
-              padding: 0.4rem;
-              border-radius: 0.2rem;
-              border: 0.1rem solid #9eb2c7;
-              color: #9eb2c7;
-              cursor: pointer;
-            }
-            .updateButton {
-              display: flex;
-              align-items: center;
-              padding: 0.4rem;
-              border-radius: 0.2rem;
-              border: 0.1rem solid #6ebef7;
-              color: #6ebef7;
-              cursor: pointer;
             }
           }
         }
       }
 
-      .roleFooter {
+      .updateUserFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 1rem;
 
-        .createButton {
+        .saveButton {
           font-size: 1rem;
           justify-content: center;
           text-transform: none;
@@ -75,10 +78,10 @@
           padding: 0.2rem 1rem;
           border-radius: 0.2rem;
           color: #fff;
-          background-color: #104e7a;
+          background-color: #829ab0;
 
           &:hover {
-            background-color: #1a6aa2;
+            background-color: #243a52;
           }
         }
 

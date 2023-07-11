@@ -16,8 +16,13 @@
   }
   .homeContainer,
   .userContainer,
+  .createUserContainer,
   .viewUserContainer,
+  .updateUserContainer,
   .roleContainer,
+  .createRoleContainer,
+  .viewRoleContainer,
+  .updateRoleContainer,
   .logsContainer,
   .orderContainer,
   .viewOrderContainer,
@@ -50,8 +55,13 @@
 
     .homeBody,
     .userBody,
+    .createUserBody,
     .viewUserBody,
+    .updateUserBody,
     .roleBody,
+    .createRoleBody,
+    .viewRoleBody,
+    .updateRoleBody,
     .logsBody,
     .orderBody,
     .viewOrderBody,
@@ -127,8 +137,13 @@
 
     .homeForm,
     .userForm,
+    .createUserForm,
     .viewUserForm,
+    .updateUserForm,
     .roleForm,
+    .createRoleForm,
+    .viewRoleForm,
+    .updateRoleForm,
     .logsForm,
     .orderForm,
     .viewOrderForm,
@@ -184,6 +199,28 @@
               -webkit-text-fill-color: inherit !important;
             }
           }
+        }
+
+        .select {
+          background-color: #48647f !important;
+          border-radius: 0.4rem !important;
+          .MuiSelect-select {
+            background-color: #48647f !important;
+            border-radius: 0.4rem !important;
+            color: #9eb2c7 !important;
+          }
+        }
+      }
+
+      .permissionForm {
+        .permissionTitle {
+          color: #bcccdc !important;
+        }
+
+        .permission {
+          background: #48647f !important;
+          border-radius: 0.4rem !important;
+          color: #bcccdc !important;
         }
 
         .select {

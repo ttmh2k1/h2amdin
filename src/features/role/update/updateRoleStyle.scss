@@ -1,12 +1,12 @@
-.updateVoucher {
+.updateRole {
   display: flex;
   width: 100%;
 
-  .updateVoucherContainer {
+  .updateRoleContainer {
     flex: 6;
     background-color: #eee;
 
-    .updateVoucherBody {
+    .updateRoleBody {
       padding-top: 4rem;
       margin: 1.2rem;
 
@@ -19,19 +19,10 @@
         }
       }
 
-      .updateVoucherForm {
+      .updateRoleForm {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;
         background-color: #fff;
-
-        .detail {
-          .levelHeader {
-            display: flex;
-            color: #48647f;
-            font-weight: bold;
-            margin: 0.8rem 0 0 0.8rem;
-          }
-        }
 
         .form {
           display: flex;
@@ -47,7 +38,7 @@
           }
 
           .textField {
-            border-radius: 0.2rem;
+            border-radius: 0.4rem;
             font-size: 1rem;
             .MuiInputBase-root {
               height: 2.4rem;
@@ -58,11 +49,30 @@
               }
             }
           }
+        }
+
+        .permissionForm {
+          display: flex;
+          flex-direction: column;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0 0.8rem 0.8rem 0.8rem;
+
+          .permissionTitle {
+            color: #324d67;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+          }
 
           .select {
             border-radius: 0.4rem;
             font-size: 1rem;
+            width: 74rem;
+            margin: 0 0.8rem 0 0;
+
             .MuiSelect-select {
+              flex-wrap: wrap;
+              overflow: hidden;
               height: 2.4rem !important;
               padding: 0 0.8rem;
               font-size: 1rem;
@@ -73,7 +83,7 @@
         }
       }
 
-      .updateVoucherFooter {
+      .updateRoleFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;

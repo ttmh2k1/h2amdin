@@ -4,15 +4,7 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import { getListCustomer, updateCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import {
-  FaArrowCircleLeft,
-  FaEye,
-  FaLock,
-  FaLockOpen,
-  FaPen,
-  FaTrashAlt,
-  FaUnlock,
-} from 'react-icons/fa'
+import { FaArrowCircleLeft, FaEye, FaLock, FaLockOpen, FaPen, FaUnlock } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import { Button } from '@mui/material'
@@ -201,20 +193,6 @@ const CustomerComponent = () => {
       })
     })
   }, [listCustomer.page, listCustomer.pageSize])
-
-  // const content = listCustomer.map((item, index) => {
-  //   return {
-  //     stt: index + 1,
-  //     id: item?.id,
-  //     username: item?.username,
-  //     fullname: item?.fullname,
-  //     gender: item?.gender,
-  //     email: item?.email,
-  //     phone: item?.phone,
-  //     status:
-  //       item?.status === 'ACTIVE' ? 'Active' : item?.status === 'BANNED' ? 'Banned' : 'Wait banned',
-  //   }
-  // })
 
   return (
     <div className="customer">

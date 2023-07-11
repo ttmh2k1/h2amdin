@@ -8,6 +8,7 @@ import { DataGrid } from '@mui/x-data-grid'
 import { Button } from '@mui/material'
 import { FaArrowCircleLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
 
 const LogsComponent = () => {
   const navigate = useNavigate()
@@ -42,6 +43,7 @@ const LogsComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${moment(params?.row?.time).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'username',
@@ -60,7 +62,7 @@ const LogsComponent = () => {
     {
       field: 'content',
       headerName: 'Content',
-      width: 450,
+      width: 500,
       align: 'left',
       headerAlign: 'center',
     },

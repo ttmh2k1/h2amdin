@@ -27,7 +27,10 @@ const FormProduct = ({ variation, setVariation, onChangeVariation, options, isCr
   }
 
   useEffect(() => {
-    onChangeForm('priceAfterDiscount', (1 - Number(variation.discount) / 100.0) * Number(variation.price))
+    onChangeForm(
+      'priceAfterDiscount',
+      (1 - Number(variation.discount) / 100.0) * Number(variation.price),
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variation.price, variation.discount])
 
@@ -48,45 +51,41 @@ const FormProduct = ({ variation, setVariation, onChangeVariation, options, isCr
                         {options?.map((option) => (
                           <div className="form">
                             <label className="title" for="option">
-                              {isCreate ? (option.name || 'Option') : (option.optionName || 'Option')}
+                              {isCreate ? option.name || 'Option' : option.optionName || 'Option'}
                             </label>
                             <Select
                               className="select"
                               id="option"
                               value={
-                                !isCreate ?
-                                  option.optionValues && 
-                                  (function () {
-                                    for (let optionValue of option.optionValues) {
-                                      if (variation.name?.includes(optionValue.value)) {
-                                        return optionValue.value;
+                                !isCreate
+                                  ? option.optionValues &&
+                                    (function () {
+                                      for (let optionValue of option.optionValues) {
+                                        if (variation.name?.includes(optionValue.value)) {
+                                          return optionValue.value
+                                        }
                                       }
-                                    }
-                                  })()
-                                :
-                                undefined
+                                    })()
+                                  : undefined
                               }
-
                               readOnly={!isCreate && variation.name}
-                              onChange={ isCreate ?
-                                  (e) => handleOptionOnChange(option.name, e.target.value)
-                                :
-                                  (e) => handleOptionOnChange(option.optionName, e.target.value)
+                              onChange={
+                                isCreate
+                                  ? (e) => handleOptionOnChange(option.name, e.target.value)
+                                  : (e) => handleOptionOnChange(option.optionName, e.target.value)
                               }
                             >
-                              { isCreate ?
-                                option?.values?.map((optionValue) => (
-                                  <MenuItem value={optionValue} key={optionValue}>
-                                    {optionValue}
-                                  </MenuItem>
-                                ))
-                              :
-                                option?.optionValues?.map((optionValue) => (
-                                  <MenuItem value={optionValue.value} key={optionValue.id}>
-                                    {optionValue.value}
-                                  </MenuItem>
-                                ))
-                              }
+                              {isCreate
+                                ? option?.values?.map((optionValue) => (
+                                    <MenuItem value={optionValue} key={optionValue}>
+                                      {optionValue}
+                                    </MenuItem>
+                                  ))
+                                : option?.optionValues?.map((optionValue) => (
+                                    <MenuItem value={optionValue.value} key={optionValue.id}>
+                                      {optionValue.value}
+                                    </MenuItem>
+                                  ))}
                               {/* {option?.optionValues?.map((optionValue) => (
                                 <MenuItem value={optionValue.value} key={optionValue.id}>
                                   {optionValue.value}

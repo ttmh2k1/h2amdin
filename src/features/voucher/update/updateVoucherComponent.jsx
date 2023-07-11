@@ -1,5 +1,5 @@
 import './updateVoucherStyle.scss'
-import { Button, Grid, TextField } from '@mui/material'
+import { Button, Grid, MenuItem, Select, TextField } from '@mui/material'
 import { FaArrowCircleLeft, FaSave } from 'react-icons/fa'
 import { useNavigate, useParams } from 'react-router-dom'
 import Sidebar from '../../../components/sidebar/Sidebar'
@@ -36,7 +36,7 @@ const VoucherComponent = () => {
 
   const handleSave = async () => {
     try {
-      await updateVoucher(voucherId, voucher?.code, voucher?.limit)
+      await updateVoucher(voucherId, voucher)
       toast.success('Update voucher successful!', style)
       setTimeout(() => {
         navigate('/voucher')
@@ -53,7 +53,7 @@ const VoucherComponent = () => {
         <Navbar />
         <div className="updateVoucherBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/voucher">Voucher</a>/ <a href=" ">Voucher detail</a>
+            <a href="/">Home</a>/ <a href="/voucher">Voucher</a>/ <a href=" ">Update oucher</a>
           </div>
           <div className="updateVoucherForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
@@ -144,23 +144,53 @@ const VoucherComponent = () => {
                   <label className="title" for="validFrom">
                     Start date
                   </label>
-                  <TextField
-                    disabled
-                    className="textField"
-                    id="validFrom"
-                    value={moment(voucher?.validFrom).format('YYYY-MM-DD hh:mm')}
-                  />
+                  {moment(voucher?.validFrom).format() > moment().format() ? (
+                    <TextField
+                      isrequired
+                      className="textField"
+                      id="validFrom"
+                      type="datetime-local"
+                      onChange={(e) =>
+                        setVoucher((state) => ({
+                          ...state,
+                          validFrom: moment(e?.target?.value).format(),
+                        }))
+                      }
+                    />
+                  ) : (
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="validFrom"
+                      value={moment(voucher?.validFrom).format('YYYY-MM-DD hh:mm')}
+                    />
+                  )}
                 </div>
                 <div className="form">
                   <label className="title" for="validTo">
                     End date
                   </label>
-                  <TextField
-                    disabled
-                    className="textField"
-                    id="validTo"
-                    value={moment(voucher?.validTo).format('YYYY-MM-DD hh:mm')}
-                  />
+                  {moment(voucher?.validTo).format() > moment().format() ? (
+                    <TextField
+                      isrequired
+                      className="textField"
+                      id="validTo"
+                      type="datetime-local"
+                      onChange={(e) =>
+                        setVoucher((state) => ({
+                          ...state,
+                          validTo: moment(e?.target?.value).format(),
+                        }))
+                      }
+                    />
+                  ) : (
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="validTo"
+                      value={moment(voucher?.validTo).format('YYYY-MM-DD hh:mm')}
+                    />
+                  )}
                 </div>
                 <div className="form">
                   <label className="title" for="usedLimit">
@@ -192,15 +222,37 @@ const VoucherComponent = () => {
                   />
                 </div>
                 <div className="form">
-                  <label className="title" for="isActive">
+                  <label className="title" for="status">
                     Status
                   </label>
-                  <TextField
-                    disabled
-                    className="textField"
-                    id="isActive"
-                    value={voucher?.isActive ? 'Anable' : 'Unable'}
-                  />
+                  {moment(voucher?.validTo).format() < moment().format() ? (
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="isActive"
+                      value={voucher?.isActive ? 'Anable' : 'Unable'}
+                    />
+                  ) : (
+                    <Select
+                      className="select"
+                      name="status"
+                      id="status"
+                      defaultValue={voucher?.isActive ? true : false}
+                      value={voucher?.isActive}
+                      onChange={(e) =>
+                        setVoucher((state) => ({
+                          ...state,
+                          isActive: e?.target?.value,
+                        }))
+                      }
+                    >
+                      {arrayStatus?.map((item, index) => (
+                        <MenuItem key={index} value={item?.value}>
+                          {item?.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  )}
                 </div>
               </Grid>
             </div>
@@ -226,5 +278,10 @@ const VoucherComponent = () => {
     </div>
   )
 }
+
+const arrayStatus = [
+  { name: 'Active', value: 'true' },
+  { name: 'Unable', value: 'false' },
+]
 
 export default VoucherComponent

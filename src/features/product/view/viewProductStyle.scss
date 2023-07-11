@@ -7,7 +7,9 @@
     background-color: #eee;
 
     .viewProductBody {
+      padding-top: 4rem;
       margin: 1.2rem;
+
       .title {
         margin-bottom: 0.4rem;
         color: #48647f;
@@ -90,7 +92,6 @@
           .variation {
             border-radius: 0.2rem;
             border: 0.08rem solid #48647f;
-            background-color: #fff;
 
             .groupParent {
               margin: 0.2rem;

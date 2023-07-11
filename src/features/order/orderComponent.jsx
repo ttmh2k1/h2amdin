@@ -6,7 +6,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FaArrowCircleLeft, FaCheck, FaEye, FaRegTimesCircle } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
-import { getListOrder, updateOrder } from '../../apis/orderApi'
+import {
+  getListOrder,
+  getListOrderDelivering,
+  getListOrderWaitForSend,
+  updateOrder,
+} from '../../apis/orderApi'
 import { toast } from 'react-toastify'
 import { formatMoney } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
@@ -165,37 +170,43 @@ const OrderComponent = () => {
   const updateData = (k, v) => setListOrder((prev) => ({ ...prev, [k]: v }))
 
   useEffect(() => {
-    getListOrder({
-      page: listOrder.page,
-      size: listOrder.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-    }).then((resp) => {
-      setListOrder({
-        ...listOrder,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
+    if (
+      localStorage
+        .getItem('permission')
+        .split(',')
+        .includes('U_ORDER_SHIPPER' || 'R_ORDER_SHIPPER')
+    ) {
+      const handleListOrder = async () => {
+        const resp = await getListOrderWaitForSend({
+          status: 'WAIT_FOR_SEND',
+        })
+        const resp1 = await getListOrderDelivering({ status: 'DELIVERING' })
+        const list = resp?.data
+        const list1 = resp1?.data
+        setListOrder({
+          ...listOrder,
+          loading: false,
+          rows: [...list?.data, ...list1?.data],
+          totalRows: list?.totalElement + list1?.totalElement,
+        })
+      }
+      handleListOrder()
+    } else {
+      getListOrder({
+        page: listOrder.page,
+        size: listOrder.pageSize,
+        sortBy: 1,
+        sortDescending: true,
+      }).then((resp) => {
+        setListOrder({
+          ...listOrder,
+          loading: false,
+          rows: resp?.data?.data,
+          totalRows: resp?.data?.totalElement,
+        })
       })
-    })
+    }
   }, [])
-
-  useEffect(() => {
-    updateData('loading', true)
-    getListOrder({
-      page: listOrder.page,
-      size: listOrder.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-    }).then((resp) => {
-      setListOrder({
-        ...listOrder,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [listOrder?.page, listOrder?.pageSize])
 
   return (
     <div className="order">
@@ -209,14 +220,14 @@ const OrderComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={listOrder.rows}
-                columns={orderHeader.concat(actionColumn)}
+                rows={listOrder?.rows}
+                columns={orderHeader?.concat(actionColumn)}
                 paginationMode="server"
-                loading={listOrder.loading}
-                rowCount={listOrder.totalRows}
-                page={listOrder.page - 1}
-                pageSize={listOrder.pageSize}
-                rowsPerPageOptions={listOrder.rowsPerPageOptions}
+                loading={listOrder?.loading}
+                rowCount={listOrder?.totalRows}
+                page={listOrder?.page - 1}
+                pageSize={listOrder?.pageSize}
+                rowsPerPageOptions={listOrder?.rowsPerPageOptions}
                 onPageChange={(page) => {
                   updateData('page', page + 1)
                 }}

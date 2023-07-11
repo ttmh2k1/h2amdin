@@ -2,8 +2,8 @@ import './warehouseStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaRegPlusSquare } from 'react-icons/fa'
+import { useNavigate } from 'react-router-dom'
+import { FaArrowCircleLeft, FaRegPlusSquare } from 'react-icons/fa'
 import { getListWarehouse } from '../../apis/warehouseApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
@@ -115,7 +115,7 @@ const WarehouseComponent = () => {
       page: warehouse.page,
       size: warehouse.pageSize,
       sortDescending: true,
-      sortBy: 8,
+      sortBy: 2,
     }).then((resp) => {
       setWarehouse({
         ...warehouse,
@@ -132,7 +132,7 @@ const WarehouseComponent = () => {
       page: warehouse.page,
       size: warehouse.pageSize,
       sortDescending: true,
-      sortBy: 8,
+      sortBy: 2,
     }).then((resp) => {
       setWarehouse({
         ...warehouse,
