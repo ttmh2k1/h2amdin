@@ -1,6 +1,6 @@
 import './chart.scss'
 import { XAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, BarChart, Bar } from 'recharts'
-import { getStatisticMoment } from '../../apis/statistic'
+import { getStatisticMoment } from '../../apis/statisticApi'
 import { useEffect, useState } from 'react'
 const Chart = () => {
   const [statistic, setStatistic] = useState()

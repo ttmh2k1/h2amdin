@@ -10,21 +10,46 @@ import { listDelivery, listDelivery1, updateOrder } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
 import { formatMoney } from '../../utils/functionHelper'
 import { Button } from '@mui/material'
+import moment from 'moment'
 
 const DeliveryComponent = () => {
-  const [listOrder, setListOrder] = useState([])
+  const [listOrder, setListOrder] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
   const navigate = useNavigate()
 
   useEffect(() => {
     const handleListDelivery = async () => {
-      const resp = await listDelivery()
-      const resp1 = await listDelivery1()
-      const list = resp?.data?.data
-      const list1 = resp1?.data?.data
-      setListOrder([...list, ...list1])
+      const resp = await listDelivery({
+        page: listOrder?.page,
+        size: listOrder?.pageSize / 2,
+        sortBy: 2,
+        sortDescending: true,
+        status: 'WAIT_FOR_SEND',
+      })
+      const resp1 = await listDelivery1({
+        page: listOrder?.page,
+        size: listOrder?.pageSize / 2,
+        sortBy: 2,
+        sortDescending: true,
+        status: 'DELIVERING',
+      })
+      const list = resp?.data
+      const list1 = resp1?.data
+      setListOrder({
+        ...listOrder,
+        loading: false,
+        rows: [...list?.data, ...list1?.data],
+        totalRows: list?.totalElement + list1?.totalElement,
+      })
     }
     handleListDelivery()
-  }, [])
+  }, [listOrder?.page, listOrder?.pageSize])
 
   const style = {
     position: 'bottom-right',
@@ -38,26 +63,28 @@ const DeliveryComponent = () => {
   }
 
   const handleApprove = async (id) => {
+    const status = 'DELIVERING'
     try {
-      await updateOrder(id, 'DELIVERING')
-      toast.success('Approve successful!', style)
+      await updateOrder(id, status)
+      toast.success('Approve order successful!', style)
       setTimeout(() => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Approve failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
   const handleApprove1 = async (id) => {
+    const status = 'DELIVERED'
     try {
-      await updateOrder(id, 'DELIVERED')
-      toast.success('Approve successful!', style)
+      await updateOrder(id, status)
+      toast.success('Approve order successful!', style)
       setTimeout(() => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Approve failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -68,11 +95,12 @@ const DeliveryComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index?.row?.id) + 1,
     },
     {
       field: 'id',
       headerName: 'Order ID',
-      width: 80,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
@@ -82,13 +110,23 @@ const DeliveryComponent = () => {
       width: 100,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.id}`,
+    },
+    {
+      field: 'username',
+      headerName: 'Username',
+      width: 100,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.username}`,
     },
     {
       field: 'customerName',
       headerName: 'Customer name',
-      width: 200,
+      width: 150,
       align: 'left',
       headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.fullname || ''}`,
     },
     {
       field: 'customerGroup',
@@ -96,42 +134,33 @@ const DeliveryComponent = () => {
       width: 120,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.buyer?.rank?.name}`,
     },
     {
-      field: 'price',
+      field: 'totalPrice',
       headerName: 'Price',
       width: 100,
       align: 'right',
       headerAlign: 'center',
+      renderCell: (params) => `${formatMoney(params?.row?.totalPrice)}`,
     },
     {
       field: 'createTime',
       headerName: 'Create time',
-      width: 180,
+      width: 150,
       align: 'center',
       headerAlign: 'center',
+      sort: 'desc',
+      renderCell: (params) => `${moment(params?.row?.createTime).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'status',
       headerName: 'Status',
-      width: 200,
+      width: 180,
       align: 'center',
       headerAlign: 'center',
     },
   ]
-
-  const content = listOrder.map((item, index) => {
-    return {
-      stt: index + 1,
-      id: item?.id,
-      customerID: item?.buyer?.id,
-      customerName: item?.buyer?.fullname,
-      customerGroup: item?.buyer?.rank?.name,
-      price: formatMoney(item?.price),
-      createTime: item?.createTime,
-      status: item?.status,
-    }
-  })
 
   const action = [
     {
@@ -163,6 +192,8 @@ const DeliveryComponent = () => {
     },
   ]
 
+  const updateData = (k, v) => setListOrder((prev) => ({ ...prev, [k]: v }))
+
   return (
     <div className="delivery">
       <Sidebar />
@@ -175,10 +206,22 @@ const DeliveryComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={content}
-                columns={header.concat(action)}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                rows={listOrder?.rows}
+                columns={header?.concat(action)}
+                paginationMode="server"
+                loading={listOrder?.loading}
+                rowCount={listOrder?.totalRows}
+                page={listOrder?.page - 1}
+                pageSize={listOrder?.pageSize}
+                rowsPerPageOptions={listOrder?.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row.id}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',

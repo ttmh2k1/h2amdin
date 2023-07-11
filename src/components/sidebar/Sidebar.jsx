@@ -12,6 +12,7 @@ const Sidebar = () => {
     localStorage.removeItem('token')
     navigate('/login')
   }
+
   return (
     <>
       <div className="sidebar">

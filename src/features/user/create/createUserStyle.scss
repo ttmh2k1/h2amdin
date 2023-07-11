@@ -1,12 +1,12 @@
-.createVoucher {
+.createUser {
   display: flex;
   width: 100%;
 
-  .createVoucherContainer {
+  .createUserContainer {
     flex: 6;
     background-color: #eee;
 
-    .createVoucherBody {
+    .createUserBody {
       padding-top: 4rem;
       margin: 1rem 1.2rem;
 
@@ -19,12 +19,12 @@
         }
       }
 
-      .createVoucherForm {
+      .createUserForm {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;
         background-color: #fff;
 
-        .createVoucher {
+        .createUser {
           display: flex;
           flex-direction: column;
 
@@ -69,7 +69,7 @@
         }
       }
 
-      .createVoucherFooter {
+      .createUserFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;

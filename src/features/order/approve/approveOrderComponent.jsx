@@ -122,15 +122,14 @@ const OrderComponent = () => {
   })
 
   const handleSave = async () => {
-    const status = order?.status
     try {
-      await updateOrder(orderId, { newStatus: status })
+      await updateOrder(orderId, order?.status)
       toast.success('Update order successful!', style)
       setTimeout(() => {
         navigate('/order')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response?.data?.message, style)
+      toast.error(error?.message, style)
     }
   }
   return (

@@ -19,8 +19,8 @@ export function createVoucher(data) {
   return api.POST(`${SERVICE}/api/admin/coupon-code`, data)
 }
 
-export function updateVoucher(id, code, limit) {
-  return api.PUT(`${SERVICE}/api/admin/coupon-code/${id}`, { code: code, limit: limit })
+export function updateVoucher(id, params) {
+  return api.PUT(`${SERVICE}/api/admin/coupon-code/${id}`, params)
 }
 
 export function deleteVoucher(id) {

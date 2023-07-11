@@ -56,7 +56,6 @@ const CustomerComponent = () => {
       <div className="updateCustomerContainer">
         <Navbar />
         <div className="updateCustomerBody">
-          {' '}
           <div className="title">
             <a href="/">Home</a>/ <a href="/customerGroup">Customer</a>/{' '}
             <a href=" ">Update customer</a>

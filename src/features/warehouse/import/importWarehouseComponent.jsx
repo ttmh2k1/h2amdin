@@ -172,14 +172,16 @@ const ImportWarehouseComponent = () => {
         _.mergeWith({}, ...g, (obj, src) => (_.isArray(obj) ? obj.concat(src) : undefined)),
       )
       .value()
-    try {
-      await importWarehouse({ inventories: result })
-      toast.success('Update successful!', style)
-      setTimeout(() => {
-        navigate('/warehouse')
-      }, 2000)
-    } catch (error) {
-      toast.error('Update failed!', style)
+    if (result?.length > 0) {
+      try {
+        await importWarehouse({ inventories: result })
+        toast.success('Import product successful!', style)
+        setTimeout(() => {
+          navigate('/warehouse')
+        }, 2000)
+      } catch (error) {
+        toast.error('Update failed!', style)
+      }
     }
   }
 
@@ -205,7 +207,6 @@ const ImportWarehouseComponent = () => {
         const data = resp?.data?.data
         setSelected(data)
       }
-      // setListVariation(data?.variations)
     }
     handleGetProduct()
   }, [productId])

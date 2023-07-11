@@ -2,57 +2,110 @@ import './roleStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
-import { getRoles } from '../../apis/roleApi'
+import { getListRole } from '../../apis/roleApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '@mui/material'
-import { FaArrowCircleLeft } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaEye, FaPen, FaPlusCircle } from 'react-icons/fa'
 
 const RoleComponent = () => {
-  const [roles, setRoles] = useState()
   const navigate = useNavigate()
+  const [roles, setRoles] = useState({
+    loading: true,
+    rows: [],
+    totalRows: 0,
+    rowsPerPageOptions: [10, 20, 50],
+    pageSize: 10,
+    page: 1,
+  })
 
   useEffect(() => {
-    const handleGetRole = async () => {
-      const resp = await getRoles()
-      const data = resp?.data?.data
-      setRoles(data)
-    }
-    handleGetRole()
+    getListRole({
+      page: roles.page,
+      size: roles.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setRoles({
+        ...roles,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
   }, [])
+
+  useEffect(() => {
+    updateData('loading', true)
+    getListRole({
+      page: roles.page,
+      size: roles.pageSize,
+      sortBy: 1,
+      sortDescending: true,
+    }).then((resp) => {
+      setRoles({
+        ...roles,
+        loading: false,
+        rows: resp?.data?.data,
+        totalRows: resp?.data?.totalElement,
+      })
+    })
+  }, [roles.page, roles.pageSize])
+
+  const actionColumn = [
+    {
+      headerName: 'Action',
+      width: 150,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (props) => {
+        return (
+          <div className="cellAction">
+            <Link to={`/role/view/${props.id}`} style={{ textDecoration: 'none' }}>
+              <div className="viewButton">
+                <FaEye />
+              </div>
+            </Link>
+            {props.id !== 'ADMIN' && (
+              <Link to={`/role/update/${props.id}`} style={{ textDecoration: 'none' }}>
+                <div className="updateButton">
+                  <FaPen />
+                </div>
+              </Link>
+            )}
+          </div>
+        )
+      },
+    },
+  ]
 
   const roleHeader = [
     {
-      field: 'id',
+      field: 'stt',
       headerName: 'No',
       width: 100,
       align: 'center',
       headerAlign: 'center',
+      renderCell: (index) => index.api.getRowIndex(index?.row?.roleName) + 1,
     },
     {
-      field: 'name',
+      field: 'roleName',
       headerName: 'Role name',
       width: 400,
       align: 'center',
       headerAlign: 'center',
     },
     {
-      field: 'permissions',
-      headerName: 'Permissions',
-      width: 650,
+      field: 'description',
+      headerName: 'Description',
+      width: 550,
       align: 'center',
       headerAlign: 'center',
     },
   ]
 
-  const roleContent = [
-    {
-      id: 1,
-      name: roles?.name,
-      permissions: roles?.permissions,
-    },
-  ]
+  const updateData = (k, v) => setRoles((prev) => ({ ...prev, [k]: v }))
 
   return (
     <div className="role">
@@ -66,10 +119,21 @@ const RoleComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={roleContent}
-                columns={roleHeader}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                rows={roles.rows}
+                columns={roleHeader.concat(actionColumn)}
+                paginationMode="server"
+                rowCount={roles.totalRows}
+                page={roles.page - 1}
+                pageSize={roles.pageSize}
+                rowsPerPageOptions={roles.rowsPerPageOptions}
+                onPageChange={(page) => {
+                  updateData('page', page + 1)
+                }}
+                onPageSizeChange={(pageSize) => {
+                  updateData('page', 1)
+                  updateData('pageSize', pageSize)
+                }}
+                getRowId={(row) => row?.roleName}
                 style={{
                   backgroundColor: '#fff',
                   fontSize: '0.8rem',
@@ -78,6 +142,13 @@ const RoleComponent = () => {
             </div>
           </div>
           <div className="roleFooter">
+            <Button
+              className="createButton"
+              startIcon={<FaPlusCircle color="#fff" size={'1rem'} />}
+              onClick={() => navigate('/role/create')}
+            >
+              New
+            </Button>
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}

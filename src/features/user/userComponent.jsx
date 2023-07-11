@@ -1,13 +1,22 @@
 import './userStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getListUsers } from '../../apis/userApi'
+import { getListUsers, updateUserStatus } from '../../apis/userApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { DataGrid } from '@mui/x-data-grid'
-import { FaArrowCircleLeft, FaEye } from 'react-icons/fa'
+import {
+  FaArrowCircleLeft,
+  FaEye,
+  FaLock,
+  FaLockOpen,
+  FaPen,
+  FaPlusCircle,
+  FaUnlock,
+} from 'react-icons/fa'
 import { Button } from '@mui/material'
+import { toast } from 'react-toastify'
 
 const UserComponent = () => {
   const navigate = useNavigate()
@@ -20,6 +29,17 @@ const UserComponent = () => {
     page: 1,
   })
 
+  const style = {
+    position: 'bottom-right',
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: 'colored',
+  }
+
   const actionColumn = [
     {
       headerName: 'Action',
@@ -29,11 +49,25 @@ const UserComponent = () => {
       renderCell: (props) => {
         return (
           <div className="cellAction">
-            <Link to={`/user/${props.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/user/view/${props.id}`} style={{ textDecoration: 'none' }}>
               <div className="viewButton">
                 <FaEye />
               </div>
             </Link>
+            <Link to={`/user/update/${props.id}`} style={{ textDecoration: 'none' }}>
+              <div className="updateButton">
+                <FaPen />
+              </div>
+            </Link>
+            <div className="disableButton">
+              {props?.row?.status === 'ACTIVE' ? (
+                <FaLock onClick={() => handleDisable(props.id)} />
+              ) : props?.row?.status === 'BANNED' ? (
+                <FaLockOpen onClick={() => handleEnable(props.id)} />
+              ) : (
+                <FaUnlock onClick={() => handleDisable(props.id)} />
+              )}
+            </div>
           </div>
         )
       },
@@ -59,7 +93,7 @@ const UserComponent = () => {
     {
       field: 'username',
       headerName: 'User name',
-      width: 100,
+      width: 150,
       align: 'left',
       headerAlign: 'center',
     },
@@ -76,7 +110,7 @@ const UserComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.role?.name}`,
+      renderCell: (params) => `${params?.row?.adminRole?.description}`,
     },
     {
       field: 'email',
@@ -105,6 +139,34 @@ const UserComponent = () => {
   ]
 
   const updateData = (k, v) => setUsers((prev) => ({ ...prev, [k]: v }))
+
+  const handleDisable = async (id) => {
+    try {
+      await updateUserStatus(id, {
+        status: 'BANNED',
+      })
+      toast.success('Disable user successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Disable user failed!', style)
+    }
+  }
+
+  const handleEnable = async (id) => {
+    try {
+      await updateUserStatus(id, {
+        status: 'ACTIVE',
+      })
+      toast.success('Enable user successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Enable user failed!', style)
+    }
+  }
 
   useEffect(() => {
     getListUsers({
@@ -173,6 +235,13 @@ const UserComponent = () => {
             </div>
           </div>
           <div className="userFooter">
+            <Button
+              className="createButton"
+              startIcon={<FaPlusCircle color="#fff" size={'1rem'} />}
+              onClick={() => navigate('/user/create')}
+            >
+              New
+            </Button>
             <Button
               className="backButton"
               startIcon={<FaArrowCircleLeft color="#fff" size={'1rem'} />}

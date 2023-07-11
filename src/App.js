@@ -3,8 +3,13 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Home from './pages/home'
 import LoginPage from './pages/login/LoginPage'
 import User from './pages/user/UserPage'
+import CreateUser from './pages/user/create/CreateUserPage'
 import ViewUser from './pages/user/view/ViewUserPage'
+import UpdateUser from './pages/user/update/UpdateUserPage'
 import Role from './pages/role/RolePage'
+import CreateRole from './pages/role/create/CreateRolePage'
+import ViewRole from './pages/role/view/ViewRolePage'
+import UpdateRole from './pages/role/update/UpdateRolePage'
 import Logs from './pages/logs/LogsPage'
 import Order from './pages/order/OrderPage'
 import ViewOrder from './pages/order/view/ViewOrderPage'
@@ -48,10 +53,23 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="user">
               <Route index element={<User />} />
-              <Route path=":userId" element={<ViewUser />} />
+              <Route path="create" element={<CreateUser />} />
+              <Route path="view">
+                <Route path=":userId" element={<ViewUser />} />
+              </Route>
+              <Route path="update">
+                <Route path=":userId" element={<UpdateUser />} />
+              </Route>
             </Route>
             <Route path="role">
               <Route index element={<Role />} />
+              <Route path="create" element={<CreateRole />} />
+              <Route path="view">
+                <Route path=":roleName" element={<ViewRole />} />
+              </Route>
+              <Route path="update">
+                <Route path=":roleName" element={<UpdateRole />} />
+              </Route>
             </Route>
           </Route>
           <Route path="logs">

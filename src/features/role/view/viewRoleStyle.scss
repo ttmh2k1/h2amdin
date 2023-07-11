@@ -1,12 +1,12 @@
-.updateVoucher {
+.viewRole {
   display: flex;
   width: 100%;
 
-  .updateVoucherContainer {
+  .viewRoleContainer {
     flex: 6;
     background-color: #eee;
 
-    .updateVoucherBody {
+    .viewRoleBody {
       padding-top: 4rem;
       margin: 1.2rem;
 
@@ -19,7 +19,7 @@
         }
       }
 
-      .updateVoucherForm {
+      .viewRoleForm {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;
         background-color: #fff;
@@ -47,7 +47,8 @@
           }
 
           .textField {
-            border-radius: 0.2rem;
+            background-color: #f1f5f8;
+            border-radius: 0.4rem;
             font-size: 1rem;
             .MuiInputBase-root {
               height: 2.4rem;
@@ -58,41 +59,40 @@
               }
             }
           }
+        }
 
-          .select {
+        .permissionForm {
+          display: flex;
+          flex-direction: column;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0 0.8rem 0.8rem 0.8rem;
+
+          .permissionTitle {
+            color: #324d67;
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .permission {
+            background-color: #f1f5f8;
+            color: rgba(0, 0, 0, 0.38);
             border-radius: 0.4rem;
             font-size: 1rem;
-            .MuiSelect-select {
-              height: 2.4rem !important;
-              padding: 0 0.8rem;
-              font-size: 1rem;
-              display: flex;
-              align-items: center;
-            }
+            margin: 0 0.8rem 0 0;
+            padding: 0.4rem 0.8rem 1rem;
+            word-wrap: break-word;
+            height: 60rem;
+            border-radius: 0.4rem;
+            resize: vertical;
           }
         }
       }
 
-      .updateVoucherFooter {
+      .viewRoleFooter {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        gap: 1rem;
-
-        .saveButton {
-          font-size: 1rem;
-          justify-content: center;
-          text-transform: none;
-          margin: 0.8rem 0 0 0;
-          padding: 0.2rem 1rem;
-          border-radius: 0.2rem;
-          color: #fff;
-          background-color: #829ab0;
-
-          &:hover {
-            background-color: #243a52;
-          }
-        }
 
         .backButton {
           font-size: 1rem;

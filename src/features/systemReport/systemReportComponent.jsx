@@ -8,7 +8,7 @@ import {
   getTopSale,
   getTopSold,
   getTopView,
-} from '../../apis/statistic'
+} from '../../apis/statisticApi'
 import { useEffect, useState } from 'react'
 import {
   CartesianGrid,
@@ -418,7 +418,6 @@ const SystemReportComponent = () => {
             <div className="productBg">
               <div className="title">Top view products</div>
               <div className="list">
-                {' '}
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                   <TableContainer sx={{ maxHeight: 300 }}>
                     <Table stickyHeader>
@@ -477,7 +476,6 @@ const SystemReportComponent = () => {
             <div className="productBg">
               <div className="title">Top sale products</div>
               <div className="list">
-                {' '}
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                   <TableContainer sx={{ maxHeight: 300 }}>
                     <Table stickyHeader>
@@ -536,7 +534,6 @@ const SystemReportComponent = () => {
             <div className="productBg">
               <div className="title">Top sold products</div>
               <div className="list">
-                {' '}
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                   <TableContainer sx={{ maxHeight: 300 }}>
                     <Table stickyHeader>
@@ -595,7 +592,6 @@ const SystemReportComponent = () => {
             <div className="productBg">
               <div className="title">Top rating products</div>
               <div className="list">
-                {' '}
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                   <TableContainer sx={{ maxHeight: 300 }}>
                     <Table stickyHeader>

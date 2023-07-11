@@ -3,11 +3,19 @@ import styled from 'styled-components'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { DataGrid } from '@mui/x-data-grid'
-import { FaArrowCircleLeft, FaEye, FaPen, FaPlusCircle, FaTrashAlt } from 'react-icons/fa'
+import {
+  FaArrowCircleLeft,
+  FaEye,
+  FaLock,
+  FaPen,
+  FaPlusCircle,
+  FaTrashAlt,
+  FaUnlock,
+} from 'react-icons/fa'
 import { Button } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { deleteVoucher, getListVoucher } from '../../apis/voucherApi'
+import { deleteVoucher, getListVoucher, updateVoucher } from '../../apis/voucherApi'
 import moment from 'moment'
 import { formatMoney } from '../../utils/functionHelper'
 import { toast } from 'react-toastify'
@@ -49,7 +57,7 @@ const VoucherComponent = () => {
   const actionColumn = [
     {
       headerName: 'Action',
-      width: 100,
+      width: 150,
       align: 'center',
       headerAlign: 'center',
       renderCell: (props) => {
@@ -65,6 +73,25 @@ const VoucherComponent = () => {
                 <FaPen />
               </div>
             </Link>
+            <div className="disableButton">
+              {props?.row?.isActive === true ? (
+                <FaLock
+                  onClick={() => {
+                    moment(props?.row?.validTo).format() < moment().format()
+                      ? toast.error("Can't disable voucher!", style)
+                      : handleDisable(props.id)
+                  }}
+                />
+              ) : (
+                <FaUnlock
+                  onClick={() => {
+                    moment(props?.row?.validTo).format() < moment().format()
+                      ? toast.error("Can't anable voucher!", style)
+                      : handleEnable(props.id)
+                  }}
+                />
+              )}
+            </div>
             <div className="deleteButton">
               <FaTrashAlt onClick={() => handleDelete(props.id)} />
             </div>
@@ -100,7 +127,7 @@ const VoucherComponent = () => {
     {
       field: 'description',
       headerName: 'Description',
-      width: 200,
+      width: 170,
       align: 'left',
       headerAlign: 'center',
     },
@@ -146,7 +173,7 @@ const VoucherComponent = () => {
       width: 100,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.isActive ? 'Anable' : 'Unnable'}`,
+      renderCell: (params) => `${params?.row?.isActive ? 'Anable' : 'Unable'}`,
     },
   ]
 
@@ -167,6 +194,30 @@ const VoucherComponent = () => {
       })
     })
   }, [])
+
+  const handleDisable = async (id) => {
+    try {
+      await updateVoucher(id, { isActive: false })
+      toast.success('Disable voucher successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Disable voucher failed!', style)
+    }
+  }
+
+  const handleEnable = async (id) => {
+    try {
+      await updateVoucher(id, { isActive: true })
+      toast.success('Enable voucher successful!', style)
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
+    } catch (error) {
+      toast.error('Enable voucher failed!', style)
+    }
+  }
 
   return (
     <div className="voucher">

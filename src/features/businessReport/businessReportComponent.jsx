@@ -1,7 +1,7 @@
 import './businessReportStyle.scss'
 import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
-import { getStatistic } from '../../apis/statistic'
+import { getStatistic } from '../../apis/statisticApi'
 import { useEffect, useState } from 'react'
 import {
   CartesianGrid,

@@ -57,6 +57,15 @@
               color: #6ebef7;
               cursor: pointer;
             }
+            .disableButton {
+              display: flex;
+              align-items: center;
+              padding: 0.4rem;
+              border-radius: 0.2rem;
+              border: 0.1rem solid #104e7a;
+              color: #104e7a;
+              cursor: pointer;
+            }
             .deleteButton {
               display: flex;
               align-items: center;

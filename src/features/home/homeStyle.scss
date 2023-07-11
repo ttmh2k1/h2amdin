@@ -7,6 +7,8 @@
     background-color: #eee;
 
     .homeBody {
+      padding-top: 4rem;
+
       .widgets,
       .charts {
         display: flex;
@@ -30,6 +32,42 @@
           color: #48647f;
           font-weight: bold;
           margin-bottom: 1.6rem;
+        }
+      }
+
+      .productReport {
+        border-radius: 0.4rem;
+        border: 0.08rem solid #48647f;
+        display: grid;
+        justify-content: center;
+        // grid-template-columns: 41vw 41vw;
+        // grid-template-rows: 40vh 43vh;
+        grid-gap: 1vw 0;
+
+        .productBg {
+          display: flex;
+          flex-direction: column;
+          margin: 0.8rem;
+          .title {
+            margin: 0.1rem;
+            color: #324d67;
+          }
+          .list {
+            border: 0.08rem solid #48647f;
+            border-radius: 0.2rem;
+            margin: 0 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .MuiTableCell-head {
+              // background-color: #bcccdc;
+            }
+            a {
+              color: #000;
+              text-decoration: none;
+            }
+          }
         }
       }
     }

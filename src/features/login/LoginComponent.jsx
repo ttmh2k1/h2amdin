@@ -11,10 +11,11 @@ function LoginComponent() {
     const username = document.getElementById('username').value
     const password = document.getElementById('password').value
     try {
-      const resp = await LoginService.login(username, password)
+      const resp = await LoginService?.login(username, password)
       if (resp?.token) {
         localStorage.setItem('token', resp?.token)
-        localStorage.setItem('role', resp?.userInfo?.role?.name)
+        localStorage.setItem('role', resp?.userInfo?.adminRole?.roleName)
+        localStorage.setItem('permission', resp?.userInfo?.adminRole?.permissions)
         localStorage.setItem('fullname', resp?.userInfo?.fullname)
         navigate('/')
       }
