@@ -121,14 +121,6 @@ const DeliveryComponent = () => {
       renderCell: (params) => `${params?.row?.buyer?.username}`,
     },
     {
-      field: 'customerName',
-      headerName: 'Customer name',
-      width: 150,
-      align: 'left',
-      headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.buyer?.fullname || ''}`,
-    },
-    {
       field: 'customerGroup',
       headerName: 'Customer group',
       width: 120,
@@ -152,6 +144,14 @@ const DeliveryComponent = () => {
       headerAlign: 'center',
       sort: 'desc',
       renderCell: (params) => `${moment(params?.row?.createTime).format('YYYY-MM-DD hh:mm')}`,
+    },
+    {
+      field: 'note',
+      headerName: 'Note',
+      width: 120,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.note}`,
     },
     {
       field: 'status',

@@ -41,7 +41,7 @@ export const CreateRole = () => {
     const handleGetRolePermission = async () => {
       const resp = await getListPermission()
       const data = resp?.data?.data
-      setListPermission(data?.map((item) => item?.permission))
+      setListPermission(data)
     }
     handleGetRolePermission()
   }, [])
@@ -118,9 +118,9 @@ export const CreateRole = () => {
                   MenuProps={MenuProps}
                 >
                   {listPermission?.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      <Checkbox checked={permission?.indexOf(item) > -1} />
-                      <ListItemText primary={item} />
+                    <MenuItem key={item?.permission} value={item?.permission}>
+                      <Checkbox checked={permission?.indexOf(item?.permission) > -1} />
+                      <ListItemText primary={item?.description} />
                     </MenuItem>
                   ))}
                 </Select>

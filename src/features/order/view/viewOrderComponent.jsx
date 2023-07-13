@@ -301,17 +301,14 @@ const OrderComponent = () => {
                     {'Price: '}
                     {formatMoney(order?.price)}
                   </Typography>
-                  {/* <Typography>
+                  <Typography>
                     {'Customer discount: - '}
-                    {formatMoney(
-                      order?.buyer?.rank?.discountRate *
-                        order?.orderDetails
-                          ?.map((item) => {
-                            return item?.unitPrice * item?.quantity
-                          })
-                          .reduce((acc, item) => acc + item, 0),
-                    )}
-                  </Typography> */}
+                    {formatMoney(parseFloat((order?.price * order?.discount) / 100).toFixed(0))}
+                  </Typography>
+                  <Typography>
+                    {'Discount discount: - '}
+                    {formatMoney(order?.couponDiscount)}
+                  </Typography>
                   <Typography>
                     {'Ship: '}
                     {formatMoney(order?.shipPrice)}

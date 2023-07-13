@@ -120,7 +120,7 @@ const VoucherComponent = () => {
     {
       field: 'code',
       headerName: 'Code',
-      width: 150,
+      width: 120,
       align: 'center',
       headerAlign: 'center',
     },
@@ -170,7 +170,7 @@ const VoucherComponent = () => {
     {
       field: 'isActive',
       headerName: 'Status',
-      width: 100,
+      width: 80,
       align: 'center',
       headerAlign: 'center',
       renderCell: (params) => `${params?.row?.isActive ? 'Anable' : 'Unable'}`,

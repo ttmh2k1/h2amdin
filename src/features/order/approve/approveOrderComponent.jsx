@@ -139,7 +139,7 @@ const OrderComponent = () => {
         <Navbar />
         <div className="approveOrderBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/order">Order</a>/ <a href=" ">Order detail</a>
+            <a href="/">Home</a>/ <a href="/order">Order</a>/ <a href=" ">Order approve</a>
           </div>
           <div className="approveOrderForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
@@ -339,14 +339,11 @@ const OrderComponent = () => {
                   </Typography>
                   <Typography>
                     {'Customer discount: - '}
-                    {formatMoney(
-                      order?.buyer?.rank?.discountRate *
-                        order?.orderDetails
-                          ?.map((item) => {
-                            return (item?.unitPrice * item?.quantity) / 100
-                          })
-                          .reduce((acc, item) => acc + item, 0),
-                    )}
+                    {formatMoney(parseFloat((order?.price * order?.discount) / 100).toFixed(0))}
+                  </Typography>
+                  <Typography>
+                    {'Discount discount: - '}
+                    {formatMoney(order?.couponDiscount)}
                   </Typography>
                   <Typography>
                     {'Ship: '}
