@@ -127,14 +127,6 @@ const OrderComponent = () => {
       renderCell: (params) => `${params?.row?.buyer?.username}`,
     },
     {
-      field: 'customerName',
-      headerName: 'Customer name',
-      width: 150,
-      align: 'left',
-      headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.buyer?.fullname || ''}`,
-    },
-    {
       field: 'customerGroup',
       headerName: 'Customer group',
       width: 120,
@@ -159,6 +151,14 @@ const OrderComponent = () => {
       renderCell: (params) => `${moment(params?.row?.createTime).format('YYYY-MM-DD hh:mm')}`,
     },
     {
+      field: 'note',
+      headerName: 'Note',
+      width: 120,
+      align: 'left',
+      headerAlign: 'center',
+      renderCell: (params) => `${params?.row?.note}`,
+    },
+    {
       field: 'status',
       headerName: 'Status',
       width: 180,
@@ -171,15 +171,11 @@ const OrderComponent = () => {
 
   useEffect(() => {
     if (
-      localStorage
-        .getItem('permission')
-        .split(',')
-        .includes('U_ORDER_SHIPPER' || 'R_ORDER_SHIPPER')
+      localStorage.getItem('permission').split(',').includes('R_ORDER_SHIPPER') ||
+      localStorage.getItem('permission').split(',').includes('U_ORDER_SHIPPER')
     ) {
       const handleListOrder = async () => {
-        const resp = await getListOrderWaitForSend({
-          status: 'WAIT_FOR_SEND',
-        })
+        const resp = await getListOrderWaitForSend({ status: 'WAIT_FOR_SEND' })
         const resp1 = await getListOrderDelivering({ status: 'DELIVERING' })
         const list = resp?.data
         const list1 = resp1?.data
@@ -188,6 +184,7 @@ const OrderComponent = () => {
           loading: false,
           rows: [...list?.data, ...list1?.data],
           totalRows: list?.totalElement + list1?.totalElement,
+          pageSize: list?.pageSize / 2 + list1?.pageSize / 2,
         })
       }
       handleListOrder()

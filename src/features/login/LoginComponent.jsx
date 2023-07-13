@@ -42,7 +42,7 @@ function LoginComponent() {
             <input type="password" className="input" id="password" />
           </div>
         </div>
-        <div className="remember-me">
+        {/* <div className="remember-me">
           <span style={{ display: 'flex', alignItems: 'center' }}>
             <input type="checkbox" className="checkbox" id="checkbox" />
             <label for="checkbox">Remember me</label>
@@ -50,7 +50,7 @@ function LoginComponent() {
           <span>
             <label style={{ textDecorationLine: 'underline' }}>Forget password?</label>
           </span>
-        </div>
+        </div> */}
         <br />
         <Button className="buttonLogin" onClick={() => handleLogin()}>
           Login

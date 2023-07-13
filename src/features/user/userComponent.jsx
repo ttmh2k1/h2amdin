@@ -86,14 +86,14 @@ const UserComponent = () => {
     {
       field: 'id',
       headerName: 'User ID',
-      width: 120,
+      width: 100,
       align: 'center',
       headerAlign: 'center',
     },
     {
       field: 'username',
       headerName: 'User name',
-      width: 150,
+      width: 120,
       align: 'left',
       headerAlign: 'center',
     },

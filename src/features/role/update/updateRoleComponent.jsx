@@ -51,7 +51,7 @@ const UpdateRole = () => {
     const handleGetRolePermission = async () => {
       const resp = await getListPermission()
       const data = resp?.data?.data
-      setListPermission(data?.map((item) => item?.permission))
+      setListPermission(data)
     }
     handleGetRolePermission()
   }, [])
@@ -60,8 +60,7 @@ const UpdateRole = () => {
     const {
       target: { value },
     } = e
-    setPermission(typeof value === 'string' ? value.split(',') : value)
-
+    setPermission(typeof value === 'string' ? value?.split(',') : value)
     setRole((state) => ({
       ...state,
       permissions: e?.target?.value,
@@ -134,9 +133,9 @@ const UpdateRole = () => {
                   MenuProps={MenuProps}
                 >
                   {listPermission?.map((item) => (
-                    <MenuItem key={item} value={item}>
-                      <Checkbox checked={permission?.indexOf(item) > -1} />
-                      <ListItemText primary={item} />
+                    <MenuItem key={item?.permission} value={item?.permission}>
+                      <Checkbox checked={permission?.indexOf(item?.permission) > -1} />
+                      <ListItemText primary={item?.description} />
                     </MenuItem>
                   ))}
                 </Select>

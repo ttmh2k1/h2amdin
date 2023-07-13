@@ -125,7 +125,7 @@ const ImportWarehouseComponent = () => {
 
   const onChange = (event, params) => {
     setSelected(params)
-    setProductId(params.id)
+    setProductId(params?.id)
   }
 
   const handleChangeVariation = (event) => {
@@ -157,11 +157,11 @@ const ImportWarehouseComponent = () => {
   const handleImport = async () => {
     const list = warehouse?.map((value, index) => {
       return {
-        idProduct: value.id,
+        idProduct: value?.id,
         inventories: [
           {
-            idVariation: value.variation.id,
-            quantity: value.quantity,
+            idVariation: value?.variation?.id,
+            quantity: value?.quantity,
           },
         ],
       }
@@ -187,7 +187,7 @@ const ImportWarehouseComponent = () => {
 
   const handleDelete = (tmp) => {
     const proIndex = warehouse?.findIndex((item) => item?.variation?.id === tmp)
-    warehouse.splice(proIndex, 1)
+    warehouse?.splice(proIndex, 1)
     setWarehouse([...warehouse])
   }
 

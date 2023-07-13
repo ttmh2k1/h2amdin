@@ -55,7 +55,7 @@ const LogsComponent = () => {
     {
       field: 'logType',
       headerName: 'Logs type',
-      width: 200,
+      width: 180,
       align: 'center',
       headerAlign: 'center',
     },
@@ -69,17 +69,6 @@ const LogsComponent = () => {
   ]
 
   const updateData = (k, v) => setLogs((prev) => ({ ...prev, [k]: v }))
-
-  useEffect(() => {
-    getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then((resp) => {
-      setLogs({
-        ...logs,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
 
   useEffect(() => {
     updateData('loading', true)

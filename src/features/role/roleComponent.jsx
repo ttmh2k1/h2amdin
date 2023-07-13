@@ -21,22 +21,6 @@ const RoleComponent = () => {
   })
 
   useEffect(() => {
-    getListRole({
-      page: roles.page,
-      size: roles.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-    }).then((resp) => {
-      setRoles({
-        ...roles,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
-
-  useEffect(() => {
     updateData('loading', true)
     getListRole({
       page: roles.page,
@@ -51,12 +35,12 @@ const RoleComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [roles.page, roles.pageSize])
+  }, [roles?.page, roles?.pageSize])
 
   const actionColumn = [
     {
       headerName: 'Action',
-      width: 150,
+      width: 120,
       align: 'left',
       headerAlign: 'center',
       renderCell: (props) => {

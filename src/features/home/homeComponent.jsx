@@ -27,10 +27,8 @@ const HomeComponent = () => {
 
   useEffect(() => {
     if (
-      localStorage
-        .getItem('permission')
-        .split(',')
-        .includes('R_STATISTIC' || 'ALL_ADMIN_PERMISSIONS')
+      localStorage.getItem('permission').split(',').includes('R_STATISTIC') ||
+      localStorage.getItem('permission').split(',').includes('ALL_ADMIN_PERMISSIONS')
     ) {
       const handleGetStatisticToday = async () => {
         const resp = await statisticToday()
