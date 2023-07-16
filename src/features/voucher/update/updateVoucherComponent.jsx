@@ -42,7 +42,25 @@ const VoucherComponent = () => {
         navigate('/voucher')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response.data.message, style)
+      if (error?.response?.data?.data) {
+        if (error?.response?.data?.data?.description) {
+          toast.error('Description ' + error?.response?.data?.data?.description, style)
+        } else if (error?.response?.data?.data?.discountAmount) {
+          toast.error('Discount value ' + error?.response?.data?.data?.discountAmount, style)
+        } else if (error?.response?.data?.data?.discountType) {
+          toast.error('Discount type ' + error?.response?.data?.data?.discountType, style)
+        } else if (error?.response?.data?.data?.limit) {
+          toast.error('Limit ' + error?.response?.data?.data?.limit, style)
+        } else if (error?.response?.data?.data?.maxDiscount) {
+          toast.error('Maximum discount value ' + error?.response?.data?.data?.maxDiscount, style)
+        } else if (error?.response?.data?.data?.minOrderAmount) {
+          toast.error('Minimum order value ' + error?.response?.data?.data?.minOrderAmount, style)
+        } else if (error?.response?.data?.data?.validFrom) {
+          toast.error('Start date ' + error?.response?.data?.data?.validFrom, style)
+        } else if (error?.response?.data?.data?.validTo) {
+          toast.error('End date ' + error?.response?.data?.data?.validTo, style)
+        }
+      } else toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -53,7 +71,7 @@ const VoucherComponent = () => {
         <Navbar />
         <div className="updateVoucherBody">
           <div className="title">
-            <a href="/">Home</a>/ <a href="/voucher">Voucher</a>/ <a href=" ">Update oucher</a>
+            <a href="/">Home</a>/ <a href="/voucher">Voucher</a>/ <a href=" ">Update voucher</a>
           </div>
           <div className="updateVoucherForm">
             <div style={{ width: '100%', padding: '0.4rem' }}>
@@ -76,35 +94,54 @@ const VoucherComponent = () => {
                     className="textField"
                     id="code"
                     value={voucher?.code}
-                    onChange={(e) =>
-                      setVoucher((state) => ({
-                        ...state,
-                        code: e?.target?.value,
-                      }))
-                    }
+                    onChange={(e) => setVoucher((state) => ({ ...state, code: e?.target?.value }))}
                   />
                 </div>
                 <div className="form">
                   <label className="title" for="discountType">
                     Discount type
                   </label>
-                  <TextField
-                    disabled
-                    className="textField"
-                    name="discountType"
-                    id="discountType"
-                    value={voucher?.discountType}
-                  />
+                  {moment(voucher?.validFrom).format() > moment().format() ? (
+                    <Select
+                      isrequired
+                      className="select"
+                      name="discountType"
+                      id="discountType"
+                      value={voucher?.discountType === 'AMOUNT' ? 'AMOUNT' : 'PERCENT'}
+                      onChange={(e) =>
+                        setVoucher((state) => ({ ...state, discountType: e?.target?.value }))
+                      }
+                    >
+                      {arrayDiscountType?.map((item, index) => (
+                        <MenuItem key={index} value={item?.value}>
+                          {item?.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  ) : (
+                    <TextField
+                      isrequired
+                      disabled
+                      className="textField"
+                      name="discountType"
+                      id="discountType"
+                      value={voucher?.discountType}
+                    />
+                  )}
                 </div>
                 <div className="form">
                   <label className="title" for="description">
                     Description
                   </label>
+
                   <TextField
-                    disabled
+                    disabled={moment(voucher?.validTo).format() > moment().format()}
                     className="textField"
                     id="description"
                     value={voucher?.description}
+                    onChange={(e) =>
+                      setVoucher((state) => ({ ...state, description: e?.target?.value }))
+                    }
                   />
                 </div>
                 <div className="form">
@@ -170,7 +207,14 @@ const VoucherComponent = () => {
                   <label className="title" for="validTo">
                     End date
                   </label>
-                  {moment(voucher?.validTo).format() > moment().format() ? (
+                  {moment(voucher?.validTo).format() < moment().format() ? (
+                    <TextField
+                      disabled
+                      className="textField"
+                      id="validTo"
+                      value={moment(voucher?.validTo).format('YYYY-MM-DD hh:mm')}
+                    />
+                  ) : (
                     <TextField
                       isrequired
                       className="textField"
@@ -182,13 +226,6 @@ const VoucherComponent = () => {
                           validTo: moment(e?.target?.value).format(),
                         }))
                       }
-                    />
-                  ) : (
-                    <TextField
-                      disabled
-                      className="textField"
-                      id="validTo"
-                      value={moment(voucher?.validTo).format('YYYY-MM-DD hh:mm')}
                     />
                   )}
                 </div>
@@ -282,6 +319,11 @@ const VoucherComponent = () => {
 const arrayStatus = [
   { name: 'Active', value: 'true' },
   { name: 'Unavailable', value: 'false' },
+]
+
+const arrayDiscountType = [
+  { name: 'Amount', value: 'AMOUNT' },
+  { name: 'Percent', value: 'PERCENT' },
 ]
 
 export default VoucherComponent

@@ -129,7 +129,7 @@ const OrderComponent = () => {
         navigate('/order')
       }, 2000)
     } catch (error) {
-      toast.error(error?.message, style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
   return (
@@ -395,7 +395,7 @@ const arrayStatus = [
   { name: 'Delivering', value: 'DELIVERING' },
   { name: 'Delivered', value: 'DELIVERED' },
   { name: 'Completed', value: 'COMPLETED' },
-  //   { name: 'Cancelled', value: 'CANCELED' },
+  { name: 'Cancelled', value: 'CANCELED' },
 ]
 
 export default OrderComponent
