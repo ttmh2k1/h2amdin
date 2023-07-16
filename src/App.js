@@ -38,6 +38,7 @@ import ImportWarehouse from './pages/warehouse/import/ImportWarehousePage'
 import BusinessReport from './pages/businessReport/BusinessReportPage'
 import SystemReport from './pages/systemReport/SystemReportPage'
 import Notification from './pages/notification'
+import Error from './pages/error403'
 import './styles/dark.scss'
 import { DarkModeContext } from './context/darkModeContext'
 
@@ -149,6 +150,9 @@ function App() {
           </Route>
           <Route path="notification">
             <Route index element={<Notification />} />
+          </Route>
+          <Route path="error">
+            <Route index element={<Error />} />
           </Route>
         </Routes>
       </BrowserRouter>

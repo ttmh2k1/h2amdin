@@ -84,14 +84,14 @@ const NotifyComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={notification.rows}
+                rows={notification?.rows}
                 columns={header}
                 paginationMode="server"
-                loading={notification.loading}
-                rowCount={notification.totalRows}
-                page={notification.page - 1}
-                pageSize={notification.pageSize}
-                rowsPerPageOptions={notification.rowsPerPageOptions}
+                loading={notification?.loading}
+                rowCount={notification?.totalRows}
+                page={notification?.page - 1}
+                pageSize={notification?.pageSize}
+                rowsPerPageOptions={notification?.rowsPerPageOptions}
                 onPageChange={(page) => {
                   updateData('page', page + 1)
                 }}

@@ -41,7 +41,9 @@ const SystemReportComponent = () => {
       const data = resp?.data?.data
       setIncome(data)
     } catch (error) {
-      return error
+      if (error?.response?.status === 403) {
+        navigate('/error')
+      }
     }
   }
 

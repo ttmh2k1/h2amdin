@@ -33,12 +33,18 @@ export const CreateUser = () => {
   }
 
   useEffect(() => {
-    const handleGetRole = async () => {
-      const resp = await getListRole()
-      const data = resp?.data?.data
-      setRole(data)
+    const handleGetListRole = async () => {
+      try {
+        const resp = await getListRole()
+        const data = resp?.data?.data
+        setRole(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
-    handleGetRole()
+    handleGetListRole()
   }, [])
 
   const handleSave = async () => {

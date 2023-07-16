@@ -35,19 +35,8 @@ const ProductComponent = () => {
   const [images, setImages] = useState([])
   const [imageList, setImageList] = useState([])
   const [defaultImages, setDefaultImage] = useState([])
-  const [imageDel, setImageDel] = useState([null])
+  const [imageDel, setImageDel] = useState([])
   const navigate = useNavigate()
-
-  useEffect(() => {
-    const handleGetProduct = async () => {
-      const resp = await getProduct(productId)
-      const data = resp?.data?.data
-      setProduct(data)
-      setOrgProduct(structuredClone(data))
-      setDefaultImage(data.images)
-    }
-    handleGetProduct()
-  }, [productId])
 
   const style = {
     position: 'bottom-right',
@@ -59,6 +48,23 @@ const ProductComponent = () => {
     progress: undefined,
     theme: 'colored',
   }
+
+  useEffect(() => {
+    const handleGetProduct = async () => {
+      try {
+        const resp = await getProduct(productId)
+        const data = resp?.data?.data
+        setProduct(data)
+        setOrgProduct(structuredClone(data))
+        setDefaultImage(data.images)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetProduct()
+  }, [productId])
 
   const onSelectAvatar = (event) => {
     const avatarFile = event.target.files[0]
@@ -121,18 +127,18 @@ const ProductComponent = () => {
     for (let i = 0; i < orgProduct.options.length; i++) {
       for (let j = 0; j < orgProduct.options[i].optionValues.length; j++) {
         let changed = getChangedProductOptionValue(
-          orgProduct.options[i].optionValues[j],
-          product.options[i].optionValues[j],
+          orgProduct?.options[i]?.optionValues[j],
+          product?.options[i]?.optionValues[j],
         )
-        if (Object.keys(changed).length > 0) {
+        if (Object.keys(changed)?.length > 0) {
           try {
             await updateProductOptionValue(
-              product.id,
-              product.options[i].optionValues[j].id,
+              product?.id,
+              product?.options[i]?.optionValues[j]?.id,
               changed,
             )
           } catch (error) {
-            toast.error('Update product option value failed!', style)
+            toast.error(error?.response?.data?.message, style)
           }
         }
       }
@@ -146,7 +152,7 @@ const ProductComponent = () => {
         try {
           await updateProductVariation(product.id, orgProduct.variations[i].id, changed)
         } catch (error) {
-          toast.error('Update product variation failed!', style)
+          toast.error(error?.response?.data?.message, style)
         }
       }
     }
@@ -159,11 +165,10 @@ const ProductComponent = () => {
     }
 
     if (newData['variations'].length === 0) return
-
     try {
       await createProductVariation(product.id, newData)
     } catch (error) {
-      toast.error('Create product variation failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -196,7 +201,7 @@ const ProductComponent = () => {
         navigate('/product')
       }, 1000)
     } catch (error) {
-      toast.error('Update product failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -277,7 +282,7 @@ const ProductComponent = () => {
                               }}
                             >
                               {images &&
-                                images.map((img, index) => {
+                                images?.map((img, index) => {
                                   return (
                                     <div key={img} className="image">
                                       <img
@@ -292,7 +297,7 @@ const ProductComponent = () => {
                                       <button
                                         className="deleteButton"
                                         onClick={() => {
-                                          setImages(images.filter((e) => e !== img))
+                                          setImages(images?.filter((e) => e !== img))
                                         }}
                                       >
                                         <FaRegTimesCircle />
@@ -300,7 +305,7 @@ const ProductComponent = () => {
                                     </div>
                                   )
                                 })}
-                              {defaultImages.map((item) => (
+                              {defaultImages?.map((item) => (
                                 <>
                                   <div key={item} className="image">
                                     <img
@@ -316,9 +321,9 @@ const ProductComponent = () => {
                                       className="deleteButton"
                                       onClick={async () => {
                                         setImageDel((prev) => {
-                                          return [...prev, item.id]
+                                          return [...prev, item?.id]
                                         })
-                                        setDefaultImage(defaultImages.filter((e) => e !== item))
+                                        setDefaultImage(defaultImages?.filter((e) => e !== item))
                                       }}
                                     >
                                       <FaRegTimesCircle />

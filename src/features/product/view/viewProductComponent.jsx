@@ -25,9 +25,15 @@ const ProductComponent = () => {
 
   useEffect(() => {
     const handleGetProduct = async () => {
-      const resp = await getProduct(productId)
-      const data = resp?.data?.data
-      setProduct(data)
+      try {
+        const resp = await getProduct(productId)
+        const data = resp?.data?.data
+        setProduct(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetProduct()
   }, [productId])
@@ -255,7 +261,7 @@ const ProductComponent = () => {
             <div className="avatar">
               <label className="titleAvatar">Avatar</label>
               <div className="imageAvatar">
-                <img src={product?.avatar} alt="" height="200rem" style={{ margin: '0.06rem'}} />
+                <img src={product?.avatar} alt="" height="200rem" style={{ margin: '0.06rem' }} />
               </div>
             </div>
 

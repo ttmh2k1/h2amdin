@@ -31,9 +31,15 @@ const OrderComponent = () => {
 
   useEffect(() => {
     const handleGetOrder = async () => {
-      const resp = await getOrder(orderId)
-      const data = resp?.data?.data
-      setOrder(data)
+      try {
+        const resp = await getOrder(orderId)
+        const data = resp?.data?.data
+        setOrder(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetOrder()
   }, [orderId])

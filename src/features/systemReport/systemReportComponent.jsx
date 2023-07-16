@@ -76,7 +76,9 @@ const SystemReportComponent = () => {
       const data = resp?.data?.data
       setStatistic(data)
     } catch (error) {
-      return error
+      if (error?.response?.status === 403) {
+        navigate('/error')
+      }
     }
   }
 
@@ -93,9 +95,10 @@ const SystemReportComponent = () => {
       link.setAttribute('download', `h2store_statistic${year}_${type}${typeValue}.xlsx`)
       document.body.appendChild(link)
       link.click()
-      // toast.success('Download file successful!', style)
     } catch (error) {
-      toast.error(error?.message, style)
+      if (error?.response?.status === 403) {
+        navigate('/error')
+      }
     }
   }
 

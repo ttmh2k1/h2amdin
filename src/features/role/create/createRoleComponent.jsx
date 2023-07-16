@@ -39,9 +39,15 @@ export const CreateRole = () => {
 
   useEffect(() => {
     const handleGetRolePermission = async () => {
-      const resp = await getListPermission()
-      const data = resp?.data?.data
-      setListPermission(data)
+      try {
+        const resp = await getListPermission()
+        const data = resp?.data?.data
+        setListPermission(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetRolePermission()
   }, [])

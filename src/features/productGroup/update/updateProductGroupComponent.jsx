@@ -29,10 +29,16 @@ const ProductGroupComponent = () => {
   //xử lý data
   useEffect(() => {
     const handleGetProductGroup = async () => {
-      const resp = await getProductGroup(productGroupId)
-      const x = resp?.data?.data
-      setData([x])
-      setOrgData([JSON.parse(JSON.stringify(x))])
+      try {
+        const resp = await getProductGroup(productGroupId)
+        const x = resp?.data?.data
+        setData([x])
+        setOrgData([JSON.parse(JSON.stringify(x))])
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetProductGroup()
   }, [])

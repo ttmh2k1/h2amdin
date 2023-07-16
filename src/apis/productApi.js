@@ -78,7 +78,7 @@ export function updateProductVariation(idProduct, idVariation, params) {
 }
 
 export function deleteProductImages(id, data) {
-  return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}/image/{id}`, data)
+  return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}/image`, data)
 }
 
 export function updateProduct(id, params) {

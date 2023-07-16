@@ -14,9 +14,15 @@ const CustomerComponent = () => {
 
   useEffect(() => {
     const handleGetCustomer = async () => {
-      const resp = await getCustomer(customerId)
-      const data = resp?.data?.data
-      setCustomer(data)
+      try {
+        const resp = await getCustomer(customerId)
+        const data = resp?.data?.data
+        setCustomer(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetCustomer()
   }, [customerId])

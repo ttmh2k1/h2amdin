@@ -3,19 +3,11 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaAngleDown, FaArrowCircleLeft, FaRegPlusSquare } from 'react-icons/fa'
+import { FaArrowCircleLeft, FaRegPlusSquare } from 'react-icons/fa'
 import { getListWarehouse } from '../../apis/warehouseApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material'
+import { Button } from '@mui/material'
 import moment from 'moment'
 
 const WarehouseComponent = () => {
@@ -100,19 +92,28 @@ const WarehouseComponent = () => {
 
   useEffect(() => {
     updateData('loading', true)
-    getListWarehouse({
-      page: warehouse?.page,
-      size: warehouse?.pageSize,
-      sortDescending: true,
-      sortBy: 2,
-    }).then((resp) => {
-      setWarehouse({
-        ...warehouse,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleListWarehouse = async () => {
+      try {
+        await getListWarehouse({
+          page: warehouse?.page,
+          size: warehouse?.pageSize,
+          sortDescending: true,
+          sortBy: 2,
+        }).then((resp) => {
+          setWarehouse({
+            ...warehouse,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleListWarehouse()
   }, [warehouse?.page, warehouse?.pageSize])
 
   return (

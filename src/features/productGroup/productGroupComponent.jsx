@@ -80,9 +80,15 @@ const ProductGroupComponent = () => {
 
   useEffect(() => {
     const handleListProductGroup = async () => {
-      const resp = await getListProductGroup()
-      const list = resp?.data?.data
-      setListProductGroup(list)
+      try {
+        const resp = await getListProductGroup()
+        const list = resp?.data?.data
+        setListProductGroup(list)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleListProductGroup()
   }, [])

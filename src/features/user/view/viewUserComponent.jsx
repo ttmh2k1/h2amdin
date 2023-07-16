@@ -14,9 +14,15 @@ const UserComponent = () => {
 
   useEffect(() => {
     const handleGetUser = async () => {
-      const resp = await getUser(userId)
-      const data = resp?.data?.data
-      setUser(data)
+      try {
+        const resp = await getUser(userId)
+        const data = resp?.data?.data
+        setUser(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetUser()
   }, [userId])

@@ -166,22 +166,26 @@ const ImportWarehouseComponent = () => {
         ],
       }
     })
-    const result = _(list)
-      .groupBy('idProduct')
-      .map((g) =>
-        _.mergeWith({}, ...g, (obj, src) => (_.isArray(obj) ? obj.concat(src) : undefined)),
-      )
-      .value()
-    if (result?.length > 0) {
-      try {
-        await importWarehouse({ inventories: result })
-        toast.success('Import product successful!', style)
-        setTimeout(() => {
-          navigate('/warehouse')
-        }, 2000)
-      } catch (error) {
-        toast.error('Update failed!', style)
+    try {
+      const result = _(list)
+        .groupBy('idProduct')
+        .map((g) =>
+          _.mergeWith({}, ...g, (obj, src) => (_.isArray(obj) ? obj.concat(src) : undefined)),
+        )
+        .value()
+      if (result?.length > 0) {
+        try {
+          await importWarehouse({ inventories: result })
+          toast.success('Import product successful!', style)
+          setTimeout(() => {
+            navigate('/warehouse')
+          }, 2000)
+        } catch (error) {
+          toast.error(error?.response?.data?.message, style)
+        }
       }
+    } catch (error) {
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -193,19 +197,38 @@ const ImportWarehouseComponent = () => {
 
   useEffect(() => {
     const handleListProduct = async () => {
-      const resp = await getListProductSearch()
-      const list = resp?.data?.data
-      setListProduct(list?.filter((item) => item?.id)?.filter((item) => item?.name))
+      try {
+        const resp = await getListProductSearch()
+        const list = resp?.data?.data
+        setListProduct(
+          list
+            ?.filter((item) => item?.id)
+            ?.filter((item) => item?.name)
+            .sort(function (a, b) {
+              return a.id - b.id
+            }),
+        )
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleListProduct()
   }, [])
 
   useEffect(() => {
     const handleGetProduct = async () => {
-      if (productId) {
-        const resp = await getProduct(productId)
-        const data = resp?.data?.data
-        setSelected(data)
+      try {
+        if (productId) {
+          const resp = await getProduct(productId)
+          const data = resp?.data?.data
+          setSelected(data)
+        }
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
       }
     }
     handleGetProduct()

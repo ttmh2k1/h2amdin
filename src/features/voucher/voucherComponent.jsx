@@ -68,7 +68,7 @@ const VoucherComponent = () => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Delete voucher failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -198,25 +198,34 @@ const VoucherComponent = () => {
   const updateData = (k, v) => setListVoucher((prev) => ({ ...prev, [k]: v }))
 
   useEffect(() => {
-    getListVoucher({
-      page: listVoucher.page,
-      size: listVoucher.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-      code: code,
-      description: description,
-      discountType: discountType,
-      isActive: isActive,
-      validFrom: validFrom,
-      validTo: validTo,
-    }).then((resp) => {
-      setListVoucher({
-        ...listVoucher,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetVoucher = async () => {
+      try {
+        await getListVoucher({
+          page: listVoucher.page,
+          size: listVoucher.pageSize,
+          sortBy: 1,
+          sortDescending: true,
+          code: code,
+          description: description,
+          discountType: discountType,
+          isActive: isActive,
+          validFrom: validFrom,
+          validTo: validTo,
+        }).then((resp) => {
+          setListVoucher({
+            ...listVoucher,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetVoucher()
   }, [code, description, discountType, isActive, validFrom, validTo])
 
   const handleDisable = async (id) => {

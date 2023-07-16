@@ -2,16 +2,24 @@ import { Grid, MenuItem, TextareaAutosize, TextField } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { getListProductParent } from '../../../apis/productApi'
 import MultiLevelSelect from '../../../components/MultiLevelSelect'
+import { useNavigate } from 'react-router-dom'
 
 export const ProductDetail = ({ product, setProduct }) => {
   const [listCategory, setListCategory] = useState([])
   const [idCategory, setIdCategory] = useState()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleGetParent = async () => {
-      const resp = await getListProductParent()
-      const list = resp?.data?.data
-      setListCategory(list)
+      try {
+        const resp = await getListProductParent()
+        const list = resp?.data?.data
+        setListCategory(list)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetParent()
   }, [])

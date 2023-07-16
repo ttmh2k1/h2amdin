@@ -15,9 +15,15 @@ const VoucherComponent = () => {
 
   useEffect(() => {
     const handleGetVoucher = async () => {
-      const resp = await getVoucher(voucherId)
-      const data = resp?.data?.data
-      setVoucher(data)
+      try {
+        const resp = await getVoucher(voucherId)
+        const data = resp?.data?.data
+        setVoucher(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetVoucher()
   }, [voucherId])

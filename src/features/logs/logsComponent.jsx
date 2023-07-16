@@ -72,14 +72,25 @@ const LogsComponent = () => {
 
   useEffect(() => {
     updateData('loading', true)
-    getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then((resp) => {
-      setLogs({
-        ...logs,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetLog = async () => {
+      try {
+        await getLogs({ page: logs.page, size: logs.pageSize, sortByDateDescending: true }).then(
+          (resp) => {
+            setLogs({
+              ...logs,
+              loading: false,
+              rows: resp?.data?.data,
+              totalRows: resp?.data?.totalElement,
+            })
+          },
+        )
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetLog()
   }, [logs?.page, logs?.pageSize])
 
   return (

@@ -34,7 +34,6 @@ const CustomerComponent = () => {
   const [searchUsername, setSearchUsername] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
   const [searchPhone, setSearchPhone] = useState('')
-  const [dob, setDob] = useState('')
   const [gender, setGender] = useState('')
   const [status, setStatus] = useState('')
 
@@ -66,7 +65,7 @@ const CustomerComponent = () => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Disable customer failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -78,7 +77,7 @@ const CustomerComponent = () => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Enable customer failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -189,26 +188,34 @@ const CustomerComponent = () => {
 
   useEffect(() => {
     updateData('loading', true)
-    getListCustomer({
-      page: listCustomer?.page,
-      size: listCustomer?.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-      searchFullname: searchFullname ? searchFullname : '',
-      searchUsername: searchUsername ? searchUsername : '',
-      searchEmail: searchEmail ? searchEmail : '',
-      searchPhone: searchPhone ? searchPhone : '',
-      dob: dob ? dob : '',
-      gender: gender ? gender : '',
-      status: status ? status : '',
-    }).then((resp) => {
-      setListCustomer({
-        ...listCustomer,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetCustomer = async () => {
+      try {
+        getListCustomer({
+          page: listCustomer?.page,
+          size: listCustomer?.pageSize,
+          sortBy: 1,
+          sortDescending: true,
+          searchFullname: searchFullname ? searchFullname : '',
+          searchUsername: searchUsername ? searchUsername : '',
+          searchEmail: searchEmail ? searchEmail : '',
+          searchPhone: searchPhone ? searchPhone : '',
+          gender: gender ? gender : '',
+          status: status ? status : '',
+        }).then((resp) => {
+          setListCustomer({
+            ...listCustomer,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetCustomer()
   }, [
     listCustomer?.page,
     listCustomer?.pageSize,
@@ -216,7 +223,6 @@ const CustomerComponent = () => {
     searchUsername,
     searchEmail,
     searchPhone,
-    dob,
     gender,
     status,
   ])

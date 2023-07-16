@@ -29,27 +29,39 @@ const UserComponent = () => {
 
   useEffect(() => {
     const handleGetUser = async () => {
-      const resp = await getUser(userId)
-      const data = resp?.data?.data
-      setUser({
-        fullname: data?.fullname,
-        email: data?.email,
-        phone: data?.phone,
-        adminRoleName: data?.adminRole?.roleName,
-        status: data?.status,
-      })
-      setUserInfo(data)
+      try {
+        const resp = await getUser(userId)
+        const data = resp?.data?.data
+        setUser({
+          fullname: data?.fullname,
+          email: data?.email,
+          phone: data?.phone,
+          adminRoleName: data?.adminRole?.roleName,
+          status: data?.status,
+        })
+        setUserInfo(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetUser()
   }, [userId])
 
   useEffect(() => {
-    const handleGetRole = async () => {
-      const resp = await getListRole()
-      const data = resp?.data?.data
-      setRole(data)
+    const handleGetListRole = async () => {
+      try {
+        const resp = await getListRole()
+        const data = resp?.data?.data
+        setRole(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
-    handleGetRole()
+    handleGetListRole()
   }, [])
 
   const handleSave = async () => {

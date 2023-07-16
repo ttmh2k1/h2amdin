@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-export const SERVICE = 'http://be.h2store.xyz'
-// export const SERVICE = process.env.REACT_APP_BACKEND_URL;
+// export const SERVICE = 'http://be.h2store.xyz'
+export const SERVICE = process.env.REACT_APP_BACKEND_URL
 
 /**
  *

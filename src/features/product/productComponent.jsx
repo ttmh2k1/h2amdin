@@ -60,14 +60,13 @@ const ProductComponent = () => {
         type: 'application/json',
       })
       transform.append('info', blob)
-
       await updateStatusProduct(id, transform)
       toast.success('Disable product successful!', style)
       setTimeout(() => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Disable product failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -85,7 +84,7 @@ const ProductComponent = () => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Enable product failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -97,7 +96,7 @@ const ProductComponent = () => {
         window.location.reload()
       }, 2000)
     } catch (error) {
-      toast.error('Delete product failed!', style)
+      toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -181,21 +180,30 @@ const ProductComponent = () => {
 
   useEffect(() => {
     updateData('loading', true)
-    getListProduct({
-      page: listProduct.page,
-      size: listProduct.pageSize,
-      sortBy: 8,
-      sortDescending: true,
-      searchName: searchName,
-      status: status,
-    }).then((resp) => {
-      setListProduct({
-        ...listProduct,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetProduct = async () => {
+      try {
+        await getListProduct({
+          page: listProduct.page,
+          size: listProduct.pageSize,
+          sortBy: 8,
+          sortDescending: true,
+          searchName: searchName,
+          status: status,
+        }).then((resp) => {
+          setListProduct({
+            ...listProduct,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetProduct()
   }, [listProduct?.page, listProduct?.pageSize, searchName, status])
 
   return (

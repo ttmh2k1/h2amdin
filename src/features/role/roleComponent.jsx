@@ -22,19 +22,28 @@ const RoleComponent = () => {
 
   useEffect(() => {
     updateData('loading', true)
-    getListRole({
-      page: roles.page,
-      size: roles.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-    }).then((resp) => {
-      setRoles({
-        ...roles,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetRole = async () => {
+      try {
+        await getListRole({
+          page: roles.page,
+          size: roles.pageSize,
+          sortBy: 1,
+          sortDescending: true,
+        }).then((resp) => {
+          setRoles({
+            ...roles,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetRole()
   }, [roles?.page, roles?.pageSize])
 
   const actionColumn = [

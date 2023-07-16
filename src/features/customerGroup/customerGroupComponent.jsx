@@ -15,9 +15,15 @@ const CustomerGroupComponent = () => {
 
   useEffect(() => {
     const handleListCustomerGroup = async () => {
-      const resp = await getListCustomerGroup()
-      const list = resp?.data?.data
-      setListCustomerGroup(list)
+      try {
+        const resp = await getListCustomerGroup()
+        const list = resp?.data?.data
+        setListCustomerGroup(list)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleListCustomerGroup()
   }, [])

@@ -14,9 +14,15 @@ const RoleComponent = () => {
 
   useEffect(() => {
     const handleGetRoleInfo = async () => {
-      const resp = await getRoleInfo(roleName)
-      const data = resp?.data?.data
-      setRole(data)
+      try {
+        const resp = await getRoleInfo(roleName)
+        const data = resp?.data?.data
+        setRole(data)
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
     }
     handleGetRoleInfo()
   }, [roleName])

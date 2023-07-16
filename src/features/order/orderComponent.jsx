@@ -29,7 +29,7 @@ import moment from 'moment'
 
 const OrderComponent = () => {
   const navigate = useNavigate()
-  const [idBuyer, setIdBuyer] = useState('')
+  const [buyerUsername, setBuyerUsername] = useState('')
   const [status, setStatus] = useState('')
   const [paymentMethod, setPaymentMethod] = useState('')
 
@@ -194,6 +194,7 @@ const OrderComponent = () => {
       localStorage.getItem('permission').split(',').includes('U_ORDER_SHIPPER')
     ) {
       const handleListOrder = async () => {
+        updateData('loading', true)
         const resp = await getListOrderWaitForSend({ status: 'WAIT_FOR_SEND' })
         const resp1 = await getListOrderDelivering({ status: 'DELIVERING' })
         const list = resp?.data
@@ -208,24 +209,34 @@ const OrderComponent = () => {
       }
       handleListOrder()
     } else {
-      getListOrder({
-        page: listOrder?.page,
-        size: listOrder?.pageSize,
-        sortBy: 1,
-        sortDescending: true,
-        idBuyer: idBuyer,
-        status: status,
-        paymentMethod: paymentMethod,
-      }).then((resp) => {
-        setListOrder({
-          ...listOrder,
-          loading: false,
-          rows: resp?.data?.data,
-          totalRows: resp?.data?.totalElement,
-        })
-      })
+      updateData('loading', true)
+      const handleGetOrder = async () => {
+        try {
+          await getListOrder({
+            page: listOrder?.page,
+            size: listOrder?.pageSize,
+            sortBy: 1,
+            sortDescending: true,
+            buyerUsername: buyerUsername ? buyerUsername : '',
+            status: status ? status : '',
+            paymentMethod: paymentMethod ? paymentMethod : '',
+          }).then((resp) => {
+            setListOrder({
+              ...listOrder,
+              loading: false,
+              rows: resp?.data?.data,
+              totalRows: resp?.data?.totalElement,
+            })
+          })
+        } catch (error) {
+          if (error?.response?.status === 403) {
+            navigate('/error')
+          }
+        }
+      }
+      handleGetOrder()
     }
-  }, [idBuyer, status, paymentMethod])
+  }, [listOrder?.page, listOrder?.pageSize, buyerUsername, status, paymentMethod])
 
   return (
     <div className="order">
@@ -251,14 +262,14 @@ const OrderComponent = () => {
                   <div style={{ width: '100%' }}>
                     <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
                       <div className="form">
-                        <label className="title" for="idBuyer">
-                          Customer ID
+                        <label className="title" for="buyerUsername">
+                          Username
                         </label>
                         <TextField
                           className="textField"
-                          id="idBuyer"
+                          id="buyerUsername"
                           onChange={(e) => {
-                            setIdBuyer(e?.target?.value)
+                            setBuyerUsername(e?.target?.value)
                           }}
                         />
                       </div>
@@ -354,7 +365,7 @@ const Tab = styled(DataGrid)({
 
 const arrayStatus = [
   { name: 'Wait for payment', value: 'WAIT_FOR_PAYMENT' },
-  { name: 'Wait for  confirm', value: 'WAIT_FOR_CONFIRM' },
+  { name: 'Wait for confirm', value: 'WAIT_FOR_CONFIRM' },
   { name: 'Wait for send', value: 'WAIT_FOR_SEND' },
   { name: 'Delivering', value: 'DELIVERING' },
   { name: 'Delivered', value: 'DELIVERED' },

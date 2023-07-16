@@ -185,24 +185,33 @@ const UserComponent = () => {
   }
 
   useEffect(() => {
-    updateData('loading', true)
-    getListUsers({
-      page: users?.page,
-      size: users?.pageSize,
-      sortDescending: true,
-      searchFullname: searchFullname ? searchFullname : ' ',
-      searchUsername: searchUsername ? searchUsername : '',
-      searchEmail: searchEmail ? searchEmail : '',
-      searchPhone: searchPhone ? searchPhone : '',
-      status: status ? status : '',
-    }).then((resp) => {
-      setUsers({
-        ...users,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
+    const handleGetListUsers = async () => {
+      updateData('loading', true)
+      try {
+        await getListUsers({
+          page: users?.page,
+          size: users?.pageSize,
+          sortDescending: true,
+          searchFullname: searchFullname ? searchFullname : ' ',
+          searchUsername: searchUsername ? searchUsername : '',
+          searchEmail: searchEmail ? searchEmail : '',
+          searchPhone: searchPhone ? searchPhone : '',
+          status: status ? status : '',
+        }).then((resp) => {
+          setUsers({
+            ...users,
+            loading: false,
+            rows: resp?.data?.data,
+            totalRows: resp?.data?.totalElement,
+          })
+        })
+      } catch (error) {
+        if (error?.response?.status === 403) {
+          navigate('/error')
+        }
+      }
+    }
+    handleGetListUsers()
   }, [
     users?.page,
     users?.pageSize,
@@ -311,14 +320,14 @@ const UserComponent = () => {
           <div className="template">
             <div className="datatable">
               <Tab
-                rows={users.rows}
-                columns={userHeader.concat(actionColumn)}
+                rows={users?.rows}
+                columns={userHeader?.concat(actionColumn)}
                 paginationMode="server"
-                loading={users.loading}
-                rowCount={users.totalRows}
-                page={users.page - 1}
-                pageSize={users.pageSize}
-                rowsPerPageOptions={users.rowsPerPageOptions}
+                loading={users?.loading}
+                rowCount={users?.totalRows}
+                page={users?.page - 1}
+                pageSize={users?.pageSize}
+                rowsPerPageOptions={users?.rowsPerPageOptions}
                 onPageChange={(page) => {
                   updateData('page', page + 1)
                 }}
