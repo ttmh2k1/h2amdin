@@ -3,7 +3,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaCheck, FaEye, FaRegTimesCircle } from 'react-icons/fa'
+import { FaAngleDown, FaArrowCircleLeft, FaCheck, FaEye, FaRegTimesCircle } from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
 import {
@@ -14,11 +14,25 @@ import {
 } from '../../apis/orderApi'
 import { toast } from 'react-toastify'
 import { formatMoney } from '../../utils/functionHelper'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  MenuItem,
+  TextField,
+  Grid,
+  Select,
+  Typography,
+} from '@mui/material'
 import moment from 'moment'
 
 const OrderComponent = () => {
   const navigate = useNavigate()
+  const [idBuyer, setIdBuyer] = useState('')
+  const [status, setStatus] = useState('')
+  const [paymentMethod, setPaymentMethod] = useState('')
+
   const [listOrder, setListOrder] = useState({
     loading: true,
     rows: [],
@@ -127,20 +141,25 @@ const OrderComponent = () => {
       renderCell: (params) => `${params?.row?.buyer?.username}`,
     },
     {
-      field: 'customerGroup',
-      headerName: 'Customer group',
-      width: 120,
-      align: 'center',
-      headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.buyer?.rank?.name}`,
-    },
-    {
       field: 'totalPrice',
       headerName: 'Price',
       width: 100,
       align: 'right',
       headerAlign: 'center',
       renderCell: (params) => `${formatMoney(params?.row?.totalPrice)}`,
+    },
+    {
+      field: 'paymentMethod',
+      headerName: 'Payment method',
+      width: 120,
+      align: 'center',
+      headerAlign: 'center',
+      renderCell: (params) =>
+        `${params?.row?.paymentMethod}` === 'OFFLINE_CASH_ON_DELIVERY'
+          ? 'COD'
+          : `${params?.row?.paymentMethod}` === 'ONLINE_PAYMENT_PAYPAL'
+          ? 'PAYPAL'
+          : 'MOMO',
     },
     {
       field: 'createTime',
@@ -190,10 +209,13 @@ const OrderComponent = () => {
       handleListOrder()
     } else {
       getListOrder({
-        page: listOrder.page,
-        size: listOrder.pageSize,
+        page: listOrder?.page,
+        size: listOrder?.pageSize,
         sortBy: 1,
         sortDescending: true,
+        idBuyer: idBuyer,
+        status: status,
+        paymentMethod: paymentMethod,
       }).then((resp) => {
         setListOrder({
           ...listOrder,
@@ -203,7 +225,7 @@ const OrderComponent = () => {
         })
       })
     }
-  }, [])
+  }, [idBuyer, status, paymentMethod])
 
   return (
     <div className="order">
@@ -214,6 +236,75 @@ const OrderComponent = () => {
           <div className="title">
             <a href="/">Home</a>/ <a href="/order">Order</a>
           </div>
+
+          <div className="search">
+            <Accordion style={{ borderRadius: '0.4vw' }}>
+              <AccordionSummary
+                expandIcon={<FaAngleDown />}
+                style={{ margin: '0' }}
+                id="panel1a-header"
+              >
+                <Typography style={{ padding: '0' }}>Search</Typography>
+              </AccordionSummary>
+              <AccordionDetails style={{ padding: 0 }}>
+                <Typography>
+                  <div style={{ width: '100%' }}>
+                    <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
+                      <div className="form">
+                        <label className="title" for="idBuyer">
+                          Customer ID
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="idBuyer"
+                          onChange={(e) => {
+                            setIdBuyer(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="status">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="status"
+                          onChange={(e) => {
+                            setStatus(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                      <div className="form">
+                        <label className="title" for="paymentMethod">
+                          Payment method
+                        </label>
+                        <Select
+                          className="select"
+                          id="paymentMethod"
+                          onChange={(e) => {
+                            setPaymentMethod(e?.target?.value)
+                          }}
+                        >
+                          {arrayPaymentMethod?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                    </Grid>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
           <div className="template">
             <div className="datatable">
               <Tab
@@ -260,5 +351,21 @@ const Tab = styled(DataGrid)({
     fontSize: '1rem',
   },
 })
+
+const arrayStatus = [
+  { name: 'Wait for payment', value: 'WAIT_FOR_PAYMENT' },
+  { name: 'Wait for  confirm', value: 'WAIT_FOR_CONFIRM' },
+  { name: 'Wait for send', value: 'WAIT_FOR_SEND' },
+  { name: 'Delivering', value: 'DELIVERING' },
+  { name: 'Delivered', value: 'DELIVERED' },
+  { name: 'Completed', value: 'COMPLETED' },
+  { name: 'Canceled', value: 'CANCELED' },
+]
+
+const arrayPaymentMethod = [
+  { name: 'COD', value: 'OFFLINE_CASH_ON_DELIVERY' },
+  { name: 'MOMO', value: 'ONLINE_PAYMENT_MOMO' },
+  { name: 'PAYPAL', value: 'ONLINE_PAYMENT_PAYPAL' },
+]
 
 export default OrderComponent

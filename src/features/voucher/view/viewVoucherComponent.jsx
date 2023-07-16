@@ -156,7 +156,7 @@ const VoucherComponent = () => {
                       disabled
                       className="textField"
                       id="isActive"
-                      value={voucher?.isActive ? 'Anable' : 'Unable'}
+                      value={voucher?.isActive ? 'Available' : 'Unavailable'}
                     />
                   </div>
                 </Grid>

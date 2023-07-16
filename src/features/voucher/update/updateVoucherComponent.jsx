@@ -230,7 +230,7 @@ const VoucherComponent = () => {
                       disabled
                       className="textField"
                       id="isActive"
-                      value={voucher?.isActive ? 'Anable' : 'Unable'}
+                      value={voucher?.isActive ? 'Available' : 'Unavailable'}
                     />
                   ) : (
                     <Select
@@ -281,7 +281,7 @@ const VoucherComponent = () => {
 
 const arrayStatus = [
   { name: 'Active', value: 'true' },
-  { name: 'Unable', value: 'false' },
+  { name: 'Unavailable', value: 'false' },
 ]
 
 export default VoucherComponent

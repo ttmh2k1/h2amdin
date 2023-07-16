@@ -49,7 +49,17 @@ export const CreateUser = () => {
         navigate('/user')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response?.data?.message, style)
+      if (error?.response?.data?.data) {
+        if (error?.response?.data?.data?.username) {
+          toast.error(error?.response?.data?.data?.username, style)
+        } else if (error?.response?.data?.data?.fullname) {
+          toast.error(error?.response?.data?.data?.fullname, style)
+        } else if (error?.response?.data?.data?.email) {
+          toast.error('Email ' + error?.response?.data?.data?.email, style)
+        } else if (error?.response?.data?.data?.password) {
+          toast.error(error?.response?.data?.data?.password, style)
+        }
+      } else toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -98,7 +108,7 @@ export const CreateUser = () => {
                         name="roleName"
                         id="roleName"
                         value={user?.adminRoleName}
-                        onChange={(e) => onChange('fullname', e.target.value)}
+                        onChange={(e) => onChange('adminRoleName', e.target.value)}
                       >
                         {role?.map((item, index) => (
                           <MenuItem key={index} value={item?.roleName}>
@@ -120,6 +130,22 @@ export const CreateUser = () => {
                           setUser((state) => ({
                             ...state,
                             email: e?.target?.value,
+                          }))
+                        }
+                      />
+                    </div>
+                    <div className="form">
+                      <label className="title" for="password">
+                        Password
+                      </label>
+                      <TextField
+                        className="textField"
+                        id="password"
+                        type="password"
+                        onChange={(e) =>
+                          setUser((state) => ({
+                            ...state,
+                            password: e?.target?.value,
                           }))
                         }
                       />
