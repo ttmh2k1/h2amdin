@@ -4,14 +4,40 @@ import Sidebar from '../../components/sidebar/Sidebar'
 import { getListCustomer, updateCustomer } from '../../apis/customerApi'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaEye, FaLock, FaLockOpen, FaPen, FaUnlock } from 'react-icons/fa'
+import {
+  FaAngleDown,
+  FaArrowCircleLeft,
+  FaEye,
+  FaLock,
+  FaLockOpen,
+  FaPen,
+  FaUnlock,
+} from 'react-icons/fa'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { toast } from 'react-toastify'
 
 const CustomerComponent = () => {
   const navigate = useNavigate()
+  const [searchFullname, setSearchFullname] = useState('')
+  const [searchUsername, setSearchUsername] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
+  const [searchPhone, setSearchPhone] = useState('')
+  const [dob, setDob] = useState('')
+  const [gender, setGender] = useState('')
+  const [status, setStatus] = useState('')
+
   const [listCustomer, setListCustomer] = useState({
     loading: true,
     rows: [],
@@ -162,28 +188,19 @@ const CustomerComponent = () => {
   const updateData = (k, v) => setListCustomer((prev) => ({ ...prev, [k]: v }))
 
   useEffect(() => {
-    getListCustomer({
-      page: listCustomer.page,
-      size: listCustomer.pageSize,
-      sortBy: 1,
-      sortDescending: true,
-    }).then((resp) => {
-      setListCustomer({
-        ...listCustomer,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
-
-  useEffect(() => {
     updateData('loading', true)
     getListCustomer({
-      page: listCustomer.page,
-      size: listCustomer.pageSize,
+      page: listCustomer?.page,
+      size: listCustomer?.pageSize,
       sortBy: 1,
       sortDescending: true,
+      searchFullname: searchFullname ? searchFullname : '',
+      searchUsername: searchUsername ? searchUsername : '',
+      searchEmail: searchEmail ? searchEmail : '',
+      searchPhone: searchPhone ? searchPhone : '',
+      dob: dob ? dob : '',
+      gender: gender ? gender : '',
+      status: status ? status : '',
     }).then((resp) => {
       setListCustomer({
         ...listCustomer,
@@ -192,7 +209,17 @@ const CustomerComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [listCustomer.page, listCustomer.pageSize])
+  }, [
+    listCustomer?.page,
+    listCustomer?.pageSize,
+    searchFullname,
+    searchUsername,
+    searchEmail,
+    searchPhone,
+    dob,
+    gender,
+    status,
+  ])
 
   return (
     <div className="customer">
@@ -203,6 +230,111 @@ const CustomerComponent = () => {
           <div className="title">
             <a href="/">Home</a>/ <a href="/customer">Customer</a>
           </div>
+
+          <div className="search">
+            <Accordion style={{ borderRadius: '0.4vw' }}>
+              <AccordionSummary
+                expandIcon={<FaAngleDown />}
+                style={{ margin: '0' }}
+                id="panel1a-header"
+              >
+                <Typography style={{ padding: '0' }}>Search</Typography>
+              </AccordionSummary>
+              <AccordionDetails style={{ padding: 0 }}>
+                <Typography>
+                  <div style={{ width: '100%' }}>
+                    <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
+                      <div className="form">
+                        <label className="title" for="searchUsername">
+                          Username
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="searchUsername"
+                          onChange={(e) => {
+                            setSearchUsername(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="searchFullname">
+                          Full name
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="searchFullname"
+                          onChange={(e) => {
+                            setSearchFullname(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="gender">
+                          Gender
+                        </label>
+                        <Select
+                          className="select"
+                          id="gender"
+                          onChange={(e) => {
+                            setGender(e?.target?.value)
+                          }}
+                        >
+                          {arrayGender?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                      <div className="form">
+                        <label className="title" for="searchEmail">
+                          Email
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="searchEmail"
+                          onChange={(e) => {
+                            setSearchEmail(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="searchPhone">
+                          Phone
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="searchPhone"
+                          onChange={(e) => {
+                            setSearchPhone(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="status">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="status"
+                          onChange={(e) => {
+                            setStatus(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                    </Grid>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
           <div className="template">
             <div className="datatable">
               <Tab
@@ -249,5 +381,16 @@ const Tab = styled(DataGrid)({
     fontSize: '1rem',
   },
 })
+
+const arrayStatus = [
+  { name: 'Active', value: 'ACTIVE' },
+  { name: 'Banned', value: 'BANNED' },
+]
+
+const arrayGender = [
+  { name: 'Male', value: 'MALE' },
+  { name: 'Female', value: 'FEMALE' },
+  { name: 'Other', value: 'OTHER' },
+]
 
 export default CustomerComponent

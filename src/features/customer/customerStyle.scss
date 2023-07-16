@@ -19,6 +19,54 @@
         }
       }
 
+      .search {
+        color: #324d67;
+        margin: 0 0 0.8rem 0;
+
+        .MuiAccordionSummary-root {
+          min-height: 2.4rem;
+
+          .MuiAccordionSummary-content {
+            margin: 0.2rem 0;
+            color: #324d67;
+          }
+        }
+
+        .form {
+          display: flex;
+          flex-direction: column;
+          width: 30%;
+          min-width: 25vw;
+          max-width: 100%;
+          margin: 0.8rem;
+
+          .title {
+            color: #324d67;
+            margin-bottom: 0.2rem;
+          }
+
+          .textField {
+            border-radius: 0.4rem;
+            font-size: 1rem;
+            .MuiInputBase-root {
+              height: 2.4rem;
+            }
+          }
+
+          .select {
+            border-radius: 0.2rem;
+            font-size: 1rem;
+            .MuiSelect-select {
+              height: 2.4rem !important;
+              padding: 0 0.8rem;
+              font-size: 1rem;
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+
       .template {
         border-radius: 0.4rem;
         border: 0.08rem solid #48647f;

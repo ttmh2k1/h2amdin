@@ -97,6 +97,44 @@
         }
       }
 
+      .search {
+        .MuiPaper-root {
+          background-color: #48647f !important;
+          border: 1px solid #dae2ec;
+
+          .MuiTypography-root {
+            color: #dae2ec;
+          }
+
+          .form {
+            .title {
+              color: #dae2ec !important;
+            }
+
+            .textField {
+              color: #243a52 !important;
+              background: #829ab0 !important;
+              border-radius: 0.4rem !important;
+              .MuiInputBase-root {
+                background: #829ab0 !important;
+                color: #243a52 !important;
+              }
+            }
+
+            .select {
+              color: #243a52 !important;
+              background-color: #829ab0 !important;
+              border-radius: 0.4rem !important;
+              .MuiSelect-select {
+                background-color: #829ab0 !important;
+                border-radius: 0.4rem !important;
+                color: #243a52 !important;
+              }
+            }
+          }
+        }
+      }
+
       .template {
         .datatable {
           .MuiDataGrid-main {

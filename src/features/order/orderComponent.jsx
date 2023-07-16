@@ -263,24 +263,6 @@ const OrderComponent = () => {
                         />
                       </div>
                       <div className="form">
-                        <label className="title" for="status">
-                          Status
-                        </label>
-                        <Select
-                          className="select"
-                          id="status"
-                          onChange={(e) => {
-                            setStatus(e?.target?.value)
-                          }}
-                        >
-                          {arrayStatus?.map((item, index) => (
-                            <MenuItem key={index} value={item?.value}>
-                              {item?.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </div>
-                      <div className="form">
                         <label className="title" for="paymentMethod">
                           Payment method
                         </label>
@@ -292,6 +274,24 @@ const OrderComponent = () => {
                           }}
                         >
                           {arrayPaymentMethod?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                      <div className="form">
+                        <label className="title" for="status">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="status"
+                          onChange={(e) => {
+                            setStatus(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
                             <MenuItem key={index} value={item?.value}>
                               {item?.name}
                             </MenuItem>

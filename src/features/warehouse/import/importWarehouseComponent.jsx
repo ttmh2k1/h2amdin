@@ -150,7 +150,7 @@ const ImportWarehouseComponent = () => {
     else if (quantity > 0) {
       setWarehouse([...warehouse, newWarehouse])
     }
-    setSelected(null)
+    // setSelected(null)
     setQuantity(null)
   }
 
@@ -241,7 +241,7 @@ const ImportWarehouseComponent = () => {
                         className="textField"
                         id="productId"
                         options={listProduct || []}
-                        getOptionLabel={(option) => option.id}
+                        getOptionLabel={(option) => option?.id}
                         renderInput={(params) => <TextField {...params} />}
                         onChange={onChange}
                       />

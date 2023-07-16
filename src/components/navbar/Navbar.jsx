@@ -46,14 +46,10 @@ const Navbar = () => {
             />
           )}
         </div>
-        {/* <div className="items">
-          <ChatBubbleOutlineOutlinedIcon className="icon" />
-          <div className="couter">1</div>
-        </div> */}
         <div className="items">
           <Link to={'/notification'}>
             <NotificationsNoneOutlinedIcon className="icon" />
-            <div className="couter">1</div>
+            <div className="couter"></div>
           </Link>
         </div>
         <div className="items">

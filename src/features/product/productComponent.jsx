@@ -3,6 +3,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { DataGrid } from '@mui/x-data-grid'
 import {
+  FaAngleDown,
   FaArrowCircleLeft,
   FaEye,
   FaLock,
@@ -15,11 +16,23 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { deleteProduct, getListProduct, updateStatusProduct } from '../../apis/productApi'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { toast } from 'react-toastify'
 
 const ProductComponent = () => {
   const navigate = useNavigate()
+  const [searchName, setSearchName] = useState('')
+  const [status, setStatus] = useState('')
   const [listProduct, setListProduct] = useState({
     loading: true,
     rows: [],
@@ -160,27 +173,11 @@ const ProductComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.hidden ? 'Banned' : 'Active'}`,
+      renderCell: (params) => `${params?.row?.hidden ? 'Hidden' : 'Active'}`,
     },
   ]
 
   const updateData = (k, v) => setListProduct((prev) => ({ ...prev, [k]: v }))
-
-  useEffect(() => {
-    getListProduct({
-      page: listProduct.page,
-      size: listProduct.pageSize,
-      sortBy: 8,
-      sortDescending: true,
-    }).then((resp) => {
-      setListProduct({
-        ...listProduct,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
 
   useEffect(() => {
     updateData('loading', true)
@@ -189,6 +186,8 @@ const ProductComponent = () => {
       size: listProduct.pageSize,
       sortBy: 8,
       sortDescending: true,
+      searchName: searchName,
+      status: status,
     }).then((resp) => {
       setListProduct({
         ...listProduct,
@@ -197,7 +196,7 @@ const ProductComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [listProduct.page, listProduct.pageSize])
+  }, [listProduct?.page, listProduct?.pageSize, searchName, status])
 
   return (
     <div className="product">
@@ -207,6 +206,56 @@ const ProductComponent = () => {
         <div className="productBody">
           <div className="title">
             <a href="/">Home</a>/ <a href="/product">Product</a>
+          </div>
+
+          <div className="search">
+            <Accordion style={{ borderRadius: '0.4vw' }}>
+              <AccordionSummary
+                expandIcon={<FaAngleDown />}
+                style={{ margin: '0' }}
+                id="panel1a-header"
+              >
+                <Typography style={{ padding: '0' }}>Search</Typography>
+              </AccordionSummary>
+              <AccordionDetails style={{ padding: 0 }}>
+                <Typography>
+                  <div style={{ width: '100%' }}>
+                    <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
+                      <div className="form">
+                        <label className="title" for="searchName">
+                          Name
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="searchName"
+                          onChange={(e) => {
+                            setSearchName(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="status">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="status"
+                          onChange={(e) => {
+                            setStatus(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                    </Grid>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
           </div>
 
           <div className="template">
@@ -262,5 +311,10 @@ const Tab = styled(DataGrid)({
     fontSize: '1rem',
   },
 })
+
+const arrayStatus = [
+  { name: 'Active', value: 'ACTIVE' },
+  { name: 'Hidden', value: 'HIDDEN' },
+]
 
 export default ProductComponent

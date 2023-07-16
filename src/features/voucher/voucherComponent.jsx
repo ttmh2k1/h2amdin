@@ -4,6 +4,7 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { DataGrid } from '@mui/x-data-grid'
 import {
+  FaAngleDown,
   FaArrowCircleLeft,
   FaEye,
   FaLock,
@@ -12,7 +13,17 @@ import {
   FaTrashAlt,
   FaUnlock,
 } from 'react-icons/fa'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { deleteVoucher, getListVoucher, updateVoucher } from '../../apis/voucherApi'
@@ -22,6 +33,13 @@ import { toast } from 'react-toastify'
 
 const VoucherComponent = () => {
   const navigate = useNavigate()
+  const [code, setCode] = useState('')
+  const [description, setDescription] = useState('')
+  const [discountType, setDiscountType] = useState('')
+  const [isActive, setIsActive] = useState('')
+  const [validFrom, setValidFrom] = useState('')
+  const [validTo, setValidTo] = useState('')
+
   const [listVoucher, setListVoucher] = useState({
     loading: true,
     rows: [],
@@ -185,6 +203,12 @@ const VoucherComponent = () => {
       size: listVoucher.pageSize,
       sortBy: 1,
       sortDescending: true,
+      code: code,
+      description: description,
+      discountType: discountType,
+      isActive: isActive,
+      validFrom: validFrom,
+      validTo: validTo,
     }).then((resp) => {
       setListVoucher({
         ...listVoucher,
@@ -193,7 +217,7 @@ const VoucherComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [])
+  }, [code, description, discountType, isActive, validFrom, validTo])
 
   const handleDisable = async (id) => {
     try {
@@ -228,6 +252,111 @@ const VoucherComponent = () => {
           <div className="title">
             <a href="/">Home</a>/ <a href="/voucher">Voucher</a>
           </div>
+
+          <div className="search">
+            <Accordion style={{ borderRadius: '0.4vw' }}>
+              <AccordionSummary
+                expandIcon={<FaAngleDown />}
+                style={{ margin: '0' }}
+                id="panel1a-header"
+              >
+                <Typography style={{ padding: '0' }}>Search</Typography>
+              </AccordionSummary>
+              <AccordionDetails style={{ padding: 0 }}>
+                <Typography>
+                  <div style={{ width: '100%' }}>
+                    <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
+                      <div className="form">
+                        <label className="title" for="code">
+                          Code
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="fullname"
+                          onChange={(e) => {
+                            setCode(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="description">
+                          Description
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="description"
+                          onChange={(e) => {
+                            setDescription(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="discountType">
+                          Discount type
+                        </label>
+                        <Select
+                          className="select"
+                          id="discountType"
+                          onChange={(e) => {
+                            setDiscountType(e?.target?.value)
+                          }}
+                        >
+                          {arrayDiscountType?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                      <div className="form">
+                        <label className="title" for="validFrom">
+                          Start date
+                        </label>
+                        <TextField
+                          isrequired
+                          className="textField"
+                          id="validFrom"
+                          type="datetime-local"
+                          onChange={(e) => setValidFrom(moment(e?.target?.value).format())}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="validTo">
+                          End date
+                        </label>
+                        <TextField
+                          isrequired
+                          className="textField"
+                          id="validTo"
+                          type="datetime-local"
+                          onChange={(e) => setValidTo(moment(e?.target?.value).format())}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="isActive">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="isActive"
+                          onChange={(e) => {
+                            setIsActive(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                    </Grid>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
           <div className="template">
             <div className="datatable">
               <Tab
@@ -281,5 +410,15 @@ const Tab = styled(DataGrid)({
     fontSize: '1rem',
   },
 })
+
+const arrayStatus = [
+  { name: 'Available', value: true },
+  { name: 'Unavailable', value: false },
+]
+
+const arrayDiscountType = [
+  { name: 'Percent', value: 'PERCENT' },
+  { name: 'Amount', value: 'AMOUNT' },
+]
 
 export default VoucherComponent
