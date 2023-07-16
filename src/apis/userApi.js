@@ -6,21 +6,21 @@ import api, { SERVICE } from './api'
  * @param {*} req
  * @returns {Promise<import('axios').AxiosResponse<any>>}
  */
-export function getListUsers(req) {
+export async function getListUsers(req) {
   const queries = combineQueriesUrl({ ...req })
-  return api.GET(`${SERVICE}/api/admin/user-manage${queries}`)
+  return await api.GET(`${SERVICE}/api/admin/user-manage${queries}`)
 }
 
 export function getUser(id) {
   return api.GET(`${SERVICE}/api/admin/user-manage/${id}`)
 }
 
-export function updateUserStatus(id, param) {
-  return api.PUT(`${SERVICE}/api/admin/user-manage/status/${id}`, param)
+export async function updateUserStatus(id, param) {
+  return await api.PUT(`${SERVICE}/api/admin/user-manage/status/${id}`, param)
 }
 
-export function updateUser(id, param) {
-  return api.PUT(`${SERVICE}/api/admin/user-manage/status/${id}`, param)
+export async function updateUser(id, param) {
+  return await api.PUT(`${SERVICE}/api/admin/user-manage/${id}`, param)
 }
 
 export function createUser(param) {

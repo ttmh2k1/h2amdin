@@ -157,7 +157,7 @@ const VoucherComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${moment(params?.row?.validFrom).format('LLL')}`,
+      renderCell: (params) => `${moment(params?.row?.validFrom).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'validTo',
@@ -165,7 +165,7 @@ const VoucherComponent = () => {
       width: 150,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${moment(params?.row?.validTo).format('LLL')}`,
+      renderCell: (params) => `${moment(params?.row?.validTo).format('YYYY-MM-DD hh:mm')}`,
     },
     {
       field: 'isActive',
@@ -173,7 +173,7 @@ const VoucherComponent = () => {
       width: 80,
       align: 'center',
       headerAlign: 'center',
-      renderCell: (params) => `${params?.row?.isActive ? 'Anable' : 'Unable'}`,
+      renderCell: (params) => `${params?.row?.isActive ? 'Available' : 'Unavailable'}`,
     },
   ]
 

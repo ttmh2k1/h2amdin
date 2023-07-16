@@ -54,13 +54,30 @@ const UserComponent = () => {
 
   const handleSave = async () => {
     try {
-      await updateUser(userId, user)
+      await updateUser(userId, {
+        fullname: user?.fullname,
+        email: user?.email,
+        phone: user?.phone,
+        password: user?.password,
+        adminRoleName: user?.adminRoleName,
+        status: user?.status,
+      })
       toast.success('Update user information successful!', style)
       setTimeout(() => {
         navigate('/user')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response?.data?.message, style)
+      if (error?.response?.data?.data) {
+        if (error?.response?.data?.data?.fullname) {
+          toast.error(error?.response?.data?.data?.fullname, style)
+        } else if (error?.response?.data?.data?.email) {
+          toast.error('Email ' + error?.response?.data?.data?.email, style)
+        } else if (error?.response?.data?.data?.phone) {
+          toast.error(error?.response?.data?.data?.phone, style)
+        } else if (error?.response?.data?.data?.password) {
+          toast.error(error?.response?.data?.data?.password, style)
+        }
+      } else toast.error(error?.response?.data?.message, style)
     }
   }
 
@@ -167,6 +184,22 @@ const UserComponent = () => {
                   />
                 </div>
                 <div className="form">
+                  <label className="title" for="password">
+                    Password
+                  </label>
+                  <TextField
+                    className="textField"
+                    type="password"
+                    id="password"
+                    onChange={(e) =>
+                      setUser((state) => ({
+                        ...state,
+                        password: e?.target?.value,
+                      }))
+                    }
+                  />
+                </div>
+                <div className="form">
                   <label className="title" for="status">
                     Status
                   </label>
@@ -196,7 +229,7 @@ const UserComponent = () => {
             <Button
               className="saveButton"
               startIcon={<FaSave color="#fff" size={'1rem'} />}
-              onClick={(e) => handleSave()}
+              onClick={(e) => handleSave(e)}
             >
               Save
             </Button>

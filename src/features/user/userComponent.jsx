@@ -14,12 +14,28 @@ import {
   FaPen,
   FaPlusCircle,
   FaUnlock,
+  FaAngleDown,
 } from 'react-icons/fa'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material'
 import { toast } from 'react-toastify'
 
 const UserComponent = () => {
   const navigate = useNavigate()
+  const [searchFullname, setSearchFullname] = useState('')
+  const [searchUsername, setSearchUsername] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
+  const [searchPhone, setSearchPhone] = useState('')
+  const [status, setStatus] = useState('')
   const [users, setUsers] = useState({
     loading: true,
     rows: [],
@@ -169,26 +185,16 @@ const UserComponent = () => {
   }
 
   useEffect(() => {
-    getListUsers({
-      page: users.page,
-      size: users.pageSize,
-      sortByDateDescending: true,
-    }).then((resp) => {
-      setUsers({
-        ...users,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
-
-  useEffect(() => {
     updateData('loading', true)
     getListUsers({
-      page: users.page,
-      size: users.pageSize,
-      sortByDateDescending: true,
+      page: users?.page,
+      size: users?.pageSize,
+      sortDescending: true,
+      searchFullname: searchFullname ? searchFullname : ' ',
+      searchUsername: searchUsername ? searchUsername : '',
+      searchEmail: searchEmail ? searchEmail : '',
+      searchPhone: searchPhone ? searchPhone : '',
+      status: status ? status : '',
     }).then((resp) => {
       setUsers({
         ...users,
@@ -197,7 +203,15 @@ const UserComponent = () => {
         totalRows: resp?.data?.totalElement,
       })
     })
-  }, [users.page, users.pageSize])
+  }, [
+    users?.page,
+    users?.pageSize,
+    searchFullname,
+    searchUsername,
+    searchEmail,
+    searchPhone,
+    status,
+  ])
 
   return (
     <div className="user">
@@ -208,6 +222,92 @@ const UserComponent = () => {
           <div className="title">
             <a href="/">Home</a>/ <a href="/user">User</a>
           </div>
+          <div className="search">
+            <Accordion style={{ borderRadius: '0.4vw' }}>
+              <AccordionSummary
+                expandIcon={<FaAngleDown />}
+                style={{ margin: '0' }}
+                id="panel1a-header"
+              >
+                <Typography style={{ padding: '0' }}>Search</Typography>
+              </AccordionSummary>
+              <AccordionDetails style={{ padding: 0 }}>
+                <Typography>
+                  <div style={{ width: '100%' }}>
+                    <Grid container spacing={0} alignItems="flex-start" alignContent="space-around">
+                      <div className="form">
+                        <label className="title" for="fullname">
+                          Fullname
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="fullname"
+                          onChange={(e) => {
+                            setSearchFullname(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="username">
+                          Username
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="username"
+                          onChange={(e) => {
+                            setSearchUsername(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="email">
+                          Email
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="email"
+                          onChange={(e) => {
+                            setSearchEmail(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="phone">
+                          Phone
+                        </label>
+                        <TextField
+                          className="textField"
+                          id="phone"
+                          onChange={(e) => {
+                            setSearchPhone(e?.target?.value)
+                          }}
+                        />
+                      </div>
+                      <div className="form">
+                        <label className="title" for="status">
+                          Status
+                        </label>
+                        <Select
+                          className="select"
+                          id="status"
+                          onChange={(e) => {
+                            setStatus(e?.target?.value)
+                          }}
+                        >
+                          {arrayStatus?.map((item, index) => (
+                            <MenuItem key={index} value={item?.value}>
+                              {item?.name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </div>
+                    </Grid>
+                  </div>
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+          </div>
+
           <div className="template">
             <div className="datatable">
               <Tab
@@ -261,5 +361,11 @@ const Tab = styled(DataGrid)({
     fontSize: '1rem',
   },
 })
+
+const arrayStatus = [
+  { name: 'Active', value: 'ACTIVE' },
+  { name: 'Banned', value: 'BANNED' },
+  { name: 'Wait banned', value: 'WAIT_BANNED' },
+]
 
 export default UserComponent
