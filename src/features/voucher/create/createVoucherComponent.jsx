@@ -39,7 +39,25 @@ export const CreateVoucher = () => {
         navigate('/voucher')
       }, 2000)
     } catch (error) {
-      toast.error(error?.response?.data?.message, style)
+      if (error?.response?.data?.data) {
+        if (error?.response?.data?.data?.description) {
+          toast.error('Description ' + error?.response?.data?.data?.description, style)
+        } else if (error?.response?.data?.data?.discountAmount) {
+          toast.error('Discount value ' + error?.response?.data?.data?.discountAmount, style)
+        } else if (error?.response?.data?.data?.discountType) {
+          toast.error('Discount type ' + error?.response?.data?.data?.discountType, style)
+        } else if (error?.response?.data?.data?.limit) {
+          toast.error('Limit ' + error?.response?.data?.data?.limit, style)
+        } else if (error?.response?.data?.data?.maxDiscount) {
+          toast.error('Maximum discount value ' + error?.response?.data?.data?.maxDiscount, style)
+        } else if (error?.response?.data?.data?.minOrderAmount) {
+          toast.error('Minimum order value ' + error?.response?.data?.data?.minOrderAmount, style)
+        } else if (error?.response?.data?.data?.validFrom) {
+          toast.error('Start date ' + error?.response?.data?.data?.validFrom, style)
+        } else if (error?.response?.data?.data?.validTo) {
+          toast.error('End date ' + error?.response?.data?.data?.validTo, style)
+        }
+      } else toast.error(error?.response?.data?.message, style)
     }
   }
 
