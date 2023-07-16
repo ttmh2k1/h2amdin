@@ -1,5 +1,5 @@
-import { combineQueriesUrl } from '../utils/functionHelper';
-import api, { SERVICE } from './api';
+import { combineQueriesUrl } from '../utils/functionHelper'
+import api, { SERVICE } from './api'
 
 /**
  * Get list products and view products
@@ -7,75 +7,82 @@ import api, { SERVICE } from './api';
  * @returns {Promise<import('axios').AxiosResponse<any>>}
  */
 export function getListProductSearch(req) {
-    const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/product-manage?size=500${queries}`);
+  const queries = combineQueriesUrl({ ...req })
+  return api.GET(`${SERVICE}/api/admin/product-manage?size=1000&sortDescending=true${queries}`)
 }
 
 export function getListProduct(req) {
-    const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/product-manage${queries}`);
+  const queries = combineQueriesUrl({ ...req })
+  return api.GET(`${SERVICE}/api/admin/product-manage${queries}`)
 }
 
 export function getListProductParent(req) {
-    const queries = combineQueriesUrl({ ...req });
-    return api.GET(`${SERVICE}/api/admin/product/category${queries}`);
+  const queries = combineQueriesUrl({ ...req })
+  return api.GET(`${SERVICE}/api/admin/product/category${queries}`)
 }
 
 export function getListCategory(id) {
-    return api.GET(`${SERVICE}/api/admin/product/category/${id}`);
+  return api.GET(`${SERVICE}/api/admin/product/category/${id}`)
 }
 
 export function getProduct(id) {
-    return api.GET(`${SERVICE}/api/admin/product-manage/${id}`);
+  return api.GET(`${SERVICE}/api/admin/product-manage/${id}`)
 }
 
 export function createProduct(data) {
-    return api.POST(`${SERVICE}/api/admin/product-manage`, data, {
-        "Content-Type": "multipart/form-data",
-    });
+  return api.POST(`${SERVICE}/api/admin/product-manage`, data, {
+    'Content-Type': 'multipart/form-data',
+  })
 }
 
 export function createProductImage(idProduct, data) {
-    return api.POST(`${SERVICE}/api/admin/product-manage/${idProduct}/image`, data, {
-        "Content-Type": "multipart/form-data",
-    });
+  return api.POST(`${SERVICE}/api/admin/product-manage/${idProduct}/image`, data, {
+    'Content-Type': 'multipart/form-data',
+  })
 }
 
-
 export function updateStatusProduct(id, params) {
-    return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
-        "Content-Type": "multipart/form-data",
-    },);
+  return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
+    'Content-Type': 'multipart/form-data',
+  })
 }
 
 export function deleteProduct(id) {
-    return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}`)
+  return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}`)
 }
 
 export function createProductVariation(idProduct, params) {
-    return api.POST(`${SERVICE}/api/admin/product-manage/${idProduct}/variation`, params, {
-        "Content-Type": "application/json",
-    },);
+  return api.POST(`${SERVICE}/api/admin/product-manage/${idProduct}/variation`, params, {
+    'Content-Type': 'application/json',
+  })
 }
 
 export function updateProductOptionValue(idProduct, idProductOptionValue, params) {
-    return api.PUT(`${SERVICE}/api/admin/product-manage/${idProduct}/option-value/${idProductOptionValue}`, params, {
-        "Content-Type": "application/json",
-    },);
+  return api.PUT(
+    `${SERVICE}/api/admin/product-manage/${idProduct}/option-value/${idProductOptionValue}`,
+    params,
+    {
+      'Content-Type': 'application/json',
+    },
+  )
 }
 
 export function updateProductVariation(idProduct, idVariation, params) {
-    return api.PUT(`${SERVICE}/api/admin/product-manage/${idProduct}/variation/${idVariation}`, params, {
-        "Content-Type": "application/json",
-    },);
+  return api.PUT(
+    `${SERVICE}/api/admin/product-manage/${idProduct}/variation/${idVariation}`,
+    params,
+    {
+      'Content-Type': 'application/json',
+    },
+  )
 }
 
 export function deleteProductImages(id, data) {
-    return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}/image/{id}`, data)
+  return api.DELETE(`${SERVICE}/api/admin/product-manage/${id}/image/{id}`, data)
 }
 
 export function updateProduct(id, params) {
-    return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
-        "Content-Type": "multipart/form-data",
-    },);
+  return api.PUT(`${SERVICE}/api/admin/product-manage/${id}`, params, {
+    'Content-Type': 'multipart/form-data',
+  })
 }

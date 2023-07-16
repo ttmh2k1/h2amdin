@@ -3,11 +3,19 @@ import Navbar from '../../components/navbar/Navbar'
 import Sidebar from '../../components/sidebar/Sidebar'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { FaArrowCircleLeft, FaRegPlusSquare } from 'react-icons/fa'
+import { FaAngleDown, FaArrowCircleLeft, FaRegPlusSquare } from 'react-icons/fa'
 import { getListWarehouse } from '../../apis/warehouseApi'
 import { DataGrid } from '@mui/x-data-grid'
 import styled from 'styled-components'
-import { Button } from '@mui/material'
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material'
 import moment from 'moment'
 
 const WarehouseComponent = () => {
@@ -20,26 +28,6 @@ const WarehouseComponent = () => {
     pageSize: 10,
     page: 1,
   })
-
-  // const action = [
-  //   {
-  //     headerName: 'Action',
-  //     width: 60,
-  //     align: 'center',
-  //     headerAlign: 'center',
-  //     renderCell: (props) => {
-  //       return (
-  //         <div className="cellAction">
-  //           <Link to={`/warehouse/${props.id}`} style={{ textDecoration: 'none' }}>
-  //             <div className="viewButton">
-  //               <FaEye />
-  //             </div>
-  //           </Link>
-  //         </div>
-  //       )
-  //     },
-  //   },
-  // ]
 
   const header = [
     {
@@ -111,26 +99,10 @@ const WarehouseComponent = () => {
   const updateData = (k, v) => setWarehouse((prev) => ({ ...prev, [k]: v }))
 
   useEffect(() => {
-    getListWarehouse({
-      page: warehouse.page,
-      size: warehouse.pageSize,
-      sortDescending: true,
-      sortBy: 2,
-    }).then((resp) => {
-      setWarehouse({
-        ...warehouse,
-        loading: false,
-        rows: resp?.data?.data,
-        totalRows: resp?.data?.totalElement,
-      })
-    })
-  }, [])
-
-  useEffect(() => {
     updateData('loading', true)
     getListWarehouse({
-      page: warehouse.page,
-      size: warehouse.pageSize,
+      page: warehouse?.page,
+      size: warehouse?.pageSize,
       sortDescending: true,
       sortBy: 2,
     }).then((resp) => {
@@ -152,6 +124,7 @@ const WarehouseComponent = () => {
           <div className="title">
             <a href="/">Home</a>/ <a href="/warehouse">Warehouse</a>
           </div>
+
           <div className="template">
             <div className="datatable">
               <Tab

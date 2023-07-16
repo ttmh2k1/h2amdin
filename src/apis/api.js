@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const SERVICE = 'http://localhost:8080'
+export const SERVICE = 'http://be.h2store.xyz'
 
 /**
  *
