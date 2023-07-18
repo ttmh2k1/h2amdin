@@ -10,9 +10,11 @@ import { toast } from 'react-toastify'
 import { createVoucher } from '../../../apis/voucherApi'
 
 export const CreateVoucher = () => {
-  const [voucher, setVoucher] = useState([])
+  const [voucher, setVoucher] = useState({
+    maxDiscount: 0,
+  })
   const navigate = useNavigate()
-
+  console.log(voucher)
   const style = {
     position: 'bottom-right',
     autoClose: 2000,
@@ -139,18 +141,20 @@ export const CreateVoucher = () => {
                         onChange={(e) => onChange('minOrderAmount', e.target.value)}
                       />
                     </div>
-                    <div className="form">
-                      <label className="title" for="maxDiscount">
-                        Maximum discount value
-                      </label>
-                      <TextField
-                        isrequired
-                        className="textField"
-                        id="maxDiscount"
-                        type="number"
-                        onChange={(e) => onChange('maxDiscount', e.target.value)}
-                      />
-                    </div>
+                    {voucher?.discountType === 'PERCENT' && (
+                      <div className="form">
+                        <label className="title" for="maxDiscount">
+                          Maximum discount value
+                        </label>
+                        <TextField
+                          isrequired
+                          className="textField"
+                          id="maxDiscount"
+                          type="number"
+                          onChange={(e) => onChange('maxDiscount', e.target.value)}
+                        />
+                      </div>
+                    )}
                     <div className="form">
                       <label className="title" for="validFrom">
                         Start date
